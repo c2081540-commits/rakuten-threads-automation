@@ -6,7 +6,7 @@ from openai import OpenAI
 
 ROOT = Path(__file__).resolve().parent
 MODEL = os.environ.get("OPENAI_MODEL", "gpt-5-mini").strip()
-MAX_OUTPUT_TOKENS = 5000
+MAX_OUTPUT_TOKENS = 7000
 
 
 def _api_key():
@@ -21,7 +21,6 @@ def _load_prompt(name):
 
 
 def _json_response(prompt):
-    # 自動リトライは禁止。失敗時にAPI課金リクエストを連鎖させない。
     client = OpenAI(api_key=_api_key(), max_retries=0, timeout=45.0)
     response = client.responses.create(model=MODEL, input=prompt, max_output_tokens=MAX_OUTPUT_TOKENS, reasoning={"effort": "low"}, text={"format": {"type": "json_object"}})
     text = (response.output_text or "").strip()
@@ -46,7 +45,7 @@ def _validate_parent(parent, recent_posts=None):
     if not parent:
         raise RuntimeError("親投稿が空です。")
     compact = parent.replace("\n", "")
-    if len(compact) > 100:
+    if len(compact) > 140:
         raise RuntimeError(f"親投稿が長すぎます({len(compact)}文字): {parent}")
     forbidden = ["http://", "https://", "【PR】", "レビュー", "価格:"]
     if any(word in parent for word in forbidden):
@@ -76,11 +75,11 @@ def _event_instruction(events):
     if not events:
         return "現在、投稿文で訴求してよい楽天公式イベントは確認されていません。セール・キャンペーン開催中とは書かないでください。"
     names = [e["name"] for e in events]
-    return f"楽天市場公式で現在開催中と確認済みのイベント: {json.dumps(names, ensure_ascii=False)}。必要なら自然に1つだけ触れて構いません。ただし商品自体の値下げ・クーポン対象・ポイント対象とは確認していないため、それらを断定しないでください。特に『5と0のつく日』は楽天カード利用等の条件付きポイント施策であり『商品がセール中』とは書かないでください。"
+    return f"楽天市場公式で現在開催中と確認済みのイベント: {json.dumps(names, ensure_ascii=False)}。必要なら自然に触れて構いません。ただし個別商品の値下げ・クーポン・ポイント対象とは断定しないでください。"
 
 
 def select_product(items):
-    prompt = f"""以下は楽天APIから取得し、機械条件を通過した商品候補です。Threadsアカウント「これ、家に欲しい」で1件だけ紹介する商品を選んでください。重視する順序: 用途の分かりやすさ、生活の小さな不満の解決、短いリアクションの作りやすさ、価格、評価・レビュー件数。ブランド名やショップ名だけで優遇せず、数値や仕様を推測・変更しないでください。候補: {json.dumps(_candidate_data(items), ensure_ascii=False)}\nJSONのみ: {{"selected_item_code":"itemCode","reason":"短い選定理由","preferred_image_index":0}}\n画像内容は見たとは扱わず preferred_image_index は0にしてください。"""
+    prompt = f"以下の楽天商品候補からThreads向きの1件を選択。候補外禁止。数値や仕様の推測禁止。候補:{json.dumps(_candidate_data(items), ensure_ascii=False)}\nJSONのみ: {{\"selected_item_code\":\"itemCode\",\"reason\":\"短い理由\",\"preferred_image_index\":0}}"
     result = _json_response(prompt)
     code = result.get("selected_item_code")
     selected = next((x for x in items if x["itemCode"] == code), None)
@@ -92,7 +91,7 @@ def select_product(items):
 def generate_product_copy(item, recent_posts=None, events=None):
     base = _load_prompt("product.txt")
     facts = {"itemCode": item["itemCode"], "itemName": item["itemName"], "itemCaption": item.get("itemCaption", "")[:1000]}
-    prompt = f"""{base}\n【今回の商品情報】\n{json.dumps(facts, ensure_ascii=False)}\n【楽天公式イベント情報】\n{_event_instruction(events)}\n【直近の商品投稿】\n{json.dumps(recent_posts or [], ensure_ascii=False)}\nJSONのみ: {{"parent_text":"親投稿1〜3行","child_text_base":"返信用補足1〜2文"}}"""
+    prompt = f"{base}\n【今回の商品情報】\n{json.dumps(facts, ensure_ascii=False)}\n【楽天公式イベント情報】\n{_event_instruction(events)}\n【直近の商品投稿】\n{json.dumps(recent_posts or [], ensure_ascii=False)}\nJSONのみ: {{\"parent_text\":\"親投稿1〜3行\",\"child_text_base\":\"返信用補足1〜2文\"}}"
     result = _json_response(prompt)
     parent, child = str(result.get("parent_text", "")).strip(), str(result.get("child_text_base", "")).strip()
     if not parent or not child:
@@ -104,7 +103,7 @@ def generate_product_copy(item, recent_posts=None, events=None):
 def generate_sample_batch(items, count=5, recent_posts=None, events=None):
     count = max(1, min(count, len(items)))
     base = _load_prompt("product.txt")
-    prompt = f"""{base}\n\n以下の候補から、Threads向きの商品を重複なしで{count}件選んでください。商品ごとに親投稿と返信用補足文も作成してください。ブランドやショップだけで優遇せず、用途の分かりやすさ、生活の小さな不満の解決、短い反応の作りやすさ、価格、評価・レビュー数を総合判断してください。候補外の商品は絶対に選ばないでください。数値や仕様は推測しないでください。\n【候補】\n{json.dumps(_candidate_data(items), ensure_ascii=False)}\n【楽天公式イベント情報】\n{_event_instruction(events)}\n【既存の直近投稿】\n{json.dumps(recent_posts or [], ensure_ascii=False)}\n重要: {count}件を別々の人間の独り言に見える程度まで散らしてください。同一バッチ内で導入パターン・冒頭・構文・語尾・着眼点を重複させないでください。「〜かも」「〜だなぁ」「地味に」「これ」を複数件で安易に反復しないでください。イベント名も全件に機械的に入れず、自然な場合だけ使ってください。\n次のJSONだけを返してください。\n{{"samples":[{{"selected_item_code":"itemCode","reason":"短い選定理由","parent_text":"親投稿1〜3行","child_text_base":"返信用補足1〜2文"}}]}}\n必ず samples を{count}件返してください。"""
+    prompt = f"{base}\n候補から重複なしで{count}件選び親投稿と返信を生成。候補:{json.dumps(_candidate_data(items), ensure_ascii=False)}\nイベント:{_event_instruction(events)}\n直近:{json.dumps(recent_posts or [], ensure_ascii=False)}\nJSONのみ: {{\"samples\":[{{\"selected_item_code\":\"itemCode\",\"reason\":\"短い理由\",\"parent_text\":\"親投稿\",\"child_text_base\":\"返信\"}}]}}"
     result = _json_response(prompt)
     samples = result.get("samples", [])
     if len(samples) != count:
@@ -115,7 +114,72 @@ def generate_sample_batch(items, count=5, recent_posts=None, events=None):
         if code not in valid_codes or code in seen_codes:
             raise RuntimeError(f"OpenAIバッチ選定の商品コードが不正または重複です: {code}")
         seen_codes.add(code)
-        if not str(sample.get("parent_text", "")).strip() or not str(sample.get("child_text_base", "")).strip():
-            raise RuntimeError(f"OpenAIバッチ文章生成結果が不足しています: {sample}")
     _validate_batch_parents(samples, recent_posts)
     return samples
+
+
+def generate_mixed_stock(items, recent_history=None, existing_queue=None, events=None):
+    """10投稿を1回のAPI呼び出しで設計。共感6・商品4（= 1日5投稿なら共感3・商品2を2日分）。"""
+    product_prompt = _load_prompt("product.txt")
+    empathy_prompt = _load_prompt("empathy.txt")
+    history = recent_history or []
+    queued = existing_queue or []
+    prompt = f"""
+あなたはThreadsアカウント「これ、家に欲しい」の10投稿分の編集計画と本文を一括作成します。
+投稿比率は厳守: empathy（日常・共感）6件、product（楽天商品紹介）4件。合計10件。
+10件全体を別々の単発文ではなく、同じ一人が数日間投稿する自然な流れとして設計してください。
+ただし無理に全投稿を連続ストーリーにしないこと。過去への言及は【実投稿履歴】に存在する事実だけ使用可能です。
+未投稿キューは今後投稿予定のため、内容・テーマ・言い回しの重複を避けてください。
+商品投稿は候補から4商品を重複なしで選択。商品を実際に購入・使用したという架空経験は禁止。
+日常投稿には商品、リンク、PRを入れない。生活・掃除・収納・キッチン・洗濯・買い物など、このアカウントの生活領域から外れない。
+同じ語尾、同じ悩み、同じ導入を連発しない。
+
+【商品投稿ルール】
+{product_prompt}
+
+【日常投稿ルール】
+{empathy_prompt}
+
+【楽天商品候補】
+{json.dumps(_candidate_data(items), ensure_ascii=False)}
+
+【実投稿履歴】
+{json.dumps(history, ensure_ascii=False)}
+
+【現在の未投稿キュー】
+{json.dumps(queued, ensure_ascii=False)}
+
+【現在確認済み楽天イベント】
+{_event_instruction(events)}
+注意: セール文言は投稿時にも再確認するため、ストック本文には原則として固定の開催中表現を埋め込まない。
+
+JSONのみ返してください。
+{{"posts":[
+  {{"type":"empathy","parent_text":"本文","theme":"短いテーマ","context_note":"履歴との関係。なければ空文字"}},
+  {{"type":"product","selected_item_code":"itemCode","parent_text":"親投稿","child_text_base":"返信補足","theme":"短いテーマ","context_note":"履歴との関係。なければ空文字"}}
+]}}
+必ず10件、empathy 6件、product 4件。
+"""
+    result = _json_response(prompt)
+    posts = result.get("posts", [])
+    if len(posts) != 10:
+        raise RuntimeError(f"ストック生成件数が不正です: {len(posts)}")
+    empathy = [p for p in posts if p.get("type") == "empathy"]
+    products = [p for p in posts if p.get("type") == "product"]
+    if len(empathy) != 6 or len(products) != 4:
+        raise RuntimeError(f"投稿比率が不正です: empathy={len(empathy)}, product={len(products)}")
+    valid_codes = {x["itemCode"] for x in items}
+    product_codes = []
+    for post in posts:
+        _validate_parent(post.get("parent_text", ""), [h.get("parent_text", "") for h in history if h.get("parent_text")])
+        if post["type"] == "product":
+            code = post.get("selected_item_code")
+            if code not in valid_codes:
+                raise RuntimeError(f"候補外の商品コード: {code}")
+            product_codes.append(code)
+            if not str(post.get("child_text_base", "")).strip():
+                raise RuntimeError("商品投稿の返信文が空です。")
+    if len(set(product_codes)) != 4:
+        raise RuntimeError("ストック内の商品が重複しています。")
+    _validate_batch_parents(posts, [h.get("parent_text", "") for h in history if h.get("parent_text")])
+    return posts
