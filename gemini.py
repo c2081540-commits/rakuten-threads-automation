@@ -118,29 +118,72 @@ def generate_sample_batch(items, count=5, recent_posts=None, events=None):
     return samples
 
 
+def _valid_daily_mix(posts):
+    if len(posts) != 10:
+        return False
+    for start in (0, 5):
+        day = posts[start:start + 5]
+        if sum(1 for p in day if p.get("type") == "empathy") != 3:
+            return False
+        if sum(1 for p in day if p.get("type") == "product") != 2:
+            return False
+    return True
+
+
 def _normalize_mixed_stock(posts):
-    """OpenAIが余分に返した場合は6 empathy + 4 productへ切り詰める。不足は後段でエラーにする。"""
-    empathy = [p for p in posts if p.get("type") == "empathy"]
-    products = [p for p in posts if p.get("type") == "product"]
-    if len(empathy) < 6 or len(products) < 4:
-        raise RuntimeError(f"ストック生成不足です: total={len(posts)}, empathy={len(empathy)}, product={len(products)}")
-    return empathy[:6] + products[:4]
+    """掲載順を壊さず10件に正規化する。まず先頭10件を優先し、比率が崩れる場合のみ順序維持で余剰を除く。"""
+    if len(posts) < 10:
+        raise RuntimeError(f"ストック生成不足です: total={len(posts)}")
+    first_ten = posts[:10]
+    if _valid_daily_mix(first_ten):
+        return first_ten
+    kept = []
+    empathy_count = 0
+    product_count = 0
+    for post in posts:
+        post_type = post.get("type")
+        if post_type == "empathy" and empathy_count < 6:
+            kept.append(post)
+            empathy_count += 1
+        elif post_type == "product" and product_count < 4:
+            kept.append(post)
+            product_count += 1
+        if len(kept) == 10:
+            break
+    if empathy_count < 6 or product_count < 4:
+        raise RuntimeError(f"ストック生成不足です: total={len(posts)}, empathy={empathy_count}, product={product_count}")
+    if not _valid_daily_mix(kept):
+        raise RuntimeError("OpenAIが生成した掲載順では1日あたり共感3・商品2を満たせません。")
+    return kept
 
 
 def generate_mixed_stock(items, recent_history=None, existing_queue=None, events=None):
-    """10投稿を1回のAPI呼び出しで設計。共感6・商品4（= 1日5投稿なら共感3・商品2を2日分）。"""
+    """10投稿を1回のAPI呼び出しで、本文だけでなく実際の掲載順まで一括設計する。"""
     product_prompt = _load_prompt("product.txt")
     empathy_prompt = _load_prompt("empathy.txt")
     history = recent_history or []
     queued = existing_queue or []
     prompt = f"""
-あなたはThreadsアカウント「これ、家に欲しい」の10投稿分の編集計画と本文を一括作成します。
+あなたはThreadsアカウント「これ、家に欲しい」の10投稿分の編集計画、本文、実際の掲載順を一括作成します。
+返すposts配列の順番が、そのまま実際の投稿順になります。後工程では原則並べ替えません。
 投稿比率は厳守: empathy（日常・共感）6件、product（楽天商品紹介）4件。合計10件。
+1〜5番を1日目、6〜10番を2日目として、各日必ず empathy 3件・product 2件にしてください。
 10件全体を同じ一人が数日間投稿する自然なアカウントとして設計してください。ただし全投稿を商品購入へ誘導する筋書きにはしません。
 過去への言及は【実投稿履歴】に存在する事実だけ使用可能です。未投稿キューは内容・テーマ・言い回しの重複回避に使います。
 商品を実際に購入・使用したという架空経験は禁止です。
 
-【10件全体の分散ルール・重要】
+【掲載順の編集ルール・最重要】
+- 先に10件の内容を作ってから、10件全体を見渡して最も自然な掲載順を決め、その順番でposts配列を返すこと。
+- 関連性のある日常投稿と商品投稿は、自然なら近い位置に置いてよい。ただし毎回「悩み→解決商品」の直結構成にはしない。
+- 商品投稿の直前の日常投稿が、その商品のために作られた広告前振りに見える配置を連発しない。
+- 無関係な日常投稿も適度に挟み、普通の生活アカウントとして読める流れにする。
+- 同系統テーマを連続させすぎない。掃除→掃除→収納→収納のような固まりを避ける。
+- product同士の連続は避ける。
+- 1日目と2日目で似た流れを機械的に繰り返さない。E-E-P-E-Pのような固定パターンにする必要はない。
+- 朝から夜へ読むことを想定し、朝向き・昼向き・夕方向きなど明確な時間文脈がある投稿は不自然な位置に置かない。
+- 実投稿履歴から自然につながる話題がある場合だけ連続性を利用する。架空の前回投稿を作らない。
+
+【10件全体の分散ルール】
 - empathy 6件は、最低5種類の異なるテーマ領域に分散すること。
 - empathy 6件のうち掃除・収納・水回りを直接テーマにできるのは合計2件まで。
 - 残りは季節/天気、食事/料理、買い物、洗濯/衣類、朝夜/休日、休憩、家事以外の生活あるある、軽い発見や満足などから分散すること。
@@ -148,7 +191,6 @@ def generate_mixed_stock(items, recent_history=None, existing_queue=None, events
 - product 4件は商品コードが異なるだけでは不十分。用途・利用場面も可能な限り分散すること。
 - 4商品中、収納・フック・ラック・ハンガー等の「物を掛ける/収納する商品」は最大2件まで。候補に他カテゴリが存在するなら最大1件を優先すること。
 - 同じブランドや同系統商品を4件中3件以上選ばないこと。候補の制約で不可能な場合のみ例外。
-- 日常投稿と直後の商品投稿が毎回「悩み→その解決商品」になる構成は禁止。偶然関連する程度は可。
 - 同じ語尾、同じ悩み、同じ導入を連発しない。
 
 【商品投稿ルール】
@@ -175,7 +217,7 @@ JSONのみ返してください。
   {{"type":"empathy","parent_text":"本文","theme":"具体的で短いテーマ","theme_group":"季節|食事|買い物|洗濯|朝夜|休憩|掃除|収納|水回り|その他生活","tone":"neutral|positive|negative","context_note":"履歴との関係。なければ空文字"}},
   {{"type":"product","selected_item_code":"itemCode","parent_text":"親投稿","child_text_base":"返信補足","theme":"短いテーマ","product_group":"商品の用途カテゴリ","context_note":"履歴との関係。なければ空文字"}}
 ]}}
-必ず10件、empathy 6件、product 4件。
+必ず10件。posts配列自体を最終掲載順にすること。1〜5番は共感3・商品2、6〜10番も共感3・商品2。
 """
     result = _json_response(prompt)
     raw_posts = result.get("posts", [])
@@ -184,6 +226,8 @@ JSONのみ返してください。
     products = [p for p in posts if p.get("type") == "product"]
     if len(posts) != 10 or len(empathy) != 6 or len(products) != 4:
         raise RuntimeError(f"投稿比率が不正です: total={len(posts)}, empathy={len(empathy)}, product={len(products)}")
+    if not _valid_daily_mix(posts):
+        raise RuntimeError("日別投稿比率が不正です。各日 empathy 3・product 2 が必要です。")
 
     groups = [str(p.get("theme_group", "")).strip() for p in empathy]
     if len(set(g for g in groups if g)) < 5:
