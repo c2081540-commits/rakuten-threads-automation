@@ -1,19 +1,23 @@
 import argparse
 import json
 
-from gemini import generate_product_copy, generate_sample_batch, select_product
-from history import recent_texts
+from gemini import generate_product_copy, generate_sample_batch, generate_mixed_stock, select_product
+from history import recent_entries, recent_texts
+from queue import append_posts, load_queue, stock_count
 from rakuten import fetch_candidate_pool
 from rakuten_events import get_active_rakuten_events
 from selector import build_shortlist, primary_filter
 
+STOCK_TARGET = 10
+REFILL_THRESHOLD = 3
 
-def get_shortlist():
+
+def get_shortlist(limit=10):
     raw_items = fetch_candidate_pool(target_raw=50)
     filtered = primary_filter(raw_items)
     if len(filtered) < 5:
         filtered = primary_filter(raw_items, max_price=8000)
-    shortlist = build_shortlist(filtered, limit=10)
+    shortlist = build_shortlist(filtered, limit=limit)
     if not shortlist:
         raise RuntimeError("一次フィルタを通過する商品がありませんでした。")
     return raw_items, filtered, shortlist
@@ -38,7 +42,7 @@ def assemble_preview(selected, reason, parent, child_base, image_index=0, events
 
 def preview_events():
     events = get_active_rakuten_events()
-    print(json.dumps({"active_rakuten_events": events, "note": "楽天市場公式で現在開催中と確認できたイベントのみ。確認不能なイベントは出力しません。"}, ensure_ascii=False, indent=2))
+    print(json.dumps({"active_rakuten_events": events, "note": "楽天市場公式で現在開催中と確認できたイベントのみ。"}, ensure_ascii=False, indent=2))
 
 
 def preview_full_post():
@@ -50,7 +54,6 @@ def preview_full_post():
 
 
 def preview_samples(count=5):
-    """複数サンプルを1回のOpenAI API呼び出しで生成。投稿・履歴更新はしない。"""
     _, _, shortlist = get_shortlist()
     events = get_active_rakuten_events()
     count = max(1, min(count, len(shortlist)))
@@ -62,18 +65,47 @@ def preview_samples(count=5):
         preview = assemble_preview(selected, generated.get("reason", ""), str(generated["parent_text"]).strip(), str(generated["child_text_base"]).strip(), events=events)
         preview["sample"] = sample_no
         outputs.append(preview)
-    print(json.dumps({"sample_count": len(outputs), "openai_requests": 1, "active_rakuten_events": [e["name"] for e in events], "note": "品質確認用。Threads投稿・history更新は行いません。", "samples": outputs}, ensure_ascii=False, indent=2))
+    print(json.dumps({"sample_count": len(outputs), "openai_requests": 1, "active_rakuten_events": [e["name"] for e in events], "samples": outputs}, ensure_ascii=False, indent=2))
+
+
+def build_stock(save=False, force=False):
+    current = stock_count()
+    if not force and current > REFILL_THRESHOLD:
+        print(json.dumps({"status": "skip", "stock_count": current, "threshold": REFILL_THRESHOLD, "reason": "ストックが十分あるためOpenAIを呼びません。"}, ensure_ascii=False, indent=2))
+        return
+    _, _, shortlist = get_shortlist(limit=10)
+    events = get_active_rakuten_events()
+    queue_data = load_queue()["posts"]
+    history = recent_entries(limit=20)
+    posts = generate_mixed_stock(shortlist, recent_history=history, existing_queue=queue_data, events=events)
+    by_code = {x["itemCode"]: x for x in shortlist}
+    completed = []
+    for post in posts:
+        row = dict(post)
+        if row["type"] == "product":
+            item = by_code[row["selected_item_code"]]
+            row.update({"item_name": item["itemName"], "item_code": item["itemCode"], "image_url": item["imageUrls"][0], "affiliate_url": item["affiliateUrl"], "price": item["itemPrice"], "rating": item["reviewAverage"], "review_count": item["reviewCount"]})
+        completed.append(row)
+    if save:
+        total = append_posts(completed)
+        status = {"status": "saved", "added": len(completed), "stock_count": total}
+    else:
+        status = {"status": "preview", "added": 0, "stock_count": current}
+    print(json.dumps({**status, "openai_requests": 1, "ratio": {"empathy": 6, "product": 4}, "active_rakuten_events": [e["name"] for e in events], "posts": completed}, ensure_ascii=False, indent=2))
 
 
 def main():
     parser = argparse.ArgumentParser(description="楽天Threads自動投稿システム")
-    parser.add_argument("--mode", choices=["preview", "full-preview", "samples", "events"], default="preview")
+    parser.add_argument("--mode", choices=["preview", "full-preview", "samples", "events", "stock-preview", "stock-refill"], default="preview")
     parser.add_argument("--count", type=int, default=5)
+    parser.add_argument("--force", action="store_true")
     args = parser.parse_args()
     if args.mode == "preview": preview_candidates()
     elif args.mode == "full-preview": preview_full_post()
     elif args.mode == "samples": preview_samples(count=max(1, min(args.count, 10)))
     elif args.mode == "events": preview_events()
+    elif args.mode == "stock-preview": build_stock(save=False, force=True)
+    elif args.mode == "stock-refill": build_stock(save=True, force=args.force)
 
 
 if __name__ == "__main__":
