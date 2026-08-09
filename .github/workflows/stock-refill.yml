@@ -1,0 +1,56 @@
+name: Rakuten Threads Stock Refill
+
+on:
+  workflow_dispatch:
+    inputs:
+      force:
+        description: 'Force refill even if stock is above threshold'
+        required: false
+        default: false
+        type: boolean
+
+concurrency:
+  group: rakuten-threads-stock-refill
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  refill:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Refill stock
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          RAKUTEN_APP_ID: ${{ secrets.RAKUTEN_APP_ID }}
+          RAKUTEN_AFFILIATE_ID: ${{ secrets.RAKUTEN_AFFILIATE_ID }}
+        run: |
+          if [ "${{ inputs.force }}" = "true" ]; then
+            python main.py --mode stock-refill --force
+          else
+            python main.py --mode stock-refill
+          fi
+
+      - name: Save queue
+        run: |
+          if git diff --quiet -- queue.json; then
+            echo "No queue changes to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add queue.json
+          git commit -m "Refill Rakuten Threads stock"
+          git push
