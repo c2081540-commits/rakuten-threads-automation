@@ -19,7 +19,7 @@ permissions:
 jobs:
   publish:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
 
@@ -31,13 +31,21 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Publish exactly one queued post
+      - name: Publish only the post due in the current JST slot
         env:
           THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
           THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
         run: python publish.py
 
-      - name: Save queue and history after successful publish
+      - name: Refill future stock when 3 or fewer posts remain
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          RAKUTEN_APP_ID: ${{ secrets.RAKUTEN_APP_ID }}
+          RAKUTEN_ACCESS_KEY: ${{ secrets.RAKUTEN_ACCESS_KEY }}
+          RAKUTEN_AFFILIATE_ID: ${{ secrets.RAKUTEN_AFFILIATE_ID }}
+        run: python main.py --mode stock-refill
+
+      - name: Save queue and history
         run: |
           if git diff --quiet -- queue.json history.json; then
             echo "No queue/history changes to commit."
@@ -46,5 +54,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add queue.json history.json
-          git commit -m "Record Rakuten Threads publish"
+          git commit -m "Record Rakuten Threads publish and stock state"
           git push
