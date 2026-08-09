@@ -6,12 +6,14 @@ on:
       mode:
         description: 'Preview mode'
         required: true
-        default: 'samples'
+        default: 'stock-preview'
         type: choice
         options:
+          - stock-preview
           - samples
           - full-preview
           - preview
+          - events
       count:
         description: 'Sample count (samples mode only)'
         required: true
