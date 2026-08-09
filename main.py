@@ -68,6 +68,18 @@ def preview_samples(count=5):
     print(json.dumps({"sample_count": len(outputs), "openai_requests": 1, "active_rakuten_events": [e["name"] for e in events], "samples": outputs}, ensure_ascii=False, indent=2))
 
 
+def arrange_stock_posts(posts):
+    """2日分を E-E-P-E-P / E-E-P-E-P に固定配置する。"""
+    empathy = [p for p in posts if p.get("type") == "empathy"]
+    products = [p for p in posts if p.get("type") == "product"]
+    if len(empathy) != 6 or len(products) != 4:
+        raise RuntimeError(f"投稿順を構成できません: empathy={len(empathy)}, product={len(products)}")
+    return [
+        empathy[0], empathy[1], products[0], empathy[2], products[1],
+        empathy[3], empathy[4], products[2], empathy[5], products[3],
+    ]
+
+
 def build_stock(save=False, force=False):
     current = stock_count()
     if not force and current > REFILL_THRESHOLD:
@@ -78,10 +90,14 @@ def build_stock(save=False, force=False):
     queue_data = load_queue()["posts"]
     history = recent_entries(limit=20)
     posts = generate_mixed_stock(shortlist, recent_history=history, existing_queue=queue_data, events=events)
+    posts = arrange_stock_posts(posts)
     by_code = {x["itemCode"]: x for x in shortlist}
     completed = []
-    for post in posts:
+    for sequence, post in enumerate(posts, start=1):
         row = dict(post)
+        row["stock_sequence"] = sequence
+        row["day_in_batch"] = 1 if sequence <= 5 else 2
+        row["slot_in_day"] = ((sequence - 1) % 5) + 1
         if row["type"] == "product":
             item = by_code[row["selected_item_code"]]
             row.update({"item_name": item["itemName"], "item_code": item["itemCode"], "image_url": item["imageUrls"][0], "affiliate_url": item["affiliateUrl"], "price": item["itemPrice"], "rating": item["reviewAverage"], "review_count": item["reviewCount"]})
@@ -91,7 +107,7 @@ def build_stock(save=False, force=False):
         status = {"status": "saved", "added": len(completed), "stock_count": total}
     else:
         status = {"status": "preview", "added": 0, "stock_count": current}
-    print(json.dumps({**status, "openai_requests": 1, "ratio": {"empathy": 6, "product": 4}, "active_rakuten_events": [e["name"] for e in events], "posts": completed}, ensure_ascii=False, indent=2))
+    print(json.dumps({**status, "openai_requests": 1, "ratio": {"empathy": 6, "product": 4}, "posting_pattern": ["empathy", "empathy", "product", "empathy", "product"], "active_rakuten_events": [e["name"] for e in events], "posts": completed}, ensure_ascii=False, indent=2))
 
 
 def main():
