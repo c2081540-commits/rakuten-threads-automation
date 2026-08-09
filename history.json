@@ -1,4 +1,31 @@
 {
-  "product_history": [],
+  "product_history": [
+    {
+      "post_id": "P1",
+      "type": "product",
+      "selected_item_code": "bathroom:10002808",
+      "parent_text": "磁石で浴室の壁に貼れる幅広の5連フック。引っ掛けて浮かせるタイプの収納に良さそう。",
+      "child_text_base": "浴室の磁石がつく壁面に取り付ける幅約28cmの5連フック。スチール製でマグネットにシリコーン滑り止めが付いています。",
+      "theme": "収納",
+      "product_group": "掛ける",
+      "context_note": "",
+      "stock_sequence": 2,
+      "day_in_batch": 1,
+      "slot_in_day": 2,
+      "item_name": "お買物マラソン/tower 《 山崎実業 マグネットバスルームフック タワー ラージ 》 5連フック 幅広タイプ 壁付けマグネット収納 浮かせる収納 掃除用具 掃除道具 壁掛け マグネット 磁石 引っ掛け お風呂収納 すっきり おしゃれ 公式 シンプル 白 黒 YAMAZAKI",
+      "item_code": "bathroom:10002808",
+      "image_url": "https://thumbnail.image.rakuten.co.jp/@0_mall/bathroom/cabinet/0001/04521919/yj-9914_sam01b.jpg",
+      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00s670n.z7eis104.g00s670n.z7eit184/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fbathroom%2Fyj-9914%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fbathroom%2Fi%2F10002808%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f",
+      "price": 1650,
+      "rating": 4.81,
+      "review_count": 923,
+      "scheduled_at": "2026-08-09T12:00+09:00",
+      "scheduled_hour": 12,
+      "status": "scheduled",
+      "posted_at": "2026-08-09T16:06:47.798349+09:00",
+      "thread_id": "18130310023648664",
+      "reply_id": "18099516779190285"
+    }
+  ],
   "empathy_history": []
 }
