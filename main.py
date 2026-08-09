@@ -43,7 +43,7 @@ def preview_full_post():
 
 
 def preview_samples(count=5):
-    """複数サンプルを1回のGemini API呼び出しで生成。投稿・履歴更新はしない。"""
+    """複数サンプルを1回のOpenAI API呼び出しで生成。投稿・履歴更新はしない。"""
     _, _, shortlist = get_shortlist()
     count = max(1, min(count, len(shortlist)))
     batch = generate_sample_batch(shortlist, count=count, recent_posts=recent_texts("product", limit=5))
@@ -54,7 +54,7 @@ def preview_samples(count=5):
         preview = assemble_preview(selected, generated.get("reason", ""), str(generated["parent_text"]).strip(), str(generated["child_text_base"]).strip())
         preview["sample"] = sample_no
         outputs.append(preview)
-    print(json.dumps({"sample_count": len(outputs), "gemini_requests": 1, "note": "品質確認用。Threads投稿・history更新は行いません。", "samples": outputs}, ensure_ascii=False, indent=2))
+    print(json.dumps({"sample_count": len(outputs), "openai_requests": 1, "note": "品質確認用。Threads投稿・history更新は行いません。", "samples": outputs}, ensure_ascii=False, indent=2))
 
 
 def main():
