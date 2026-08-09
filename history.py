@@ -16,6 +16,24 @@ def load_history():
     return data
 
 
+def save_history(data):
+    tmp = HISTORY_PATH.with_suffix(".tmp")
+    tmp.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    tmp.replace(HISTORY_PATH)
+
+
+def record_success(post, thread_id, reply_id=None):
+    data = load_history()
+    entry = dict(post)
+    entry["posted_at"] = datetime.now(JST).isoformat()
+    entry["thread_id"] = thread_id
+    if reply_id:
+        entry["reply_id"] = reply_id
+    key = "product_history" if post.get("type") == "product" else "empathy_history"
+    data[key].append(entry)
+    save_history(data)
+
+
 def recent_product_codes(days=30):
     history = load_history()["product_history"]
     cutoff = datetime.now(JST) - timedelta(days=days)
