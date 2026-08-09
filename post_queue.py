@@ -72,9 +72,7 @@ def get_due_post(now=None):
     data = load_queue()
     for post in data["posts"]:
         scheduled = _parse_scheduled(post)
-        if not scheduled:
-            continue
-        if scheduled <= now <= scheduled + timedelta(minutes=SLOT_GRACE_MINUTES):
+        if scheduled and scheduled <= now <= scheduled + timedelta(minutes=SLOT_GRACE_MINUTES):
             return post
     return None
 
@@ -83,10 +81,7 @@ def remove_post(post_id, scheduled_at):
     data = load_queue()
     for index, post in enumerate(data["posts"]):
         if post.get("post_id") == post_id and post.get("scheduled_at") == scheduled_at:
-            return data["posts"].pop(index) if not save_queue_and_return(data) else None
+            removed = data["posts"].pop(index)
+            save_queue(data)
+            return removed
     return None
-
-
-def save_queue_and_return(data):
-    save_queue(data)
-    return False
