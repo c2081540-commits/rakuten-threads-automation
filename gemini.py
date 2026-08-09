@@ -126,9 +126,10 @@ def generate_mixed_stock(items, recent_history=None, existing_queue=None, events
     prompt = f"""
 Threadsアカウント「これ、家に欲しい」の10投稿を作成する。
 
-最重要: 二段階で考える。
-フェーズ1では掲載順を一切考えず、独立した完成投稿を作る。
-フェーズ2ではフェーズ1の完成本文を一文字も変更せず、post_idだけを並べ替える。
+最重要: 10件は2日分の固定投稿枠に入る。各日の掲載位置は必ず次の時刻に対応する。
+1番=07:00、2番=12:00、3番=15:00、4番=18:00、5番=21:00。
+6〜10番も翌日の同じ順番。
+朝・昼・夕方・夜など時刻を限定する表現は、その掲載時刻に自然な場合だけ使う。特に21時枠に朝/昼の描写、07時枠に夜の描写を置かない。
 
 【フェーズ1】
 - empathy 6件、product 4件。
@@ -141,12 +142,11 @@ Threadsアカウント「これ、家に欲しい」の10投稿を作成する�
 - productは4商品重複禁止。用途を分散し、掛ける/収納系は最大2件、可能なら1件。同系統ブランド3件以上は禁止。
 
 【フェーズ2】
-- 完成した10本文は変更禁止。post_idだけで掲載順を決める。
 - 1〜5番が1日目、6〜10番が2日目。各日必ずempathy 3件、product 2件。
-- 偶然関連する投稿があれば近づけてもよいが、関連ペアを無理に作らない。0〜2組で十分。
+- 掲載順を決める際は上記の固定時刻を最優先する。
 - 商品同士を連続させない。同系統テーマも固めない。
-- 明確な朝・昼・夜文脈があれば自然な位置にする。
 - 毎日同じE-P-E-P-E等の固定型にする必要はない。
+- editorial_order決定後、その位置の時刻に合わない本文があれば、その投稿本文だけ時刻に自然になるよう調整してよい。ただし商品事実を変えない。
 
 【過去】
 過去への言及は実投稿履歴に存在する事実だけ。未投稿キューは重複回避だけに使う。
@@ -174,8 +174,6 @@ postsはE1〜E6とP1〜P4を各1件。editorial_orderも同じ10IDを重複な�
     result = _json_response(prompt)
     posts = _normalize_mixed_stock(result.get("posts", []))
     empathy = [p for p in posts if p.get("type") == "empathy"]
-    products = [p for p in posts if p.get("type") == "product"]
-
     expected_ids = {f"E{i}" for i in range(1, 7)} | {f"P{i}" for i in range(1, 5)}
     if {p.get("post_id") for p in posts} != expected_ids:
         raise RuntimeError("投稿IDが不正です。")
@@ -186,7 +184,6 @@ postsはE1〜E6とP1〜P4を各1件。editorial_orderも同じ10IDを重複な�
         raise RuntimeError("掃除・収納・水回りに偏りすぎています。")
     if sum(str(p.get("tone", "")) in {"neutral", "positive"} for p in empathy) < 2:
         raise RuntimeError("共感投稿がネガティブに偏っています。")
-
     valid_codes = {x["itemCode"] for x in items}
     codes = []
     recent = [h.get("parent_text", "") for h in history if h.get("parent_text")]
@@ -201,5 +198,4 @@ postsはE1〜E6とP1〜P4を各1件。editorial_orderも同じ10IDを重複な�
                 raise RuntimeError("商品返信文が空です。")
     if len(set(codes)) != 4:
         raise RuntimeError("商品が重複しています。")
-
     return _arrange_editorial_order(posts, result.get("editorial_order", []))
