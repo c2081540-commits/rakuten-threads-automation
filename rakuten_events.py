@@ -27,6 +27,15 @@ POINT_DAY = {
     "url": "https://event.rakuten.co.jp/card/pointday/",
 }
 
+# 公式ページが非開催時に表示する文言。これが確認できた場合は
+# 「解析失敗」ではなく正常な非開催判定として扱う。
+INACTIVE_MARKERS = (
+    "は終了しました",
+    "終了しました",
+    "キャンペーンは終了",
+    "次回の開催をお待ちください",
+)
+
 
 def _plain_text(html):
     text = re.sub(r"<script[\s\S]*?</script>", " ", html, flags=re.I)
@@ -61,16 +70,35 @@ def _extract_period_after_label(text, labels):
     return None
 
 
+def _official_page_says_inactive(text, campaign_name):
+    # 例: 「楽天スーパーSALEは終了しました。」
+    compact = re.sub(r"\s+", "", text)
+    name = re.sub(r"\s+", "", campaign_name)
+    for marker in INACTIVE_MARKERS:
+        marker_compact = re.sub(r"\s+", "", marker)
+        if f"{name}{marker_compact}" in compact:
+            return True
+    # 名前直結でなくても、公式キャンペーンページ全体が終了表示なら非開催扱い。
+    return any(re.sub(r"\s+", "", marker) in compact for marker in INACTIVE_MARKERS)
+
+
 def _fetch_official_campaign(campaign, now):
     try:
         text = _fetch_official_text(campaign["url"])
-        # ページ名と期間の両方が公式ページ本文に存在する場合だけ採用。
         if campaign["name"] not in text:
             return None
+
+        # 終了済み公式ページには開催期間が残っていない場合がある。
+        # その場合は解析エラーにせず「現在非開催」と確定する。
+        if _official_page_says_inactive(text, campaign["name"]):
+            return None
+
         period = _extract_period_after_label(text, campaign["period_labels"])
         if not period:
+            # 開催を示すページなのに期間が読めない時だけ警告する。
             print(f"楽天公式キャンペーン期間を解析できません: {campaign['name']}")
             return None
+
         start, end = period
         if start <= now <= end:
             return {
