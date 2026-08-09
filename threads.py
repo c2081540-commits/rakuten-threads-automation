@@ -49,13 +49,17 @@ def publish_post(post):
         container = create_image_container(post["parent_text"], post["image_url"])
     else:
         container = create_text_container(post["parent_text"])
+
     # Meta側のコンテナ準備に短い待機を入れる。失敗時の自動リトライはしない。
     time.sleep(3)
     thread_id = publish_container(container)
 
     reply_id = None
     if post.get("type") == "product":
-        reply = f"{post['child_text_base']}\n\n★{post['rating']}（レビュー {post['review_count']:,}件）\n価格: {post['price']:,}円\n\n【PR】詳細はこちら\n{post['affiliate_url']}"
+        # 商品投稿の返信は広告感を抑えるため、短い補足 + PR表記 + リンクだけにする。
+        # 価格・評価・レビュー件数は取得データとして保持するが、投稿本文には自動挿入しない。
+        child = str(post.get("child_text_base", "")).strip()
+        reply = f"{child}\n\n【PR】商品はこちら\n{post['affiliate_url']}"
         reply_container = create_text_container(reply, reply_to_id=thread_id)
         time.sleep(3)
         reply_id = publish_container(reply_container)
