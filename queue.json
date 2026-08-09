@@ -1,156 +1,35 @@
 {
   "posts": [
     {
-      "post_id": "E1",
-      "type": "empathy",
-      "parent_text": "洗濯物取り込んだときに靴下が片方だけない瞬間の謎よ。",
-      "theme": "洗濯/衣類",
-      "theme_group": "洗濯/衣類",
-      "tone": "neutral",
-      "context_note": "",
-      "stock_sequence": 1,
-      "day_in_batch": 1,
-      "slot_in_day": 1
+      "post_id": "E1", "type": "empathy", "parent_text": "洗濯物取り込んだときに靴下が片方だけない瞬間の謎よ。", "theme": "洗濯/衣類", "theme_group": "洗濯/衣類", "tone": "neutral", "context_note": "", "stock_sequence": 1, "day_in_batch": 1, "slot_in_day": 1, "scheduled_at": "2026-08-09T07:00+09:00", "scheduled_hour": 7, "status": "scheduled"
     },
     {
-      "post_id": "P1",
-      "type": "product",
-      "selected_item_code": "bathroom:10002808",
-      "parent_text": "磁石で浴室の壁に貼れる幅広の5連フック。引っ掛けて浮かせるタイプの収納に良さそう。",
-      "child_text_base": "浴室の磁石がつく壁面に取り付ける幅約28cmの5連フック。スチール製でマグネットにシリコーン滑り止めが付いています。",
-      "theme": "収納",
-      "product_group": "掛ける",
-      "context_note": "",
-      "stock_sequence": 2,
-      "day_in_batch": 1,
-      "slot_in_day": 2,
-      "item_name": "お買物マラソン/tower 《 山崎実業 マグネットバスルームフック タワー ラージ 》 5連フック 幅広タイプ 壁付けマグネット収納 浮かせる収納 掃除用具 掃除道具 壁掛け マグネット 磁石 引っ掛け お風呂収納 すっきり おしゃれ 公式 シンプル 白 黒 YAMAZAKI",
-      "item_code": "bathroom:10002808",
-      "image_url": "https://thumbnail.image.rakuten.co.jp/@0_mall/bathroom/cabinet/0001/04521919/yj-9914_sam01b.jpg",
-      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00s670n.z7eis104.g00s670n.z7eit184/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fbathroom%2Fyj-9914%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fbathroom%2Fi%2F10002808%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f",
-      "price": 1650,
-      "rating": 4.81,
-      "review_count": 923
+      "post_id": "P1", "type": "product", "selected_item_code": "bathroom:10002808", "parent_text": "磁石で浴室の壁に貼れる幅広の5連フック。引っ掛けて浮かせるタイプの収納に良さそう。", "child_text_base": "浴室の磁石がつく壁面に取り付ける幅約28cmの5連フック。スチール製でマグネットにシリコーン滑り止めが付いています。", "theme": "収納", "product_group": "掛ける", "context_note": "", "stock_sequence": 2, "day_in_batch": 1, "slot_in_day": 2, "item_name": "お買物マラソン/tower 《 山崎実業 マグネットバスルームフック タワー ラージ 》 5連フック 幅広タイプ 壁付けマグネット収納 浮かせる収納 掃除用具 掃除道具 壁掛け マグネット 磁石 引っ掛け お風呂収納 すっきり おしゃれ 公式 シンプル 白 黒 YAMAZAKI", "item_code": "bathroom:10002808", "image_url": "https://thumbnail.image.rakuten.co.jp/@0_mall/bathroom/cabinet/0001/04521919/yj-9914_sam01b.jpg", "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00s670n.z7eis104.g00s670n.z7eit184/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fbathroom%2Fyj-9914%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fbathroom%2Fi%2F10002808%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f", "price": 1650, "rating": 4.81, "review_count": 923, "scheduled_at": "2026-08-09T12:00+09:00", "scheduled_hour": 12, "status": "scheduled"
     },
     {
-      "post_id": "E2",
-      "type": "empathy",
-      "parent_text": "買い物から帰って冷蔵庫に全部しまい終えたときの小さな達成感。",
-      "theme": "買い物",
-      "theme_group": "買い物",
-      "tone": "positive",
-      "context_note": "",
-      "stock_sequence": 3,
-      "day_in_batch": 1,
-      "slot_in_day": 3
+      "post_id": "E3", "type": "empathy", "parent_text": "休みの日の昼、だらっと座ってコーヒー飲む時間が至福すぎる。", "theme": "休憩", "theme_group": "休憩", "tone": "positive", "context_note": "", "stock_sequence": 3, "day_in_batch": 1, "slot_in_day": 3, "scheduled_at": "2026-08-09T15:00+09:00", "scheduled_hour": 15, "status": "scheduled"
     },
     {
-      "post_id": "P2",
-      "type": "product",
-      "selected_item_code": "shopmarna:10006157",
-      "parent_text": "フタ付きで角にフィットするスクエアのバケツ。つけ置きや計量に使いやすそうな見た目。",
-      "child_text_base": "ポリプロピレン製のスクエアバケツ（5L/10L）。目盛り付きでフタをフチに立てかけられ、重ね置きが可能です。",
-      "theme": "掃除",
-      "product_group": "収納/容器",
-      "context_note": "",
-      "stock_sequence": 4,
-      "day_in_batch": 1,
-      "slot_in_day": 4,
-      "item_name": "【マーナ公式】バケツ 5L 10L 蓋つき おしゃれ 四角 洗車 蓋付き ふた付き 目盛り付き 計量 つけ置き洗い 10リットル 靴洗い 洗濯 手洗い 取っ手 スタッキング 重ねる収納 角型 収納ケース 収納ボックス キッチン 長方形 掃除 便利グッズ 大容量 かわいい 白 W627",
-      "item_code": "shopmarna:10006157",
-      "image_url": "https://thumbnail.image.rakuten.co.jp/@0_mall/shopmarna/cabinet/item_top/w6/w627a.jpg",
-      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00qtg2n.z7eis2dc.g00qtg2n.z7eitd7a/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fshopmarna%2Fw627%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fshopmarna%2Fi%2F10006157%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f",
-      "price": 2490,
-      "rating": 4.76,
-      "review_count": 671
+      "post_id": "P2", "type": "product", "selected_item_code": "shopmarna:10006157", "parent_text": "フタ付きで角にフィットするスクエアのバケツ。つけ置きや計量に使いやすそうな見た目。", "child_text_base": "ポリプロピレン製のスクエアバケツ（5L/10L）。目盛り付きでフタをフチに立てかけられ、重ね置きが可能です。", "theme": "掃除", "product_group": "収納/容器", "context_note": "", "stock_sequence": 4, "day_in_batch": 1, "slot_in_day": 4, "item_name": "【マーナ公式】バケツ 5L 10L 蓋つき おしゃれ 四角 洗車 蓋付き ふた付き 目盛り付き 計量 つけ置き洗い 10リットル 靴洗い 洗濯 手洗い 取っ手 スタッキング 重ねる収納 角型 収納ケース 収納ボックス キッチン 長方形 掃除 便利グッズ 大容量 かわいい 白 W627", "item_code": "shopmarna:10006157", "image_url": "https://thumbnail.image.rakuten.co.jp/@0_mall/shopmarna/cabinet/item_top/w6/w627a.jpg", "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00qtg2n.z7eis2dc.g00qtg2n.z7eitd7a/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fshopmarna%2Fw627%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fshopmarna%2Fi%2F10006157%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f", "price": 2490, "rating": 4.76, "review_count": 671, "scheduled_at": "2026-08-09T18:00+09:00", "scheduled_hour": 18, "status": "scheduled"
     },
     {
-      "post_id": "E3",
-      "type": "empathy",
-      "parent_text": "休みの日の昼、だらっと座ってコーヒー飲む時間が至福すぎる。",
-      "theme": "休憩",
-      "theme_group": "休憩",
-      "tone": "positive",
-      "context_note": "",
-      "stock_sequence": 5,
-      "day_in_batch": 1,
-      "slot_in_day": 5
+      "post_id": "E2", "type": "empathy", "parent_text": "買い物から帰って冷蔵庫に全部しまい終えたときの小さな達成感。", "theme": "買い物", "theme_group": "買い物", "tone": "positive", "context_note": "", "stock_sequence": 5, "day_in_batch": 1, "slot_in_day": 5, "scheduled_at": "2026-08-09T21:00+09:00", "scheduled_hour": 21, "status": "scheduled"
     },
     {
-      "post_id": "E4",
-      "type": "empathy",
-      "parent_text": "料理の途中で調味料を出しすぎて作業スペースが狭くなるの、地味に困る。",
-      "theme": "食事/料理",
-      "theme_group": "食事/料理",
-      "tone": "negative",
-      "context_note": "",
-      "stock_sequence": 6,
-      "day_in_batch": 2,
-      "slot_in_day": 1
+      "post_id": "E4", "type": "empathy", "parent_text": "料理の途中で調味料を出しすぎて作業スペースが狭くなるの、地味に困る。", "theme": "食事/料理", "theme_group": "食事/料理", "tone": "negative", "context_note": "", "stock_sequence": 6, "day_in_batch": 2, "slot_in_day": 1, "scheduled_at": "2026-08-10T07:00+09:00", "scheduled_hour": 7, "status": "scheduled"
     },
     {
-      "post_id": "P3",
-      "type": "product",
-      "selected_item_code": "magokoro-eshop:10001366",
-      "parent_text": "段ボールをまとめて運べる持ち運び可能な段ボールストッカー。ゴミ出しが楽になりそう。",
-      "child_text_base": "段ボールを束ねて持ち運べる収納具で、耐荷重は約3kg。ひも通し機能があり持ち運びに配慮された設計です。",
-      "theme": "買い物",
-      "product_group": "整理/運搬",
-      "context_note": "",
-      "stock_sequence": 7,
-      "day_in_batch": 2,
-      "slot_in_day": 2,
-      "item_name": "【お得なクーポン有! 8/17 9:59まで】段ボールストッカー プラス 持ち運びできる段ボールストッカー プラス ダンボールストッカー 段ボール コジット 整理 束ねる まとめる 便利グッズ ひも通し 紐通し 収納 片付け ゴミ捨て ゴミ リサイクル【クリックポスト出荷】",
-      "item_code": "magokoro-eshop:10001366",
-      "image_url": "https://thumbnail.image.rakuten.co.jp/@0_mall/magokoro-eshop/cabinet/cleaning/dstocker-p.jpg",
-      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00te29n.z7eis47c.g00te29n.z7eit7b1/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fmagokoro-eshop%2F10121489%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fmagokoro-eshop%2Fi%2F10001366%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f",
-      "price": 1608,
-      "rating": 4.76,
-      "review_count": 623
+      "post_id": "P3", "type": "product", "selected_item_code": "magokoro-eshop:10001366", "parent_text": "段ボールをまとめて運べる持ち運び可能な段ボールストッカー。ゴミ出しが楽になりそう。", "child_text_base": "段ボールを束ねて持ち運べる収納具で、耐荷重は約3kg。ひも通し機能があり持ち運びに配慮された設計です。", "theme": "買い物", "product_group": "整理/運搬", "context_note": "", "stock_sequence": 7, "day_in_batch": 2, "slot_in_day": 2, "item_name": "【お得なクーポン有! 8/17 9:59まで】段ボールストッカー プラス 持ち運びできる段ボールストッカー プラス ダンボールストッカー 段ボール コジット 整理 束ねる まとめる 便利グッズ ひも通し 紐通し 収納 片付け ゴミ捨て ゴミ リサイクル【クリックポスト出荷】", "item_code": "magokoro-eshop:10001366", "image_url": "https://thumbnail.image.rakuten.co.jp/@0_mall/magokoro-eshop/cabinet/cleaning/dstocker-p.jpg", "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00te29n.z7eis47c.g00te29n.z7eit7b1/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fmagokoro-eshop%2F10121489%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fmagokoro-eshop%2Fi%2F10001366%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f", "price": 1608, "rating": 4.76, "review_count": 623, "scheduled_at": "2026-08-10T12:00+09:00", "scheduled_hour": 12, "status": "scheduled"
     },
     {
-      "post_id": "E5",
-      "type": "empathy",
-      "parent_text": "夜、明日の服を考えながらベッドでうだうだする時間がけっこう好き。",
-      "theme": "朝夜/休日",
-      "theme_group": "朝夜/休日",
-      "tone": "neutral",
-      "context_note": "",
-      "stock_sequence": 8,
-      "day_in_batch": 2,
-      "slot_in_day": 3
+      "post_id": "E6", "type": "empathy", "parent_text": "掃除のときにちょっとした隙間に手が届かなくてため息つく瞬間。", "theme": "掃除", "theme_group": "掃除", "tone": "negative", "context_note": "", "stock_sequence": 8, "day_in_batch": 2, "slot_in_day": 3, "scheduled_at": "2026-08-10T15:00+09:00", "scheduled_hour": 15, "status": "scheduled"
     },
     {
-      "post_id": "P4",
-      "type": "product",
-      "selected_item_code": "roomy:10016037",
-      "parent_text": "米とぎにも使えるザルとボウルのセット。食洗機対応で入れ子にできるコンパクトさが良さそう。",
-      "child_text_base": "ザルとボウルの6点セットで、電子レンジ・食洗機対応。深型と浅型の入れ子式で米とぎや湯切りに使えます。",
-      "theme": "食事/料理",
-      "product_group": "調理器具/ボウル",
-      "context_note": "",
-      "stock_sequence": 9,
-      "day_in_batch": 2,
-      "slot_in_day": 4,
-      "item_name": "楽天1位【特典付き】米とぎ ザル ボウル 日本製 ライクイット 6点セット お米 米 米研ぎ 米とぎ器 米研ぎボウル 食洗機対応 レンジ対応 耐熱 米とぎざる ザルボウル ボール レンジ 深型 浅型 水切り 湯切り LBK-10［ like-it 米とぎにも使えるザルとボウル 6点セット ］",
-      "item_code": "roomy:10016037",
-      "image_url": "https://thumbnail.image.rakuten.co.jp/@0_mall/roomy/cabinet/500cart_all/500cart_11g/p2n-5/lit5231-pw011-0_gt01.jpg",
-      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00qb0ln.z7eis6c8.g00qb0ln.z7eit2ac/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Froomy%2Flit22sep06h04%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Froomy%2Fi%2F10016037%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f",
-      "price": 4730,
-      "rating": 4.71,
-      "review_count": 1283
+      "post_id": "P4", "type": "product", "selected_item_code": "roomy:10016037", "parent_text": "米とぎにも使えるザルとボウルのセット。食洗機対応で入れ子にできるコンパクトさが良さそう。", "child_text_base": "ザルとボウルの6点セットで、電子レンジ・食洗機対応。深型と浅型の入れ子式で米とぎや湯切りに使えます。", "theme": "食事/料理", "product_group": "調理器具/ボウル", "context_note": "", "stock_sequence": 9, "day_in_batch": 2, "slot_in_day": 4, "item_name": "楽天1位【特典付き】米とぎ ザル ボウル 日本製 ライクイット 6点セット お米 米 米研ぎ 米とぎ器 米研ぎボウル 食洗機対応 レンジ対応 耐熱 米とぎざる ザルボウル ボール レンジ 深型 浅型 水切り 湯切り LBK-10［ like-it 米とぎにも使えるザルとボウル 6点セット ］", "item_code": "roomy:10016037", "image_url": "https://thumbnail.image.rakuten.co.jp/@0_mall/roomy/cabinet/500cart_all/500cart_11g/p2n-5/lit5231-pw011-0_gt01.jpg", "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00qb0ln.z7eis6c8.g00qb0ln.z7eit2ac/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Froomy%2Flit22sep06h04%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Froomy%2Fi%2F10016037%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f", "price": 4730, "rating": 4.71, "review_count": 1283, "scheduled_at": "2026-08-10T18:00+09:00", "scheduled_hour": 18, "status": "scheduled"
     },
     {
-      "post_id": "E6",
-      "type": "empathy",
-      "parent_text": "掃除のときにちょっとした隙間に手が届かなくてため息つく瞬間。",
-      "theme": "掃除",
-      "theme_group": "掃除",
-      "tone": "negative",
-      "context_note": "",
-      "stock_sequence": 10,
-      "day_in_batch": 2,
-      "slot_in_day": 5
+      "post_id": "E5", "type": "empathy", "parent_text": "夜、明日の服を考えながらベッドでうだうだする時間がけっこう好き。", "theme": "朝夜/休日", "theme_group": "朝夜/休日", "tone": "neutral", "context_note": "", "stock_sequence": 10, "day_in_batch": 2, "slot_in_day": 5, "scheduled_at": "2026-08-10T21:00+09:00", "scheduled_hour": 21, "status": "scheduled"
     }
-  ]
+  ],
+  "expired": []
 }
