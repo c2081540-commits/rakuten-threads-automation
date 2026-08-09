@@ -1,0 +1,50 @@
+name: Rakuten Threads Publish
+
+on:
+  workflow_dispatch:
+    inputs:
+      source:
+        description: 'Trigger source'
+        required: false
+        default: 'gas'
+        type: string
+
+concurrency:
+  group: rakuten-threads-publish
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Publish exactly one queued post
+        env:
+          THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
+          THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
+        run: python publish.py
+
+      - name: Save queue and history after successful publish
+        run: |
+          if git diff --quiet -- queue.json history.json; then
+            echo "No queue/history changes to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add queue.json history.json
+          git commit -m "Record Rakuten Threads publish"
+          git push
