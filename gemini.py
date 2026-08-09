@@ -127,12 +127,20 @@ def generate_mixed_stock(items, recent_history=None, existing_queue=None, events
     prompt = f"""
 あなたはThreadsアカウント「これ、家に欲しい」の10投稿分の編集計画と本文を一括作成します。
 投稿比率は厳守: empathy（日常・共感）6件、product（楽天商品紹介）4件。合計10件。
-10件全体を別々の単発文ではなく、同じ一人が数日間投稿する自然な流れとして設計してください。
-ただし無理に全投稿を連続ストーリーにしないこと。過去への言及は【実投稿履歴】に存在する事実だけ使用可能です。
-未投稿キューは今後投稿予定のため、内容・テーマ・言い回しの重複を避けてください。
-商品投稿は候補から4商品を重複なしで選択。商品を実際に購入・使用したという架空経験は禁止。
-日常投稿には商品、リンク、PRを入れない。生活・掃除・収納・キッチン・洗濯・買い物など、このアカウントの生活領域から外れない。
-同じ語尾、同じ悩み、同じ導入を連発しない。
+10件全体を同じ一人が数日間投稿する自然なアカウントとして設計してください。ただし全投稿を商品購入へ誘導する筋書きにはしません。
+過去への言及は【実投稿履歴】に存在する事実だけ使用可能です。未投稿キューは内容・テーマ・言い回しの重複回避に使います。
+商品を実際に購入・使用したという架空経験は禁止です。
+
+【10件全体の分散ルール・重要】
+- empathy 6件は、最低5種類の異なるテーマ領域に分散すること。
+- empathy 6件のうち掃除・収納・水回りを直接テーマにできるのは合計2件まで。
+- 残りは季節/天気、食事/料理、買い物、洗濯/衣類、朝夜/休日、休憩、家事以外の生活あるある、軽い発見や満足などから分散すること。
+- empathyをすべて「不便・面倒・イライラ」にしない。6件中最低2件はニュートラルまたは軽くポジティブな独り言にすること。
+- product 4件は商品コードが異なるだけでは不十分。用途・利用場面も可能な限り分散すること。
+- 4商品中、収納・フック・ラック・ハンガー等の「物を掛ける/収納する商品」は最大2件まで。候補に他カテゴリが存在するなら最大1件を優先すること。
+- 同じブランドや同系統商品を4件中3件以上選ばないこと。候補の制約で不可能な場合のみ例外。
+- 日常投稿と直後の商品投稿が毎回「悩み→その解決商品」になる構成は禁止。偶然関連する程度は可。
+- 同じ語尾、同じ悩み、同じ導入を連発しない。
 
 【商品投稿ルール】
 {product_prompt}
@@ -155,8 +163,8 @@ def generate_mixed_stock(items, recent_history=None, existing_queue=None, events
 
 JSONのみ返してください。
 {{"posts":[
-  {{"type":"empathy","parent_text":"本文","theme":"短いテーマ","context_note":"履歴との関係。なければ空文字"}},
-  {{"type":"product","selected_item_code":"itemCode","parent_text":"親投稿","child_text_base":"返信補足","theme":"短いテーマ","context_note":"履歴との関係。なければ空文字"}}
+  {{"type":"empathy","parent_text":"本文","theme":"具体的で短いテーマ","theme_group":"季節|食事|買い物|洗濯|朝夜|休憩|掃除|収納|水回り|その他生活","tone":"neutral|positive|negative","context_note":"履歴との関係。なければ空文字"}},
+  {{"type":"product","selected_item_code":"itemCode","parent_text":"親投稿","child_text_base":"返信補足","theme":"短いテーマ","product_group":"商品の用途カテゴリ","context_note":"履歴との関係。なければ空文字"}}
 ]}}
 必ず10件、empathy 6件、product 4件。
 """
@@ -168,6 +176,17 @@ JSONのみ返してください。
     products = [p for p in posts if p.get("type") == "product"]
     if len(empathy) != 6 or len(products) != 4:
         raise RuntimeError(f"投稿比率が不正です: empathy={len(empathy)}, product={len(products)}")
+
+    groups = [str(p.get("theme_group", "")).strip() for p in empathy]
+    if len(set(g for g in groups if g)) < 5:
+        raise RuntimeError(f"共感投稿のテーマ分散不足です: {groups}")
+    home_problem_groups = {"掃除", "収納", "水回り"}
+    if sum(1 for g in groups if g in home_problem_groups) > 2:
+        raise RuntimeError(f"掃除・収納・水回りに偏りすぎています: {groups}")
+    tones = [str(p.get("tone", "")).strip() for p in empathy]
+    if sum(1 for t in tones if t in {"neutral", "positive"}) < 2:
+        raise RuntimeError(f"共感投稿がネガティブに偏りすぎています: {tones}")
+
     valid_codes = {x["itemCode"] for x in items}
     product_codes = []
     for post in posts:
