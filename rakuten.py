@@ -1,4 +1,5 @@
 import os
+import time
 import requests
 
 API_URL = "https://openapi.rakuten.co.jp/ichibams/api/IchibaItem/Search/20260701"
@@ -61,23 +62,44 @@ def search_items(keyword, page=1, hits=30, sort="-reviewCount", timeout=20):
         "sort": sort,
         "format": "json",
     }
-    response = requests.get(API_URL, params=params, timeout=timeout)
-    if response.status_code != 200:
-        raise RuntimeError(
-            f"楽天API通信エラー HTTP {response.status_code}: {response.text[:1000]}"
-        )
-    data = response.json()
-    if "error" in data:
-        raise RuntimeError(f"楽天APIレスポンスエラー: {data}")
-    return [normalize_item(item) for item in data.get("Items", [])]
+
+    # 楽天APIは短時間の連続アクセスで429を返すことがある。
+    # 無限リトライはせず、429だけ最大1回・2秒待って再試行する。
+    for attempt in range(2):
+        response = requests.get(API_URL, params=params, timeout=timeout)
+        if response.status_code == 429 and attempt == 0:
+            retry_after = response.headers.get("Retry-After")
+            try:
+                wait_seconds = max(1.0, min(float(retry_after), 5.0)) if retry_after else 2.0
+            except (TypeError, ValueError):
+                wait_seconds = 2.0
+            print(f"楽天API 429: {wait_seconds:g}秒待って1回だけ再試行します。")
+            time.sleep(wait_seconds)
+            continue
+        if response.status_code != 200:
+            raise RuntimeError(
+                f"楽天API通信エラー HTTP {response.status_code}: {response.text[:1000]}"
+            )
+        data = response.json()
+        if "error" in data:
+            raise RuntimeError(f"楽天APIレスポンスエラー: {data}")
+        return [normalize_item(item) for item in data.get("Items", [])]
+
+    raise RuntimeError("楽天API 429: 1回再試行してもレート制限が解除されませんでした。")
 
 
 def fetch_candidate_pool(keywords=None, target_raw=50, max_pages_per_keyword=3):
     keywords = keywords or DEFAULT_KEYWORDS
     collected = {}
+    request_count = 0
     for keyword in keywords:
         for page in range(1, max_pages_per_keyword + 1):
-            for item in search_items(keyword=keyword, page=page, hits=30):
+            # APIへの連続リクエストを避ける。初回リクエスト前には待たない。
+            if request_count > 0:
+                time.sleep(1.1)
+            items = search_items(keyword=keyword, page=page, hits=30)
+            request_count += 1
+            for item in items:
                 code = item.get("itemCode")
                 if code:
                     collected[code] = item
