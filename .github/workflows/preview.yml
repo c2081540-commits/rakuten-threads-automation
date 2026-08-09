@@ -1,7 +1,16 @@
-name: Rakuten Candidate Preview
+name: Rakuten Post Preview
 
 on:
   workflow_dispatch:
+    inputs:
+      mode:
+        description: 'Preview mode'
+        required: true
+        default: 'full-preview'
+        type: choice
+        options:
+          - full-preview
+          - preview
 
 permissions:
   contents: read
@@ -20,9 +29,10 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Preview Rakuten candidates
+      - name: Build Rakuten post preview
         env:
           RAKUTEN_APP_ID: ${{ secrets.RAKUTEN_APP_ID }}
           RAKUTEN_ACCESS_KEY: ${{ secrets.RAKUTEN_ACCESS_KEY }}
           RAKUTEN_AFFILIATE_ID: ${{ secrets.RAKUTEN_AFFILIATE_ID }}
-        run: python main.py --mode preview
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: python main.py --mode "${{ inputs.mode }}"
