@@ -4,6 +4,7 @@ import json
 from gemini import generate_product_copy, generate_sample_batch, select_product
 from history import recent_texts
 from rakuten import fetch_candidate_pool
+from rakuten_events import get_active_rakuten_events
 from selector import build_shortlist, primary_filter
 
 
@@ -29,42 +30,50 @@ def preview_candidates():
     print(json.dumps(safe_output, ensure_ascii=False, indent=2))
 
 
-def assemble_preview(selected, reason, parent, child_base, image_index=0):
+def assemble_preview(selected, reason, parent, child_base, image_index=0, events=None):
     image_url = selected["imageUrls"][image_index]
     child_final = f"{child_base}\n\n★{selected['reviewAverage']}（レビュー {selected['reviewCount']:,}件）\n価格: {selected['itemPrice']:,}円\n\n【PR】詳細はこちら\n{selected['affiliateUrl']}"
-    return {"selected_item": selected["itemName"], "selected_item_code": selected["itemCode"], "selection_reason": reason, "image_url": image_url, "parent_post": parent, "reply_post": child_final, "topic": "未設定（Threads実投稿接続時に追加）", "publish": False}
+    return {"selected_item": selected["itemName"], "selected_item_code": selected["itemCode"], "selection_reason": reason, "image_url": image_url, "parent_post": parent, "reply_post": child_final, "active_rakuten_events": [e["name"] for e in (events or [])], "topic": "未設定（Threads実投稿接続時に追加）", "publish": False}
+
+
+def preview_events():
+    events = get_active_rakuten_events()
+    print(json.dumps({"active_rakuten_events": events, "note": "楽天市場公式で現在開催中と確認できたイベントのみ。確認不能なイベントは出力しません。"}, ensure_ascii=False, indent=2))
 
 
 def preview_full_post():
     _, _, shortlist = get_shortlist()
+    events = get_active_rakuten_events()
     selected, reason, image_index = select_product(shortlist)
-    parent, child_base = generate_product_copy(selected, recent_posts=recent_texts("product", limit=5))
-    print(json.dumps(assemble_preview(selected, reason, parent, child_base, image_index), ensure_ascii=False, indent=2))
+    parent, child_base = generate_product_copy(selected, recent_posts=recent_texts("product", limit=5), events=events)
+    print(json.dumps(assemble_preview(selected, reason, parent, child_base, image_index, events), ensure_ascii=False, indent=2))
 
 
 def preview_samples(count=5):
     """複数サンプルを1回のOpenAI API呼び出しで生成。投稿・履歴更新はしない。"""
     _, _, shortlist = get_shortlist()
+    events = get_active_rakuten_events()
     count = max(1, min(count, len(shortlist)))
-    batch = generate_sample_batch(shortlist, count=count, recent_posts=recent_texts("product", limit=5))
+    batch = generate_sample_batch(shortlist, count=count, recent_posts=recent_texts("product", limit=5), events=events)
     by_code = {x["itemCode"]: x for x in shortlist}
     outputs = []
     for sample_no, generated in enumerate(batch, start=1):
         selected = by_code[generated["selected_item_code"]]
-        preview = assemble_preview(selected, generated.get("reason", ""), str(generated["parent_text"]).strip(), str(generated["child_text_base"]).strip())
+        preview = assemble_preview(selected, generated.get("reason", ""), str(generated["parent_text"]).strip(), str(generated["child_text_base"]).strip(), events=events)
         preview["sample"] = sample_no
         outputs.append(preview)
-    print(json.dumps({"sample_count": len(outputs), "openai_requests": 1, "note": "品質確認用。Threads投稿・history更新は行いません。", "samples": outputs}, ensure_ascii=False, indent=2))
+    print(json.dumps({"sample_count": len(outputs), "openai_requests": 1, "active_rakuten_events": [e["name"] for e in events], "note": "品質確認用。Threads投稿・history更新は行いません。", "samples": outputs}, ensure_ascii=False, indent=2))
 
 
 def main():
     parser = argparse.ArgumentParser(description="楽天Threads自動投稿システム")
-    parser.add_argument("--mode", choices=["preview", "full-preview", "samples"], default="preview")
+    parser.add_argument("--mode", choices=["preview", "full-preview", "samples", "events"], default="preview")
     parser.add_argument("--count", type=int, default=5)
     args = parser.parse_args()
     if args.mode == "preview": preview_candidates()
     elif args.mode == "full-preview": preview_full_post()
     elif args.mode == "samples": preview_samples(count=max(1, min(args.count, 10)))
+    elif args.mode == "events": preview_events()
 
 
 if __name__ == "__main__":
