@@ -40,3 +40,15 @@ def recent_texts(kind, limit=5):
     key = "product_history" if kind == "product" else "empathy_history"
     entries = load_history()[key][-limit:]
     return [entry.get("parent_text", "") for entry in entries if entry.get("parent_text")]
+
+
+def recent_entries(limit=20):
+    data = load_history()
+    combined = []
+    for kind, key in (("product", "product_history"), ("empathy", "empathy_history")):
+        for entry in data[key]:
+            row = dict(entry)
+            row["type"] = kind
+            combined.append(row)
+    combined.sort(key=lambda x: x.get("posted_at", ""))
+    return combined[-limit:]
