@@ -6,11 +6,21 @@ on:
       mode:
         description: 'Preview mode'
         required: true
-        default: 'full-preview'
+        default: 'samples'
         type: choice
         options:
+          - samples
           - full-preview
           - preview
+      count:
+        description: 'Sample count (samples mode only)'
+        required: true
+        default: '5'
+        type: choice
+        options:
+          - '3'
+          - '5'
+          - '10'
 
 permissions:
   contents: read
@@ -35,4 +45,4 @@ jobs:
           RAKUTEN_ACCESS_KEY: ${{ secrets.RAKUTEN_ACCESS_KEY }}
           RAKUTEN_AFFILIATE_ID: ${{ secrets.RAKUTEN_AFFILIATE_ID }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-        run: python main.py --mode "${{ inputs.mode }}"
+        run: python main.py --mode "${{ inputs.mode }}" --count "${{ inputs.count }}"
