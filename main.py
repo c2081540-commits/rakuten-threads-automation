@@ -69,15 +69,16 @@ def preview_samples(count=5):
 
 
 def arrange_stock_posts(posts):
-    """2日分を E-E-P-E-P / E-E-P-E-P に固定配置する。"""
-    empathy = [p for p in posts if p.get("type") == "empathy"]
-    products = [p for p in posts if p.get("type") == "product"]
-    if len(empathy) != 6 or len(products) != 4:
-        raise RuntimeError(f"投稿順を構成できません: empathy={len(empathy)}, product={len(products)}")
-    return [
-        empathy[0], empathy[1], products[0], empathy[2], products[1],
-        empathy[3], empathy[4], products[2], empathy[5], products[3],
-    ]
+    """OpenAIが設計した掲載順を維持し、各日5件が共感3・商品2かだけ検証する。"""
+    if len(posts) != 10:
+        raise RuntimeError(f"投稿順を構成できません: total={len(posts)}")
+    for day_no, start in enumerate((0, 5), start=1):
+        day = posts[start:start + 5]
+        empathy_count = sum(1 for p in day if p.get("type") == "empathy")
+        product_count = sum(1 for p in day if p.get("type") == "product")
+        if empathy_count != 3 or product_count != 2:
+            raise RuntimeError(f"{day_no}日目の投稿比率が不正です: empathy={empathy_count}, product={product_count}")
+    return posts
 
 
 def build_stock(save=False, force=False):
@@ -107,7 +108,7 @@ def build_stock(save=False, force=False):
         status = {"status": "saved", "added": len(completed), "stock_count": total}
     else:
         status = {"status": "preview", "added": 0, "stock_count": current}
-    print(json.dumps({**status, "openai_requests": 1, "ratio": {"empathy": 6, "product": 4}, "posting_pattern": ["empathy", "empathy", "product", "empathy", "product"], "active_rakuten_events": [e["name"] for e in events], "posts": completed}, ensure_ascii=False, indent=2))
+    print(json.dumps({**status, "openai_requests": 1, "ratio": {"empathy": 6, "product": 4}, "posting_pattern": "editorial_order: each day empathy=3/product=2", "active_rakuten_events": [e["name"] for e in events], "posts": completed}, ensure_ascii=False, indent=2))
 
 
 def main():
