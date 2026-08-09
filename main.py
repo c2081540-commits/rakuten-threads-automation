@@ -1,5 +1,6 @@
 import argparse
 import json
+from datetime import datetime, timedelta, timezone
 
 from gemini import generate_product_copy, generate_sample_batch, generate_mixed_stock, select_product
 from history import recent_entries, recent_texts
@@ -10,6 +11,8 @@ from selector import build_shortlist, primary_filter
 
 STOCK_TARGET = 10
 REFILL_THRESHOLD = 3
+JST = timezone(timedelta(hours=9))
+DAILY_HOURS = [7, 12, 15, 18, 21]
 
 
 def get_shortlist(limit=10):
@@ -69,7 +72,6 @@ def preview_samples(count=5):
 
 
 def arrange_stock_posts(posts):
-    """OpenAIが設計した掲載順を維持し、各日5件が共感3・商品2かだけ検証する。"""
     if len(posts) != 10:
         raise RuntimeError(f"投稿順を構成できません: total={len(posts)}")
     for day_no, start in enumerate((0, 5), start=1):
@@ -81,24 +83,52 @@ def arrange_stock_posts(posts):
     return posts
 
 
+def _batch_start_date(queue_posts):
+    scheduled = []
+    for post in queue_posts:
+        value = str(post.get("scheduled_at", "")).strip()
+        if value:
+            try:
+                scheduled.append(datetime.fromisoformat(value).astimezone(JST))
+            except ValueError:
+                pass
+    if scheduled:
+        return max(scheduled).date() + timedelta(days=1)
+    now = datetime.now(JST)
+    return now.date() if now.hour < DAILY_HOURS[0] else now.date() + timedelta(days=1)
+
+
+def _schedule_for_two_days(start_date):
+    slots = []
+    for day_offset in range(2):
+        day = start_date + timedelta(days=day_offset)
+        for hour in DAILY_HOURS:
+            slots.append(datetime(day.year, day.month, day.day, hour, 0, tzinfo=JST))
+    return slots
+
+
 def build_stock(save=False, force=False):
     current = stock_count()
     if not force and current > REFILL_THRESHOLD:
-        print(json.dumps({"status": "skip", "stock_count": current, "threshold": REFILL_THRESHOLD, "reason": "ストックが十分あるためOpenAIを呼びません。"}, ensure_ascii=False, indent=2))
+        print(json.dumps({"status": "skip", "stock_count": current, "threshold": REFILL_THRESHOLD, "reason": "未来の投稿予定が十分あるためOpenAIを呼びません。"}, ensure_ascii=False, indent=2))
         return
     _, _, shortlist = get_shortlist(limit=10)
     events = get_active_rakuten_events()
     queue_data = load_queue()["posts"]
     history = recent_entries(limit=20)
-    posts = generate_mixed_stock(shortlist, recent_history=history, existing_queue=queue_data, events=events)
-    posts = arrange_stock_posts(posts)
+    posts = arrange_stock_posts(generate_mixed_stock(shortlist, recent_history=history, existing_queue=queue_data, events=events))
     by_code = {x["itemCode"]: x for x in shortlist}
+    start_date = _batch_start_date(queue_data)
+    slots = _schedule_for_two_days(start_date)
     completed = []
-    for sequence, post in enumerate(posts, start=1):
+    for sequence, (post, scheduled) in enumerate(zip(posts, slots), start=1):
         row = dict(post)
         row["stock_sequence"] = sequence
         row["day_in_batch"] = 1 if sequence <= 5 else 2
         row["slot_in_day"] = ((sequence - 1) % 5) + 1
+        row["scheduled_at"] = scheduled.isoformat(timespec="minutes")
+        row["scheduled_hour"] = scheduled.hour
+        row["status"] = "scheduled"
         if row["type"] == "product":
             item = by_code[row["selected_item_code"]]
             row.update({"item_name": item["itemName"], "item_code": item["itemCode"], "image_url": item["imageUrls"][0], "affiliate_url": item["affiliateUrl"], "price": item["itemPrice"], "rating": item["reviewAverage"], "review_count": item["reviewCount"]})
@@ -108,7 +138,7 @@ def build_stock(save=False, force=False):
         status = {"status": "saved", "added": len(completed), "stock_count": total}
     else:
         status = {"status": "preview", "added": 0, "stock_count": current}
-    print(json.dumps({**status, "openai_requests": 1, "ratio": {"empathy": 6, "product": 4}, "posting_pattern": "editorial_order: each day empathy=3/product=2", "active_rakuten_events": [e["name"] for e in events], "posts": completed}, ensure_ascii=False, indent=2))
+    print(json.dumps({**status, "openai_requests": 1, "ratio": {"empathy": 6, "product": 4}, "posting_pattern": "fixed JST slots: 07:00/12:00/15:00/18:00/21:00; each day empathy=3/product=2", "active_rakuten_events": [e["name"] for e in events], "posts": completed}, ensure_ascii=False, indent=2))
 
 
 def main():
