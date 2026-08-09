@@ -2,15 +2,17 @@ import json
 import os
 from pathlib import Path
 
-from google import genai
+from openai import OpenAI
 
 ROOT = Path(__file__).resolve().parent
+MODEL = os.environ.get("OPENAI_MODEL", "gpt-5-mini").strip()
+MAX_OUTPUT_TOKENS = 2200
 
 
 def _api_key():
-    key = os.environ.get("GEMINI_API_KEY", "").strip()
+    key = os.environ.get("OPENAI_API_KEY", "").strip()
     if not key:
-        raise RuntimeError("GEMINI_API_KEY が設定されていません。")
+        raise RuntimeError("OPENAI_API_KEY が設定されていません。")
     return key
 
 
@@ -19,20 +21,19 @@ def _load_prompt(name):
 
 
 def _json_response(prompt):
-    client = genai.Client(api_key=_api_key())
-    try:
-        response = client.models.generate_content(
-            model="gemini-2.5-flash",
-            contents=prompt,
-            config={"response_mime_type": "application/json"},
-        )
-        text = response.text
-    finally:
-        client.close()
+    # max_retries=0: SDK側の自動リトライを禁止。1実行=1課金リクエストを明確化する。
+    client = OpenAI(api_key=_api_key(), max_retries=0, timeout=45.0)
+    response = client.responses.create(
+        model=MODEL,
+        input=prompt,
+        max_output_tokens=MAX_OUTPUT_TOKENS,
+        text={"format": {"type": "json_object"}},
+    )
+    text = response.output_text
     try:
         return json.loads(text)
     except Exception as exc:
-        raise RuntimeError(f"Gemini JSON解析失敗: {text}") from exc
+        raise RuntimeError(f"OpenAI JSON解析失敗: {text}") from exc
 
 
 def _candidate_data(items):
@@ -61,7 +62,7 @@ JSONのみ: {{"selected_item_code":"itemCode","reason":"短い選定理由","pre
     selected_code = result.get("selected_item_code")
     selected = next((x for x in items if x["itemCode"] == selected_code), None)
     if selected is None:
-        raise RuntimeError(f"Geminiが候補外の商品コードを返しました: {selected_code}")
+        raise RuntimeError(f"OpenAIが候補外の商品コードを返しました: {selected_code}")
     return selected, result.get("reason", ""), 0
 
 
@@ -73,12 +74,12 @@ def generate_product_copy(item, recent_posts=None):
     parent = str(result.get("parent_text", "")).strip()
     child = str(result.get("child_text_base", "")).strip()
     if not parent or not child:
-        raise RuntimeError(f"Gemini文章生成結果が不足しています: {result}")
+        raise RuntimeError(f"OpenAI文章生成結果が不足しています: {result}")
     return parent, child
 
 
 def generate_sample_batch(items, count=5, recent_posts=None):
-    """品質確認用。1回のGemini呼び出しで複数商品の選定と文章生成を行う。"""
+    """品質確認用。1回のOpenAI API呼び出しで複数商品の選定と文章生成を行う。"""
     count = max(1, min(count, len(items)))
     base = _load_prompt("product.txt")
     prompt = f"""
@@ -103,14 +104,14 @@ def generate_sample_batch(items, count=5, recent_posts=None):
     result = _json_response(prompt)
     samples = result.get("samples", [])
     if len(samples) != count:
-        raise RuntimeError(f"Geminiバッチ生成件数が不正です: expected={count}, actual={len(samples)}")
+        raise RuntimeError(f"OpenAIバッチ生成件数が不正です: expected={count}, actual={len(samples)}")
     valid_codes = {x["itemCode"] for x in items}
     seen = set()
     for sample in samples:
         code = sample.get("selected_item_code")
         if code not in valid_codes or code in seen:
-            raise RuntimeError(f"Geminiバッチ選定の商品コードが不正または重複です: {code}")
+            raise RuntimeError(f"OpenAIバッチ選定の商品コードが不正または重複です: {code}")
         seen.add(code)
         if not str(sample.get("parent_text", "")).strip() or not str(sample.get("child_text_base", "")).strip():
-            raise RuntimeError(f"Geminiバッチ文章生成結果が不足しています: {sample}")
+            raise RuntimeError(f"OpenAIバッチ文章生成結果が不足しています: {sample}")
     return samples
