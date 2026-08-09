@@ -118,6 +118,15 @@ def generate_sample_batch(items, count=5, recent_posts=None, events=None):
     return samples
 
 
+def _normalize_mixed_stock(posts):
+    """OpenAIが余分に返した場合は6 empathy + 4 productへ切り詰める。不足は後段でエラーにする。"""
+    empathy = [p for p in posts if p.get("type") == "empathy"]
+    products = [p for p in posts if p.get("type") == "product"]
+    if len(empathy) < 6 or len(products) < 4:
+        raise RuntimeError(f"ストック生成不足です: total={len(posts)}, empathy={len(empathy)}, product={len(products)}")
+    return empathy[:6] + products[:4]
+
+
 def generate_mixed_stock(items, recent_history=None, existing_queue=None, events=None):
     """10投稿を1回のAPI呼び出しで設計。共感6・商品4（= 1日5投稿なら共感3・商品2を2日分）。"""
     product_prompt = _load_prompt("product.txt")
@@ -169,13 +178,12 @@ JSONのみ返してください。
 必ず10件、empathy 6件、product 4件。
 """
     result = _json_response(prompt)
-    posts = result.get("posts", [])
-    if len(posts) != 10:
-        raise RuntimeError(f"ストック生成件数が不正です: {len(posts)}")
+    raw_posts = result.get("posts", [])
+    posts = _normalize_mixed_stock(raw_posts)
     empathy = [p for p in posts if p.get("type") == "empathy"]
     products = [p for p in posts if p.get("type") == "product"]
-    if len(empathy) != 6 or len(products) != 4:
-        raise RuntimeError(f"投稿比率が不正です: empathy={len(empathy)}, product={len(products)}")
+    if len(posts) != 10 or len(empathy) != 6 or len(products) != 4:
+        raise RuntimeError(f"投稿比率が不正です: total={len(posts)}, empathy={len(empathy)}, product={len(products)}")
 
     groups = [str(p.get("theme_group", "")).strip() for p in empathy]
     if len(set(g for g in groups if g)) < 5:
