@@ -6,7 +6,8 @@ from openai import OpenAI
 
 ROOT = Path(__file__).resolve().parent
 MODEL = os.environ.get("OPENAI_MODEL", "gpt-5-mini").strip()
-MAX_OUTPUT_TOKENS = 2200
+# GPT-5系は推論トークンも出力上限を消費するため、2200では本文が空になる場合がある。
+MAX_OUTPUT_TOKENS = 5000
 
 
 def _api_key():
@@ -21,15 +22,23 @@ def _load_prompt(name):
 
 
 def _json_response(prompt):
-    # max_retries=0: SDK側の自動リトライを禁止。1実行=1課金リクエストを明確化する。
+    # 自動リトライは禁止。APIエラー時に課金リクエストが連鎖しないよう1回で停止する。
     client = OpenAI(api_key=_api_key(), max_retries=0, timeout=45.0)
     response = client.responses.create(
         model=MODEL,
         input=prompt,
         max_output_tokens=MAX_OUTPUT_TOKENS,
+        reasoning={"effort": "low"},
         text={"format": {"type": "json_object"}},
     )
-    text = response.output_text
+    text = (response.output_text or "").strip()
+    if not text:
+        status = getattr(response, "status", None)
+        incomplete = getattr(response, "incomplete_details", None)
+        usage = getattr(response, "usage", None)
+        raise RuntimeError(
+            f"OpenAI応答本文が空です: status={status}, incomplete_details={incomplete}, usage={usage}"
+        )
     try:
         return json.loads(text)
     except Exception as exc:
