@@ -3,7 +3,7 @@ import json
 
 from gemini import generate_product_copy, generate_sample_batch, generate_mixed_stock, select_product
 from history import recent_entries, recent_texts
-from queue import append_posts, load_queue, stock_count
+from post_queue import append_posts, load_queue, stock_count
 from rakuten import fetch_candidate_pool
 from rakuten_events import get_active_rakuten_events
 from selector import build_shortlist, primary_filter
