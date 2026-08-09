@@ -1,0 +1,52 @@
+name: Rakuten Threads Manual Recovery Publish
+
+on:
+  workflow_dispatch:
+    inputs:
+      post_id:
+        description: 'queue.json の未投稿 post_id（例: P1）'
+        required: true
+        type: string
+      confirm:
+        description: '本当に投稿する場合は PUBLISH と入力'
+        required: true
+        type: string
+
+concurrency:
+  group: rakuten-threads-publish
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    if: ${{ inputs.confirm == 'PUBLISH' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Publish selected queued post
+        env:
+          THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
+          THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
+        run: python manual_publish.py --post-id "${{ inputs.post_id }}"
+
+      - name: Save queue and history
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add queue.json history.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Record manual Rakuten Threads recovery publish"
+            git push
+          fi
