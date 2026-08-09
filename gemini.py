@@ -7,11 +7,11 @@ from google import genai
 ROOT = Path(__file__).resolve().parent
 
 
-def _client():
+def _api_key():
     key = os.environ.get("GEMINI_API_KEY", "").strip()
     if not key:
         raise RuntimeError("GEMINI_API_KEY が設定されていません。")
-    return genai.Client(api_key=key)
+    return key
 
 
 def _load_prompt(name):
@@ -19,15 +19,23 @@ def _load_prompt(name):
 
 
 def _json_response(prompt):
-    response = _client().models.generate_content(
-        model="gemini-2.5-flash",
-        contents=prompt,
-        config={"response_mime_type": "application/json"},
-    )
+    # Clientを一時オブジェクトとして生成すると、models呼び出し中に
+    # HTTPクライアントが破棄される場合があるため、応答完了まで明示保持する。
+    client = genai.Client(api_key=_api_key())
     try:
-        return json.loads(response.text)
+        response = client.models.generate_content(
+            model="gemini-2.5-flash",
+            contents=prompt,
+            config={"response_mime_type": "application/json"},
+        )
+        text = response.text
+    finally:
+        client.close()
+
+    try:
+        return json.loads(text)
     except Exception as exc:
-        raise RuntimeError(f"Gemini JSON解析失敗: {response.text}") from exc
+        raise RuntimeError(f"Gemini JSON解析失敗: {text}") from exc
 
 
 def select_product(items):
@@ -49,7 +57,7 @@ def select_product(items):
 Threadsアカウント「これ、家に欲しい」で1件だけ紹介する商品を選んでください。
 
 重視する順序:
-1. 商品画像を見ただけで用途や便利さが伝わりやすい
+1. 商品名・説明から、用途や便利さが短時間で理解しやすい
 2. 日常の小さな不満・面倒を分かりやすく解決する
 3. Threadsで短いリアクションを作りやすい
 4. 衝動買いを検討しやすい価格
@@ -69,9 +77,8 @@ JSONのみ返してください:
   "preferred_image_index": 0
 }}
 
-preferred_image_index は候補の imageUrls の0始まりの番号です。
-文字や広告要素が少なく、商品・用途が一目で伝わる画像を優先してください。
-画像内容を十分判断できない場合は0にしてください。
+現段階では画像URLそのものの内容を見たとは扱わないでください。
+preferred_image_index は暫定的に0を返してください。画像内容の評価は別工程で実装します。
 """
     result = _json_response(prompt)
     selected_code = result.get("selected_item_code")
