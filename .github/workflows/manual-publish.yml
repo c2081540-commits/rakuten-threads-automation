@@ -3,10 +3,21 @@ name: Rakuten Threads Manual Recovery Publish
 on:
   workflow_dispatch:
     inputs:
-      post_id:
-        description: 'queue.json の未投稿 post_id（例: P1）'
+      target_date:
+        description: '投稿予定日（YYYY-MM-DD）'
         required: true
         type: string
+      target_hour:
+        description: '投稿予定時刻'
+        required: true
+        default: '12'
+        type: choice
+        options:
+          - '7'
+          - '12'
+          - '15'
+          - '18'
+          - '21'
       confirm:
         description: '本当に投稿する場合は PUBLISH と入力'
         required: true
@@ -39,7 +50,7 @@ jobs:
         env:
           THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
           THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
-        run: python manual_publish.py --post-id "${{ inputs.post_id }}"
+        run: python manual_publish.py --date "${{ inputs.target_date }}" --hour "${{ inputs.target_hour }}"
 
       - name: Save queue and history
         run: |
