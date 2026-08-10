@@ -1,0 +1,54 @@
+name: Rakuten Manual Publish
+
+on:
+  workflow_dispatch:
+    inputs:
+      post_id:
+        description: 'Exact queue post_id to publish (example: TODAY-20260810-18)'
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: rakuten-threads-publisher
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout latest main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Publish exact queued post
+        env:
+          THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
+          THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
+        run: python publish.py --post-id "${{ inputs.post_id }}"
+
+      - name: Commit queue and history state
+        if: always()
+        run: |
+          if git diff --quiet -- queue.json history.json; then
+            echo "No state changes"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add queue.json history.json
+          git commit -m "Persist manual Threads publish state"
+          git pull --rebase origin main
+          git push
