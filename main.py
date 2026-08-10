@@ -37,9 +37,10 @@ def preview_candidates():
     print(json.dumps(safe_output, ensure_ascii=False, indent=2))
 
 
-def assemble_preview(selected, reason, parent, child_base, image_index=0, events=None):
+def assemble_preview(selected, reason, parent, child_base="", image_index=0, events=None):
     image_url = selected["imageUrls"][image_index]
-    child_final = f"{child_base}\n\n★{selected['reviewAverage']}（レビュー {selected['reviewCount']:,}件）\n価格: {selected['itemPrice']:,}円\n\n【PR】詳細はこちら\n{selected['affiliateUrl']}"
+    # 実投稿と同じ形式。返信はリンク + pr のみ。
+    child_final = f"{selected['affiliateUrl']} pr"
     return {"selected_item": selected["itemName"], "selected_item_code": selected["itemCode"], "selection_reason": reason, "image_url": image_url, "parent_post": parent, "reply_post": child_final, "active_rakuten_events": [e["name"] for e in (events or [])], "topic": "未設定（Threads実投稿接続時に追加）", "publish": False}
 
 
@@ -65,7 +66,7 @@ def preview_samples(count=5):
     outputs = []
     for sample_no, generated in enumerate(batch, start=1):
         selected = by_code[generated["selected_item_code"]]
-        preview = assemble_preview(selected, generated.get("reason", ""), str(generated["parent_text"]).strip(), str(generated["child_text_base"]).strip(), events=events)
+        preview = assemble_preview(selected, generated.get("reason", ""), str(generated["parent_text"]).strip(), "", events=events)
         preview["sample"] = sample_no
         outputs.append(preview)
     print(json.dumps({"sample_count": len(outputs), "openai_requests": 1, "active_rakuten_events": [e["name"] for e in events], "samples": outputs}, ensure_ascii=False, indent=2))
@@ -131,6 +132,7 @@ def build_stock(save=False, force=False):
         row["status"] = "scheduled"
         if row["type"] == "product":
             item = by_code[row["selected_item_code"]]
+            row["child_text_base"] = ""
             row.update({"item_name": item["itemName"], "item_code": item["itemCode"], "image_url": item["imageUrls"][0], "affiliate_url": item["affiliateUrl"], "price": item["itemPrice"], "rating": item["reviewAverage"], "review_count": item["reviewCount"]})
         completed.append(row)
     if save:
