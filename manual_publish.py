@@ -6,7 +6,7 @@ from post_queue import load_queue, remove_post
 from threads import publish_post
 
 
-def find_post(target_date, hour):
+def find_queued_post(target_date, hour):
     prefix = f"{target_date}T{int(hour):02d}:00"
     matches = [
         post for post in load_queue().get("posts", [])
@@ -17,26 +17,55 @@ def find_post(target_date, hour):
     return matches[0] if matches else None
 
 
+def find_history_post(target_date, hour):
+    prefix = f"{target_date}T{int(hour):02d}:00"
+    try:
+        with open("history.json", "r", encoding="utf-8") as f:
+            history = json.load(f)
+    except FileNotFoundError:
+        return None
+
+    matches = []
+    for key in ("product_history", "empathy_history"):
+        for post in history.get(key, []):
+            if str(post.get("scheduled_at", "")).startswith(prefix):
+                matches.append(post)
+
+    if len(matches) > 1:
+        raise RuntimeError(f"同じ日時の投稿履歴が複数あります: {target_date} {hour}:00")
+    return matches[0] if matches else None
+
+
 def main():
-    parser = argparse.ArgumentParser(description="楽天Threads 障害復旧用手動投稿")
+    parser = argparse.ArgumentParser(description="楽天Threads 障害復旧・再投稿用手動投稿")
     parser.add_argument("--date", required=True, help="YYYY-MM-DD")
     parser.add_argument("--hour", required=True, type=int, choices=[7, 12, 15, 18, 21])
+    parser.add_argument("--allow-history", action="store_true", help="queueに無い場合、投稿済みhistoryから再投稿する")
     args = parser.parse_args()
 
-    post = find_post(args.date, args.hour)
-    if not post:
-        raise RuntimeError(f"queue内に未投稿データがありません: {args.date} {args.hour}:00")
+    post = find_queued_post(args.date, args.hour)
+    source = "queue"
 
-    # 通常の時刻/期限判定を通さず、指定日時の未投稿1件だけを投稿する。
+    if not post and args.allow_history:
+        post = find_history_post(args.date, args.hour)
+        source = "history"
+
+    if not post:
+        raise RuntimeError(f"対象データがありません: {args.date} {args.hour}:00")
+
+    # publish_post() は現在の投稿形式を使用する。
+    # 商品投稿は 親=短文+画像、返信=アフィリエイトURL + pr のみ。
     thread_id, reply_id = publish_post(post)
 
-    removed = remove_post(post.get("post_id"), post.get("scheduled_at"))
-    if not removed:
-        raise RuntimeError("投稿成功後のqueue削除に失敗しました。")
+    if source == "queue":
+        removed = remove_post(post.get("post_id"), post.get("scheduled_at"))
+        if not removed:
+            raise RuntimeError("投稿成功後のqueue削除に失敗しました。")
+        record_success(post, thread_id, reply_id)
 
-    record_success(post, thread_id, reply_id)
     print(json.dumps({
-        "status": "manual_published",
+        "status": "manual_republished" if source == "history" else "manual_published",
+        "source": source,
         "post_id": post.get("post_id"),
         "scheduled_at": post.get("scheduled_at"),
         "thread_id": thread_id,
