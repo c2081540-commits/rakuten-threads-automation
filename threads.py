@@ -38,6 +38,33 @@ def create_image_container(text, image_url):
     return _check(resp, "image container create")
 
 
+def create_carousel_container(text, image_urls):
+    user_id, token = _credentials()
+    urls = [str(x).strip() for x in image_urls if str(x).strip()]
+    if len(urls) < 2:
+        return create_image_container(text, urls[0])
+
+    children = []
+    for image_url in urls[:3]:
+        data = {
+            "media_type": "IMAGE",
+            "image_url": image_url,
+            "is_carousel_item": "true",
+            "access_token": token,
+        }
+        resp = requests.post(f"{BASE}/{user_id}/threads", data=data, timeout=30)
+        children.append(_check(resp, "carousel child create"))
+
+    data = {
+        "media_type": "CAROUSEL",
+        "children": ",".join(children),
+        "text": text,
+        "access_token": token,
+    }
+    resp = requests.post(f"{BASE}/{user_id}/threads", data=data, timeout=30)
+    return _check(resp, "carousel container create")
+
+
 def publish_container(container_id):
     user_id, token = _credentials()
     resp = requests.post(f"{BASE}/{user_id}/threads_publish", data={"creation_id": container_id, "access_token": token}, timeout=30)
@@ -46,7 +73,11 @@ def publish_container(container_id):
 
 def publish_post(post):
     if post.get("type") == "product":
-        container = create_image_container(post["parent_text"], post["image_url"])
+        image_urls = post.get("image_urls") or [post.get("image_url")]
+        image_urls = [x for x in image_urls if x]
+        if not image_urls:
+            raise RuntimeError("商品投稿の画像がありません。")
+        container = create_carousel_container(post["parent_text"], image_urls)
     else:
         container = create_text_container(post["parent_text"])
 
