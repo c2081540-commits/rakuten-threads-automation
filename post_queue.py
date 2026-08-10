@@ -46,7 +46,6 @@ def append_posts(posts):
 
 
 def replace_slots(posts):
-    """Replace queue rows occupying the exact same scheduled_at slots, then save new rows."""
     data = load_queue()
     replacement_slots = {str(p.get("scheduled_at", "")) for p in posts if p.get("scheduled_at")}
     removed = [p for p in data["posts"] if str(p.get("scheduled_at", "")) in replacement_slots]
@@ -57,6 +56,22 @@ def replace_slots(posts):
     return len(data["posts"]), len(removed)
 
 
+def update_post_progress(post_id, scheduled_at, thread_id=None, reply_id=None):
+    data = load_queue()
+    for post in data["posts"]:
+        if post.get("post_id") == post_id and post.get("scheduled_at") == scheduled_at:
+            if thread_id:
+                post["published_thread_id"] = thread_id
+                post["status"] = "parent_published"
+            if reply_id:
+                post["published_reply_id"] = reply_id
+                post["status"] = "published"
+            post["publish_progress_at"] = datetime.now(JST).isoformat(timespec="seconds")
+            save_queue(data)
+            return dict(post)
+    raise RuntimeError("queue内の投稿進捗更新対象が見つかりません。")
+
+
 def expire_missed(now=None):
     now = now or datetime.now(JST)
     data = load_queue()
@@ -64,6 +79,10 @@ def expire_missed(now=None):
     expired = []
     for post in data["posts"]:
         scheduled = _parse_scheduled(post)
+        # 親投稿まで成功している商品は、返信リトライ対象なので期限切れにしない。
+        if post.get("published_thread_id") and not post.get("published_reply_id"):
+            kept.append(post)
+            continue
         if scheduled and now > scheduled + timedelta(minutes=SLOT_GRACE_MINUTES):
             row = dict(post)
             row["status"] = "expired"
@@ -82,9 +101,22 @@ def get_due_post(now=None):
     now = now or datetime.now(JST)
     expire_missed(now)
     data = load_queue()
+    # 部分成功中の投稿は、二重親投稿を避けて返信だけを優先再試行する。
+    for post in data["posts"]:
+        if post.get("published_thread_id") and not post.get("published_reply_id"):
+            return post
     for post in data["posts"]:
         scheduled = _parse_scheduled(post)
         if scheduled and scheduled <= now <= scheduled + timedelta(minutes=SLOT_GRACE_MINUTES):
+            return post
+    return None
+
+
+def get_post(post_id=None, scheduled_at=None):
+    for post in load_queue()["posts"]:
+        if post_id and post.get("post_id") == post_id:
+            return post
+        if scheduled_at and post.get("scheduled_at") == scheduled_at:
             return post
     return None
 
