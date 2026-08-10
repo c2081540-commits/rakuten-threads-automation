@@ -4,6 +4,8 @@ import requests
 
 BASE = "https://graph.threads.net/v1.0"
 MAX_PRODUCT_IMAGES = 3
+CONTAINER_TIMEOUT_SECONDS = 90
+CONTAINER_POLL_SECONDS = 2
 
 
 def _credentials():
@@ -23,6 +25,28 @@ def _check(resp, label):
     return data["id"]
 
 
+def wait_until_finished(container_id, label="container"):
+    _, token = _credentials()
+    deadline = time.time() + CONTAINER_TIMEOUT_SECONDS
+    last = None
+    while time.time() < deadline:
+        resp = requests.get(
+            f"{BASE}/{container_id}",
+            params={"fields": "status,error_message", "access_token": token},
+            timeout=30,
+        )
+        if not resp.ok:
+            raise RuntimeError(f"Threads {label} status failed: HTTP {resp.status_code} {resp.text[:500]}")
+        last = resp.json()
+        status = str(last.get("status", "")).upper()
+        if status == "FINISHED":
+            return
+        if status in {"ERROR", "EXPIRED"}:
+            raise RuntimeError(f"Threads {label} processing failed: {last}")
+        time.sleep(CONTAINER_POLL_SECONDS)
+    raise RuntimeError(f"Threads {label} processing timeout: {last}")
+
+
 def create_text_container(text, reply_to_id=None):
     user_id, token = _credentials()
     data = {"media_type": "TEXT", "text": text, "access_token": token}
@@ -36,7 +60,9 @@ def create_image_container(text, image_url):
     user_id, token = _credentials()
     data = {"media_type": "IMAGE", "image_url": image_url, "text": text, "access_token": token}
     resp = requests.post(f"{BASE}/{user_id}/threads", data=data, timeout=30)
-    return _check(resp, "image container create")
+    container_id = _check(resp, "image container create")
+    wait_until_finished(container_id, "image container")
+    return container_id
 
 
 def create_carousel_container(text, image_urls):
@@ -48,16 +74,22 @@ def create_carousel_container(text, image_urls):
         return create_image_container(text, urls[0])
 
     children = []
-    for image_url in urls:
+    for index, image_url in enumerate(urls, start=1):
         data = {"media_type": "IMAGE", "image_url": image_url, "is_carousel_item": "true", "access_token": token}
         resp = requests.post(f"{BASE}/{user_id}/threads", data=data, timeout=30)
-        children.append(_check(resp, "carousel child create"))
+        child_id = _check(resp, f"carousel child {index} create")
+        # 子コンテナは作成直後には親CAROUSELのchildrenとして使えない場合がある。
+        # FINISHEDになるまで待ってから親を作る。
+        wait_until_finished(child_id, f"carousel child {index}")
+        children.append(child_id)
 
     if len(children) != len(urls):
         raise RuntimeError(f"カルーセル子要素数が不一致です: urls={len(urls)} children={len(children)}")
     data = {"media_type": "CAROUSEL", "children": ",".join(children), "text": text, "access_token": token}
     resp = requests.post(f"{BASE}/{user_id}/threads", data=data, timeout=30)
-    return _check(resp, "carousel container create")
+    parent_id = _check(resp, "carousel container create")
+    wait_until_finished(parent_id, "carousel container")
+    return parent_id
 
 
 def publish_container(container_id):
@@ -90,7 +122,6 @@ def publish_parent(post):
         container = create_carousel_container(post["parent_text"], urls)
     else:
         container = create_text_container(post["parent_text"])
-    time.sleep(3)
     return publish_container(container)
 
 
@@ -103,12 +134,10 @@ def publish_reply(post, thread_id):
         raise RuntimeError("商品返信に必要な child_text_base / affiliate_url がありません。")
     reply = f"{child}\n\n【PR】\n{affiliate_url}"
     reply_container = create_text_container(reply, reply_to_id=thread_id)
-    time.sleep(3)
     return publish_container(reply_container)
 
 
 def publish_post(post, existing_thread_id=None, existing_reply_id=None, progress_callback=None):
-    """Resume-safe publish. If parent already succeeded, retry only the reply."""
     validate_post(post)
     thread_id = existing_thread_id
     reply_id = existing_reply_id
