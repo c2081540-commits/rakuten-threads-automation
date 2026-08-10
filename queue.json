@@ -1,21 +1,6 @@
 {
   "posts": [
     {
-      "post_id": "E2",
-      "type": "empathy",
-      "parent_text": "洗濯物を取り込んだら靴下が片方だけない時の小さな謎。",
-      "theme": "洗濯/衣類",
-      "theme_group": "洗濯/衣類",
-      "tone": "neutral",
-      "context_note": "",
-      "stock_sequence": 3,
-      "day_in_batch": 1,
-      "slot_in_day": 3,
-      "scheduled_at": "2026-08-10T15:00+09:00",
-      "scheduled_hour": 15,
-      "status": "scheduled"
-    },
-    {
       "post_id": "P2",
       "type": "product",
       "selected_item_code": "kaguzaku:10005260",
