@@ -13,6 +13,7 @@ STOCK_TARGET = 10
 REFILL_THRESHOLD = 3
 JST = timezone(timedelta(hours=9))
 DAILY_HOURS = [7, 12, 15, 18, 21]
+MAX_PRODUCT_IMAGES = 3
 
 
 def get_shortlist(limit=10):
@@ -33,15 +34,14 @@ def preview_candidates():
     print(f"二次選定候補: {len(shortlist)}件\n")
     safe_output = []
     for index, item in enumerate(shortlist, start=1):
-        safe_output.append({"rank": index, "itemCode": item["itemCode"], "itemName": item["itemName"], "price": item["itemPrice"], "rating": item["reviewAverage"], "reviews": item["reviewCount"], "shopName": item["shopName"], "imageCount": len(item["imageUrls"]), "firstImage": item["imageUrls"][0] if item["imageUrls"] else None})
+        safe_output.append({"rank": index, "itemCode": item["itemCode"], "itemName": item["itemName"], "price": item["itemPrice"], "rating": item["reviewAverage"], "reviews": item["reviewCount"], "shopName": item["shopName"], "imageCount": len(item["imageUrls"]), "images": item["imageUrls"][:MAX_PRODUCT_IMAGES]})
     print(json.dumps(safe_output, ensure_ascii=False, indent=2))
 
 
 def assemble_preview(selected, reason, parent, child_base="", image_index=0, events=None):
-    image_url = selected["imageUrls"][image_index]
-    # 実投稿と同じ形式。返信はリンク + pr のみ。
-    child_final = f"{selected['affiliateUrl']} pr"
-    return {"selected_item": selected["itemName"], "selected_item_code": selected["itemCode"], "selection_reason": reason, "image_url": image_url, "parent_post": parent, "reply_post": child_final, "active_rakuten_events": [e["name"] for e in (events or [])], "topic": "未設定（Threads実投稿接続時に追加）", "publish": False}
+    image_urls = selected["imageUrls"][:MAX_PRODUCT_IMAGES]
+    child_final = f"{child_base}\n\n【PR】\n{selected['affiliateUrl']}" if child_base else "ERROR: child_text_base is empty"
+    return {"selected_item": selected["itemName"], "selected_item_code": selected["itemCode"], "selection_reason": reason, "image_urls": image_urls, "parent_post": parent, "reply_post": child_final, "active_rakuten_events": [e["name"] for e in (events or [])], "topic": "未設定（Threads実投稿接続時に追加）", "publish": False}
 
 
 def preview_events():
@@ -66,7 +66,7 @@ def preview_samples(count=5):
     outputs = []
     for sample_no, generated in enumerate(batch, start=1):
         selected = by_code[generated["selected_item_code"]]
-        preview = assemble_preview(selected, generated.get("reason", ""), str(generated["parent_text"]).strip(), "", events=events)
+        preview = assemble_preview(selected, generated.get("reason", ""), str(generated["parent_text"]).strip(), str(generated.get("child_text_base", "")).strip(), events=events)
         preview["sample"] = sample_no
         outputs.append(preview)
     print(json.dumps({"sample_count": len(outputs), "openai_requests": 1, "active_rakuten_events": [e["name"] for e in events], "samples": outputs}, ensure_ascii=False, indent=2))
@@ -132,8 +132,13 @@ def build_stock(save=False, force=False):
         row["status"] = "scheduled"
         if row["type"] == "product":
             item = by_code[row["selected_item_code"]]
-            row["child_text_base"] = ""
-            row.update({"item_name": item["itemName"], "item_code": item["itemCode"], "image_url": item["imageUrls"][0], "affiliate_url": item["affiliateUrl"], "price": item["itemPrice"], "rating": item["reviewAverage"], "review_count": item["reviewCount"]})
+            child = str(row.get("child_text_base", "")).strip()
+            if not child:
+                raise RuntimeError(f"商品補足文が空です: {row['post_id']}")
+            image_urls = item["imageUrls"][:MAX_PRODUCT_IMAGES]
+            if not image_urls:
+                raise RuntimeError(f"商品画像がありません: {item['itemCode']}")
+            row.update({"item_name": item["itemName"], "item_code": item["itemCode"], "image_url": image_urls[0], "image_urls": image_urls, "affiliate_url": item["affiliateUrl"], "price": item["itemPrice"], "rating": item["reviewAverage"], "review_count": item["reviewCount"]})
         completed.append(row)
     if save:
         total = append_posts(completed)
