@@ -51,6 +51,16 @@ def _validate_parent(parent, recent_posts=None):
             raise RuntimeError("直近投稿と完全一致しています。")
 
 
+def _validate_child(child):
+    child = str(child).strip()
+    if not child:
+        raise RuntimeError("商品補足文が空です。")
+    if len(child.replace("\n", "")) > 180:
+        raise RuntimeError("商品補足文が長すぎます。")
+    if any(x in child for x in ["http://", "https://", "【PR】", "レビュー", "価格:"]):
+        raise RuntimeError("商品補足文に禁止要素があります。")
+
+
 def _event_instruction(events):
     if not events:
         return "確認済み楽天公式イベントなし。開催中とは書かない。"
@@ -68,21 +78,24 @@ def select_product(items):
 def generate_product_copy(item, recent_posts=None, events=None):
     base = _load_prompt("product.txt")
     facts = {"itemCode": item["itemCode"], "itemName": item["itemName"], "itemCaption": item.get("itemCaption", "")[:1000]}
-    result = _json_response(f"{base}\n商品:{json.dumps(facts, ensure_ascii=False)}\nイベント:{_event_instruction(events)}\n直近:{json.dumps(recent_posts or [], ensure_ascii=False)}\nJSONのみ: {{\"parent_text\":\"親投稿\",\"child_text_base\":\"\"}}")
+    result = _json_response(f"{base}\n商品:{json.dumps(facts, ensure_ascii=False)}\nイベント:{_event_instruction(events)}\n直近:{json.dumps(recent_posts or [], ensure_ascii=False)}\nJSONのみ: {{\"parent_text\":\"親投稿\",\"child_text_base\":\"具体的な補足文\"}}")
     parent = str(result.get("parent_text", "")).strip()
-    if not parent:
-        raise RuntimeError("文章生成結果が不足しています。")
+    child = str(result.get("child_text_base", "")).strip()
     _validate_parent(parent, recent_posts)
-    return parent, ""
+    _validate_child(child)
+    return parent, child
 
 
 def generate_sample_batch(items, count=5, recent_posts=None, events=None):
     count = max(1, min(count, len(items)))
     base = _load_prompt("product.txt")
-    result = _json_response(f"{base}\n候補から重複なしで{count}件。{json.dumps(_candidate_data(items), ensure_ascii=False)}\nJSONのみ: {{\"samples\":[{{\"selected_item_code\":\"itemCode\",\"reason\":\"理由\",\"parent_text\":\"親投稿\",\"child_text_base\":\"\"}}]}}")
+    result = _json_response(f"{base}\n候補から重複なしで{count}件。{json.dumps(_candidate_data(items), ensure_ascii=False)}\nJSONのみ: {{\"samples\":[{{\"selected_item_code\":\"itemCode\",\"reason\":\"理由\",\"parent_text\":\"親投稿\",\"child_text_base\":\"具体的な補足文\"}}]}}")
     samples = result.get("samples", [])
     if len(samples) != count:
         raise RuntimeError("バッチ生成件数が不正です。")
+    for sample in samples:
+        _validate_parent(sample.get("parent_text", ""), recent_posts)
+        _validate_child(sample.get("child_text_base", ""))
     return samples
 
 
@@ -124,31 +137,17 @@ def generate_mixed_stock(items, recent_history=None, existing_queue=None, events
     queued = existing_queue or []
     prompt = f"""
 Threadsアカウント「これ、家に欲しい」の10投稿を作成する。
+最重要: 10件は2日分の固定投稿枠。1番=07:00、2番=12:00、3番=15:00、4番=18:00、5番=21:00。6〜10番も翌日同順。
 
-最重要: 10件は2日分の固定投稿枠に入る。各日の掲載位置は必ず次の時刻に対応する。
-1番=07:00、2番=12:00、3番=15:00、4番=18:00、5番=21:00。
-6〜10番も翌日の同じ順番。
-朝・昼・夕方・夜など時刻を限定する表現は、その掲載時刻に自然な場合だけ使う。特に21時枠に朝/昼の描写、07時枠に夜の描写を置かない。
-
-【フェーズ1】
 - empathy 6件、product 4件。
-- empathyは楽天商品候補を見て前振りを作ってはいけない。商品との関連性を意図的に作らず、単体で自然な日常の一言にする。
-- productはempathyを受けて書かず、商品情報だけから独立して作る。
-- empathyに商品の用途、特徴、困りごとを仕込まない。
+- empathyは楽天商品候補を見て前振りを作らず単体で自然な日常投稿。
+- productは商品情報だけから独立して作る。
 - 架空の購入・使用経験は禁止。
-- empathyはE1〜E6、productはP1〜P4のpost_idを付ける。
-- empathyは最低5テーマに分散。掃除・収納・水回りは合計2件まで。最低2件はneutral/positive。
-- productは4商品重複禁止。用途を分散し、掛ける/収納系は最大2件、可能なら1件。同系統ブランド3件以上は禁止。
-
-【フェーズ2】
-- 1〜5番が1日目、6〜10番が2日目。各日必ずempathy 3件、product 2件。
-- 掲載順を決める際は上記の固定時刻を最優先する。
-- 商品同士を連続させない。同系統テーマも固めない。
-- 毎日同じE-P-E-P-E等の固定型にする必要はない。
-- editorial_order決定後、その位置の時刻に合わない本文があれば、その投稿本文だけ時刻に自然になるよう調整してよい。ただし商品事実を変えない。
-
-【過去】
-過去への言及は実投稿履歴に存在する事実だけ。未投稿キューは重複回避だけに使う。
+- empathyはE1〜E6、productはP1〜P4。
+- empathyは最低5テーマ。掃除・収納・水回りは合計2件まで。最低2件はneutral/positive。
+- productは4商品重複禁止。用途を分散。掛ける/収納系は最大2件。同系統ブランド3件以上は禁止。
+- 各日必ずempathy 3件、product 2件。商品同士を連続させない。同系統テーマも固めない。
+- 時刻に不自然な本文は禁止。
 
 【商品ルール】
 {product_prompt}
@@ -166,7 +165,7 @@ Threadsアカウント「これ、家に欲しい」の10投稿を作成する�
 JSONのみ:
 {{"posts":[
 {{"post_id":"E1","type":"empathy","parent_text":"本文","theme":"テーマ","theme_group":"季節/天気|食事/料理|買い物|洗濯/衣類|朝夜/休日|休憩|掃除|収納|水回り|その他生活","tone":"neutral|positive|negative","context_note":""}},
-{{"post_id":"P1","type":"product","selected_item_code":"itemCode","parent_text":"親投稿","child_text_base":"","theme":"テーマ","product_group":"用途","context_note":""}}
+{{"post_id":"P1","type":"product","selected_item_code":"itemCode","parent_text":"親投稿","child_text_base":"具体的な補足文","theme":"テーマ","product_group":"用途","context_note":""}}
 ],"editorial_order":["E1","P1","E2","P2","E3","E4","P3","E5","P4","E6"]}}
 postsはE1〜E6とP1〜P4を各1件。editorial_orderも同じ10IDを重複なく1回ずつ使う。
 """
@@ -193,7 +192,7 @@ postsはE1〜E6とP1〜P4を各1件。editorial_orderも同じ10IDを重複な�
             if code not in valid_codes:
                 raise RuntimeError(f"候補外の商品コード: {code}")
             codes.append(code)
-            post["child_text_base"] = ""
+            _validate_child(post.get("child_text_base", ""))
     if len(set(codes)) != 4:
         raise RuntimeError("商品が重複しています。")
     return _arrange_editorial_order(posts, result.get("editorial_order", []))
