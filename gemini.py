@@ -68,19 +68,18 @@ def select_product(items):
 def generate_product_copy(item, recent_posts=None, events=None):
     base = _load_prompt("product.txt")
     facts = {"itemCode": item["itemCode"], "itemName": item["itemName"], "itemCaption": item.get("itemCaption", "")[:1000]}
-    result = _json_response(f"{base}\n商品:{json.dumps(facts, ensure_ascii=False)}\nイベント:{_event_instruction(events)}\n直近:{json.dumps(recent_posts or [], ensure_ascii=False)}\nJSONのみ: {{\"parent_text\":\"親投稿\",\"child_text_base\":\"返信\"}}")
+    result = _json_response(f"{base}\n商品:{json.dumps(facts, ensure_ascii=False)}\nイベント:{_event_instruction(events)}\n直近:{json.dumps(recent_posts or [], ensure_ascii=False)}\nJSONのみ: {{\"parent_text\":\"親投稿\",\"child_text_base\":\"\"}}")
     parent = str(result.get("parent_text", "")).strip()
-    child = str(result.get("child_text_base", "")).strip()
-    if not parent or not child:
+    if not parent:
         raise RuntimeError("文章生成結果が不足しています。")
     _validate_parent(parent, recent_posts)
-    return parent, child
+    return parent, ""
 
 
 def generate_sample_batch(items, count=5, recent_posts=None, events=None):
     count = max(1, min(count, len(items)))
     base = _load_prompt("product.txt")
-    result = _json_response(f"{base}\n候補から重複なしで{count}件。{json.dumps(_candidate_data(items), ensure_ascii=False)}\nJSONのみ: {{\"samples\":[{{\"selected_item_code\":\"itemCode\",\"reason\":\"理由\",\"parent_text\":\"親投稿\",\"child_text_base\":\"返信\"}}]}}")
+    result = _json_response(f"{base}\n候補から重複なしで{count}件。{json.dumps(_candidate_data(items), ensure_ascii=False)}\nJSONのみ: {{\"samples\":[{{\"selected_item_code\":\"itemCode\",\"reason\":\"理由\",\"parent_text\":\"親投稿\",\"child_text_base\":\"\"}}]}}")
     samples = result.get("samples", [])
     if len(samples) != count:
         raise RuntimeError("バッチ生成件数が不正です。")
@@ -167,7 +166,7 @@ Threadsアカウント「これ、家に欲しい」の10投稿を作成する�
 JSONのみ:
 {{"posts":[
 {{"post_id":"E1","type":"empathy","parent_text":"本文","theme":"テーマ","theme_group":"季節/天気|食事/料理|買い物|洗濯/衣類|朝夜/休日|休憩|掃除|収納|水回り|その他生活","tone":"neutral|positive|negative","context_note":""}},
-{{"post_id":"P1","type":"product","selected_item_code":"itemCode","parent_text":"親投稿","child_text_base":"返信","theme":"テーマ","product_group":"用途","context_note":""}}
+{{"post_id":"P1","type":"product","selected_item_code":"itemCode","parent_text":"親投稿","child_text_base":"","theme":"テーマ","product_group":"用途","context_note":""}}
 ],"editorial_order":["E1","P1","E2","P2","E3","E4","P3","E5","P4","E6"]}}
 postsはE1〜E6とP1〜P4を各1件。editorial_orderも同じ10IDを重複なく1回ずつ使う。
 """
@@ -194,8 +193,7 @@ postsはE1〜E6とP1〜P4を各1件。editorial_orderも同じ10IDを重複な�
             if code not in valid_codes:
                 raise RuntimeError(f"候補外の商品コード: {code}")
             codes.append(code)
-            if not str(post.get("child_text_base", "")).strip():
-                raise RuntimeError("商品返信文が空です。")
+            post["child_text_base"] = ""
     if len(set(codes)) != 4:
         raise RuntimeError("商品が重複しています。")
     return _arrange_editorial_order(posts, result.get("editorial_order", []))
