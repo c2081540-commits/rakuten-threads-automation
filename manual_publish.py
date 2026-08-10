@@ -40,23 +40,26 @@ def main():
     parser = argparse.ArgumentParser(description="楽天Threads 障害復旧・再投稿用手動投稿")
     parser.add_argument("--date", required=True, help="YYYY-MM-DD")
     parser.add_argument("--hour", required=True, type=int, choices=[7, 12, 15, 18, 21])
-    parser.add_argument("--allow-history", action="store_true", help="queueに無い場合、投稿済みhistoryから再投稿する")
     args = parser.parse_args()
 
+    # まず未投稿queueを探す。無ければ投稿済みhistoryを自動で探す。
+    # これにより、同じ日付・時刻指定だけで障害復旧と再投稿の両方に対応する。
     post = find_queued_post(args.date, args.hour)
     source = "queue"
 
-    if not post and args.allow_history:
+    if not post:
         post = find_history_post(args.date, args.hour)
         source = "history"
 
     if not post:
-        raise RuntimeError(f"対象データがありません: {args.date} {args.hour}:00")
+        raise RuntimeError(f"queue/historyのどちらにも対象データがありません: {args.date} {args.hour}:00")
 
-    # publish_post() は現在の投稿形式を使用する。
+    # 常に現在の投稿形式で投稿する。
     # 商品投稿は 親=短文+画像、返信=アフィリエイトURL + pr のみ。
     thread_id, reply_id = publish_post(post)
 
+    # queue由来の未投稿だけ、通常どおりqueueから削除してhistoryへ記録する。
+    # history由来の再投稿は元履歴を変更しない。
     if source == "queue":
         removed = remove_post(post.get("post_id"), post.get("scheduled_at"))
         if not removed:
