@@ -1,29 +1,6 @@
 {
   "posts": [
     {
-      "post_id": "P1",
-      "type": "product",
-      "selected_item_code": "bathroom:10002807",
-      "parent_text": "スプレーボトルを壁に掛けて浮かせられるの、良いかも。",
-      "child_text_base": "浴室の磁石がつく壁面に取り付けるスプレーボトル用ハンガーです。",
-      "theme": "水回り",
-      "product_group": "掛ける",
-      "context_note": "",
-      "stock_sequence": 2,
-      "day_in_batch": 1,
-      "slot_in_day": 2,
-      "scheduled_at": "2026-08-10T12:00+09:00",
-      "scheduled_hour": 12,
-      "status": "scheduled",
-      "item_name": "お買物マラソン/tower 山崎実業 マグネットスプレーボトルハンガー タワー スプレーボトルホルダー 浮かせる収納 引っ掛ける フック ラック マグネット収納 磁石 お風呂収納 お風呂場 バスルーム カビ対策 ヌメリ対策 掃除 壁掛け おしゃれ シンプル 公式 白 黒 9916 9917",
-      "item_code": "bathroom:10002807",
-      "image_url": "https://thumbnail.image.rakuten.co.jp/@0_mall/bathroom/cabinet/0001/04521919/yj-9916_sam01b.jpg",
-      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00s670n.z7eis104.g00s670n.z7eit184/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fbathroom%2Fyj-9916%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fbathroom%2Fi%2F10002807%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f",
-      "price": 1980,
-      "rating": 4.79,
-      "review_count": 2696
-    },
-    {
       "post_id": "E2",
       "type": "empathy",
       "parent_text": "洗濯物を取り込んだら靴下が片方だけない時の小さな謎。",
