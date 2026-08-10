@@ -135,6 +135,23 @@
       "status": "published",
       "posted_at": "2026-08-10T21:00:46.793919+09:00",
       "thread_id": "18137886160589259"
+    },
+    {
+      "post_id": "E1",
+      "type": "empathy",
+      "parent_text": "朝の一杯で体が動き出す気がする。ちょっとだけ丁寧に淹れると出勤前の慌ただしさも落ち着く。",
+      "theme": "朝夜/休日",
+      "theme_group": "朝夜/休日",
+      "tone": "positive",
+      "context_note": "",
+      "stock_sequence": 1,
+      "day_in_batch": 1,
+      "slot_in_day": 1,
+      "scheduled_at": "2026-08-11T07:00+09:00",
+      "scheduled_hour": 7,
+      "status": "published",
+      "posted_at": "2026-08-11T07:00:50.328242+09:00",
+      "thread_id": "17877639411622585"
     }
   ]
 }
