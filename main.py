@@ -4,7 +4,7 @@ from datetime import datetime, timedelta, timezone
 
 from gemini import generate_product_copy, generate_sample_batch, generate_mixed_stock, select_product
 from history import recent_entries, recent_texts
-from post_queue import append_posts, load_queue, stock_count
+from post_queue import append_posts, load_queue, replace_slots, stock_count
 from rakuten import fetch_candidate_pool
 from rakuten_events import get_active_rakuten_events
 from selector import build_shortlist, primary_filter
@@ -124,26 +124,27 @@ def build_today_remaining(save=False):
     remaining_hours = [h for h in DAILY_HOURS if h > now.hour]
     if not remaining_hours:
         raise RuntimeError("本日の未到来投稿枠がありません。")
+
     queue_data = load_queue()["posts"]
-    existing_today_hours = set()
+    # today-refill は「空き枠追加」ではなく「本日の未到来枠を新仕様で上書き」する。
+    # 既存の本日分は生成時の重複チェック対象から外し、保存時に同じ scheduled_at を置換する。
+    generation_queue = []
     for p in queue_data:
         try:
             dt = datetime.fromisoformat(str(p.get("scheduled_at", ""))).astimezone(JST)
         except (ValueError, TypeError):
+            generation_queue.append(p)
             continue
-        if dt.date() == now.date():
-            existing_today_hours.add(dt.hour)
-    remaining_hours = [h for h in remaining_hours if h not in existing_today_hours]
-    if not remaining_hours:
-        raise RuntimeError("本日の残り枠はすでにqueueに存在します。")
+        if dt.date() == now.date() and dt.hour in remaining_hours:
+            continue
+        generation_queue.append(p)
 
     _, _, shortlist = get_shortlist(limit=10)
     events = get_active_rakuten_events()
     history = recent_entries(limit=20)
-    generated = arrange_stock_posts(generate_mixed_stock(shortlist, recent_history=history, existing_queue=queue_data, events=events))
+    generated = arrange_stock_posts(generate_mixed_stock(shortlist, recent_history=history, existing_queue=generation_queue, events=events))
     by_code = {x["itemCode"]: x for x in shortlist}
 
-    # その日の5枠のうち、生成済み1日目の同じslotを採用する。
     first_day = generated[:5]
     slot_by_hour = dict(zip(DAILY_HOURS, first_day))
     completed = []
@@ -162,11 +163,19 @@ def build_today_remaining(save=False):
         completed.append(post)
 
     if save:
-        total = append_posts(completed)
-        status = {"status": "saved", "added": len(completed), "stock_count": total}
+        total, replaced = replace_slots(completed)
+        status = {"status": "saved", "added": len(completed), "replaced": replaced, "stock_count": total}
     else:
-        status = {"status": "preview", "added": 0, "stock_count": stock_count()}
-    print(json.dumps({**status, "mode": "today-remaining", "date": now.date().isoformat(), "remaining_hours": remaining_hours, "posts": completed}, ensure_ascii=False, indent=2))
+        existing_slots = []
+        for p in queue_data:
+            try:
+                dt = datetime.fromisoformat(str(p.get("scheduled_at", ""))).astimezone(JST)
+            except (ValueError, TypeError):
+                continue
+            if dt.date() == now.date() and dt.hour in remaining_hours:
+                existing_slots.append(dt.hour)
+        status = {"status": "preview", "added": 0, "would_replace": len(existing_slots), "stock_count": stock_count()}
+    print(json.dumps({**status, "mode": "today-replace", "date": now.date().isoformat(), "remaining_hours": remaining_hours, "posts": completed}, ensure_ascii=False, indent=2))
 
 
 def build_stock(save=False, force=False):
