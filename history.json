@@ -27,5 +27,23 @@
       "reply_id": "18099516779190285"
     }
   ],
-  "empathy_history": []
+  "empathy_history": [
+    {
+      "post_id": "E1",
+      "type": "empathy",
+      "parent_text": "朝のコーヒーを淹れた瞬間の、ちょっとした贅沢感が好き。",
+      "theme": "朝夜/休日",
+      "theme_group": "朝夜/休日",
+      "tone": "positive",
+      "context_note": "",
+      "stock_sequence": 1,
+      "day_in_batch": 1,
+      "slot_in_day": 1,
+      "scheduled_at": "2026-08-10T07:00+09:00",
+      "scheduled_hour": 7,
+      "status": "scheduled",
+      "posted_at": "2026-08-10T10:34:48.686283+09:00",
+      "thread_id": "18067797533484905"
+    }
+  ]
 }
