@@ -45,6 +45,18 @@ def append_posts(posts):
     return len(data["posts"])
 
 
+def replace_slots(posts):
+    """Replace queue rows occupying the exact same scheduled_at slots, then save new rows."""
+    data = load_queue()
+    replacement_slots = {str(p.get("scheduled_at", "")) for p in posts if p.get("scheduled_at")}
+    removed = [p for p in data["posts"] if str(p.get("scheduled_at", "")) in replacement_slots]
+    data["posts"] = [p for p in data["posts"] if str(p.get("scheduled_at", "")) not in replacement_slots]
+    data["posts"].extend(posts)
+    data["posts"].sort(key=lambda p: str(p.get("scheduled_at", "")))
+    save_queue(data)
+    return len(data["posts"]), len(removed)
+
+
 def expire_missed(now=None):
     now = now or datetime.now(JST)
     data = load_queue()
