@@ -9,6 +9,9 @@ MODEL = os.environ.get("OPENAI_MODEL", "gpt-5-mini").strip()
 MAX_OUTPUT_TOKENS = 7000
 MAX_GENERATION_ATTEMPTS = 3
 
+WEAK_PARENT_ENDINGS = ("便利そう", "良さそう", "いいかも", "欲しい", "便利かも", "使えそう")
+WEAK_PARENT_PHRASES = ("ちょっと掛けたいもの", "ちょっと置きたいもの", "あると便利そう", "あると良さそう")
+
 
 def _api_key():
     key = os.environ.get("OPENAI_API_KEY", "").strip()
@@ -38,28 +41,45 @@ def _normalize_for_compare(text):
     return "".join(str(text).replace("\n", "").replace(" ", "").split()).lower()
 
 
-def _validate_parent(parent, recent_posts=None):
+def _validate_parent(parent, recent_posts=None, product=False):
     parent = str(parent).strip()
+    compact = parent.replace("\n", "")
     if not parent:
         raise RuntimeError("親投稿が空です。")
-    if len(parent.replace("\n", "")) > 140:
+    if len(compact) > 140:
         raise RuntimeError("親投稿が長すぎます。")
     if any(x in parent for x in ["http://", "https://", "【PR】", "レビュー", "価格:"]):
         raise RuntimeError("親投稿に禁止要素があります。")
+    if product:
+        if len(compact) < 45:
+            raise RuntimeError("商品親投稿が短すぎて魅力・使用場面を伝えられていません。")
+        if any(x in compact for x in WEAK_PARENT_PHRASES):
+            raise RuntimeError("商品親投稿が曖昧な定型表現に寄りすぎています。")
+        stripped = compact.rstrip("。！？!? ")
+        if any(stripped.endswith(x) for x in WEAK_PARENT_ENDINGS) and len(compact) < 70:
+            raise RuntimeError("商品親投稿が抽象的な感想だけで終わっています。")
+        # 商品投稿は最低限、場面・問題・変化を説明できる情報量を要求する。
+        if compact.count("、") + compact.count("。") < 2 and len(compact) < 65:
+            raise RuntimeError("商品親投稿の具体性が不足しています。")
     normalized = _normalize_for_compare(parent)
     for old in recent_posts or []:
         if normalized == _normalize_for_compare(old):
             raise RuntimeError("直近投稿と完全一致しています。")
 
 
-def _validate_child(child):
+def _validate_child(child, parent=""):
     child = str(child).strip()
+    compact = child.replace("\n", "")
     if not child:
         raise RuntimeError("商品補足文が空です。")
-    if len(child.replace("\n", "")) > 180:
+    if len(compact) > 180:
         raise RuntimeError("商品補足文が長すぎます。")
+    if len(compact) < 45:
+        raise RuntimeError("商品補足文が短すぎて購入判断の補足になっていません。")
     if any(x in child for x in ["http://", "https://", "【PR】", "レビュー", "価格:"]):
         raise RuntimeError("商品補足文に禁止要素があります。")
+    if parent and _normalize_for_compare(child) == _normalize_for_compare(parent):
+        raise RuntimeError("親投稿と商品補足文が同一です。")
 
 
 def _event_instruction(events):
@@ -81,13 +101,13 @@ def generate_product_copy(item, recent_posts=None, events=None):
     facts = {"itemCode": item["itemCode"], "itemName": item["itemName"], "itemCaption": item.get("itemCaption", "")[:1000]}
     last_error = None
     for attempt in range(1, MAX_GENERATION_ATTEMPTS + 1):
-        retry_note = "" if attempt == 1 else f"\n再生成{attempt}回目。直前の出力は検証で不採用。直近投稿と同一文にせず、別の切り口・表現で必ず書き直す。"
+        retry_note = "" if attempt == 1 else f"\n再生成{attempt}回目。直前の出力は品質検証で不採用。商品情報の事実だけを使い、具体的な生活場面→特徴→生活上の変化が伝わる別の文章へ書き直す。"
         result = _json_response(f"{base}\n商品:{json.dumps(facts, ensure_ascii=False)}\nイベント:{_event_instruction(events)}\n直近:{json.dumps(recent_posts or [], ensure_ascii=False)}{retry_note}\nJSONのみ: {{\"parent_text\":\"親投稿\",\"child_text_base\":\"具体的な補足文\"}}")
         parent = str(result.get("parent_text", "")).strip()
         child = str(result.get("child_text_base", "")).strip()
         try:
-            _validate_parent(parent, recent_posts)
-            _validate_child(child)
+            _validate_parent(parent, recent_posts, product=True)
+            _validate_child(child, parent)
             return parent, child
         except RuntimeError as exc:
             last_error = exc
@@ -102,8 +122,8 @@ def generate_sample_batch(items, count=5, recent_posts=None, events=None):
     if len(samples) != count:
         raise RuntimeError("バッチ生成件数が不正です。")
     for sample in samples:
-        _validate_parent(sample.get("parent_text", ""), recent_posts)
-        _validate_child(sample.get("child_text_base", ""))
+        _validate_parent(sample.get("parent_text", ""), recent_posts, product=True)
+        _validate_child(sample.get("child_text_base", ""), sample.get("parent_text", ""))
     return samples
 
 
@@ -156,17 +176,18 @@ def _validate_mixed_result(result, items, history):
     recent = [h.get("parent_text", "") for h in history if h.get("parent_text")]
     seen_current = set()
     for post in posts:
-        _validate_parent(post.get("parent_text", ""), recent)
+        is_product = post["type"] == "product"
+        _validate_parent(post.get("parent_text", ""), recent, product=is_product)
         normalized = _normalize_for_compare(post.get("parent_text", ""))
         if normalized in seen_current:
             raise RuntimeError("今回生成した10投稿内で本文が完全一致しています。")
         seen_current.add(normalized)
-        if post["type"] == "product":
+        if is_product:
             code = post.get("selected_item_code")
             if code not in valid_codes:
                 raise RuntimeError(f"候補外の商品コード: {code}")
             codes.append(code)
-            _validate_child(post.get("child_text_base", ""))
+            _validate_child(post.get("child_text_base", ""), post.get("parent_text", ""))
     if len(set(codes)) != 4:
         raise RuntimeError("商品が重複しています。")
     return _arrange_editorial_order(posts, result.get("editorial_order", []))
@@ -184,6 +205,9 @@ Threadsアカウント「これ、家に欲しい」の10投稿を作成する�
 - empathy 6件、product 4件。
 - empathyは楽天商品候補を見て前振りを作らず単体で自然な日常投稿。
 - productは商品情報だけから独立して作る。
+- productは自然さだけで合格にしない。具体的な生活場面・困りごと、商品特徴、生活上のメリットのうち最低2要素を親投稿に入れる。
+- productの返信は親の言い換えではなく、購入判断に役立つ新しい具体情報を最低1つ加える。
+- 「便利そう」「良さそう」「いいかも」だけで商品の魅力を済ませない。
 - 架空の購入・使用経験は禁止。
 - empathyはE1〜E6、productはP1〜P4。
 - empathyは最低5テーマ。掃除・収納・水回りは合計2件まで。最低2件はneutral/positive。
@@ -214,7 +238,7 @@ postsはE1〜E6とP1〜P4を各1件。editorial_orderも同じ10IDを重複な�
 """
     last_error = None
     for attempt in range(1, MAX_GENERATION_ATTEMPTS + 1):
-        retry_note = "" if attempt == 1 else f"\n重要: 再生成{attempt}回目。直前の10投稿は検証で不採用。全10件をゼロから作り直し、履歴と完全一致する本文を絶対に出さない。"
+        retry_note = "" if attempt == 1 else f"\n重要: 再生成{attempt}回目。直前の10投稿は品質検証で不採用。全10件をゼロから作り直し、履歴と完全一致する本文を絶対に出さない。商品投稿は具体的な使用場面と生活上のメリットを明確にする。"
         result = _json_response(base_prompt + retry_note)
         try:
             return _validate_mixed_result(result, items, history)
