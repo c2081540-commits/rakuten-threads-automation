@@ -56,10 +56,9 @@ def publish_post(post):
 
     reply_id = None
     if post.get("type") == "product":
-        # 商品投稿の返信は広告感を抑えるため、短い補足 + PR表記 + リンクだけにする。
-        # 価格・評価・レビュー件数は取得データとして保持するが、投稿本文には自動挿入しない。
-        child = str(post.get("child_text_base", "")).strip()
-        reply = f"{child}\n\n【PR】商品はこちら\n{post['affiliate_url']}"
+        # 商品投稿は、親=短い一言+商品画像、返信=リンク+pr のみ。
+        # 商品説明・価格・評価・レビュー件数・定型PR文は返信に追加しない。
+        reply = f"{post['affiliate_url']} pr"
         reply_container = create_text_container(reply, reply_to_id=thread_id)
         time.sleep(3)
         reply_id = publish_container(reply_container)
