@@ -4,8 +4,10 @@ import requests
 
 BASE = "https://graph.threads.net/v1.0"
 MAX_PRODUCT_IMAGES = 3
-CONTAINER_TIMEOUT_SECONDS = 90
+CONTAINER_TIMEOUT_SECONDS = 120
 CONTAINER_POLL_SECONDS = 2
+PUBLISH_RETRY_ATTEMPTS = 6
+PUBLISH_RETRY_SECONDS = 5
 
 
 def _credentials():
@@ -25,22 +27,26 @@ def _check(resp, label):
     return data["id"]
 
 
-def wait_until_finished(container_id, label="container"):
+def get_container_status(container_id):
     _, token = _credentials()
+    resp = requests.get(
+        f"{BASE}/{container_id}",
+        params={"fields": "id,status,error_message", "access_token": token},
+        timeout=30,
+    )
+    if not resp.ok:
+        raise RuntimeError(f"Threads container status failed: HTTP {resp.status_code} {resp.text[:500]}")
+    return resp.json()
+
+
+def wait_until_finished(container_id, label="container"):
     deadline = time.time() + CONTAINER_TIMEOUT_SECONDS
     last = None
     while time.time() < deadline:
-        resp = requests.get(
-            f"{BASE}/{container_id}",
-            params={"fields": "status,error_message", "access_token": token},
-            timeout=30,
-        )
-        if not resp.ok:
-            raise RuntimeError(f"Threads {label} status failed: HTTP {resp.status_code} {resp.text[:500]}")
-        last = resp.json()
+        last = get_container_status(container_id)
         status = str(last.get("status", "")).upper()
-        if status == "FINISHED":
-            return
+        if status in {"FINISHED", "PUBLISHED"}:
+            return last
         if status in {"ERROR", "EXPIRED"}:
             raise RuntimeError(f"Threads {label} processing failed: {last}")
         time.sleep(CONTAINER_POLL_SECONDS)
@@ -75,17 +81,23 @@ def create_carousel_container(text, image_urls):
 
     children = []
     for index, image_url in enumerate(urls, start=1):
-        data = {"media_type": "IMAGE", "image_url": image_url, "is_carousel_item": "true", "access_token": token}
+        data = {
+            "media_type": "IMAGE",
+            "image_url": image_url,
+            "is_carousel_item": "true",
+            "access_token": token,
+        }
         resp = requests.post(f"{BASE}/{user_id}/threads", data=data, timeout=30)
         child_id = _check(resp, f"carousel child {index} create")
-        # 子コンテナは作成直後には親CAROUSELのchildrenとして使えない場合がある。
-        # FINISHEDになるまで待ってから親を作る。
         wait_until_finished(child_id, f"carousel child {index}")
         children.append(child_id)
 
-    if len(children) != len(urls):
-        raise RuntimeError(f"カルーセル子要素数が不一致です: urls={len(urls)} children={len(children)}")
-    data = {"media_type": "CAROUSEL", "children": ",".join(children), "text": text, "access_token": token}
+    data = {
+        "media_type": "CAROUSEL",
+        "children": ",".join(children),
+        "text": text,
+        "access_token": token,
+    }
     resp = requests.post(f"{BASE}/{user_id}/threads", data=data, timeout=30)
     parent_id = _check(resp, "carousel container create")
     wait_until_finished(parent_id, "carousel container")
@@ -93,9 +105,43 @@ def create_carousel_container(text, image_urls):
 
 
 def publish_container(container_id):
-    user_id, token = _credentials()
-    resp = requests.post(f"{BASE}/{user_id}/threads_publish", data={"creation_id": container_id, "access_token": token}, timeout=30)
-    return _check(resp, "publish")
+    """Publish only after FINISHED and retry Media Not Found propagation errors."""
+    _, token = _credentials()
+    last_error = None
+
+    for attempt in range(1, PUBLISH_RETRY_ATTEMPTS + 1):
+        status_data = wait_until_finished(container_id, "publish target")
+        if str(status_data.get("status", "")).upper() == "PUBLISHED":
+            return container_id
+
+        # Meta公式例に合わせて /me/threads_publish を使用する。
+        resp = requests.post(
+            f"{BASE}/me/threads_publish",
+            params={"creation_id": container_id, "access_token": token},
+            timeout=30,
+        )
+        if resp.ok:
+            return _check(resp, "publish")
+
+        last_error = f"HTTP {resp.status_code} {resp.text[:500]}"
+        try:
+            body = resp.json().get("error", {})
+        except Exception:
+            body = {}
+        code = body.get("code")
+        subcode = body.get("error_subcode")
+
+        # Carousel containerがFINISHED直後でもMedia Not Foundが出ることがあるため、
+        # この既知パターンだけは状態を再確認して待って再試行する。
+        if code == 24 or subcode == 4279009:
+            if attempt < PUBLISH_RETRY_ATTEMPTS:
+                time.sleep(PUBLISH_RETRY_SECONDS)
+                continue
+        raise RuntimeError(f"Threads publish failed: {last_error}")
+
+    raise RuntimeError(
+        f"Threads publish failed after {PUBLISH_RETRY_ATTEMPTS} attempts: {last_error}"
+    )
 
 
 def validate_post(post):
