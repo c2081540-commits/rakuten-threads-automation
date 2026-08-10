@@ -18,11 +18,6 @@ on:
           - '15'
           - '18'
           - '21'
-      republish_posted:
-        description: '投稿済み履歴から再投稿する'
-        required: true
-        default: false
-        type: boolean
       confirm:
         description: '本当に投稿する場合は PUBLISH と入力'
         required: true
@@ -55,12 +50,7 @@ jobs:
         env:
           THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
           THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
-        run: |
-          EXTRA=""
-          if [ "${{ inputs.republish_posted }}" = "true" ]; then
-            EXTRA="--allow-history"
-          fi
-          python manual_publish.py --date "${{ inputs.target_date }}" --hour "${{ inputs.target_hour }}" $EXTRA
+        run: python manual_publish.py --date "${{ inputs.target_date }}" --hour "${{ inputs.target_hour }}"
 
       - name: Save queue and history
         run: |
