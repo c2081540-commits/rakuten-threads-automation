@@ -108,6 +108,67 @@ def _schedule_for_two_days(start_date):
     return slots
 
 
+def _complete_product_row(row, item):
+    child = str(row.get("child_text_base", "")).strip()
+    if not child:
+        raise RuntimeError(f"商品補足文が空です: {row.get('post_id')}")
+    image_urls = item["imageUrls"][:MAX_PRODUCT_IMAGES]
+    if not image_urls:
+        raise RuntimeError(f"商品画像がありません: {item['itemCode']}")
+    row.update({"item_name": item["itemName"], "item_code": item["itemCode"], "image_url": image_urls[0], "image_urls": image_urls, "affiliate_url": item["affiliateUrl"], "price": item["itemPrice"], "rating": item["reviewAverage"], "review_count": item["reviewCount"]})
+    return row
+
+
+def build_today_remaining(save=False):
+    now = datetime.now(JST)
+    remaining_hours = [h for h in DAILY_HOURS if h > now.hour]
+    if not remaining_hours:
+        raise RuntimeError("本日の未到来投稿枠がありません。")
+    queue_data = load_queue()["posts"]
+    existing_today_hours = set()
+    for p in queue_data:
+        try:
+            dt = datetime.fromisoformat(str(p.get("scheduled_at", ""))).astimezone(JST)
+        except (ValueError, TypeError):
+            continue
+        if dt.date() == now.date():
+            existing_today_hours.add(dt.hour)
+    remaining_hours = [h for h in remaining_hours if h not in existing_today_hours]
+    if not remaining_hours:
+        raise RuntimeError("本日の残り枠はすでにqueueに存在します。")
+
+    _, _, shortlist = get_shortlist(limit=10)
+    events = get_active_rakuten_events()
+    history = recent_entries(limit=20)
+    generated = arrange_stock_posts(generate_mixed_stock(shortlist, recent_history=history, existing_queue=queue_data, events=events))
+    by_code = {x["itemCode"]: x for x in shortlist}
+
+    # その日の5枠のうち、生成済み1日目の同じslotを採用する。
+    first_day = generated[:5]
+    slot_by_hour = dict(zip(DAILY_HOURS, first_day))
+    completed = []
+    for sequence, hour in enumerate(remaining_hours, start=1):
+        post = dict(slot_by_hour[hour])
+        scheduled = datetime(now.year, now.month, now.day, hour, 0, tzinfo=JST)
+        post["post_id"] = f"TODAY-{now.strftime('%Y%m%d')}-{hour:02d}"
+        post["stock_sequence"] = sequence
+        post["day_in_batch"] = 0
+        post["slot_in_day"] = DAILY_HOURS.index(hour) + 1
+        post["scheduled_at"] = scheduled.isoformat(timespec="minutes")
+        post["scheduled_hour"] = hour
+        post["status"] = "scheduled"
+        if post["type"] == "product":
+            post = _complete_product_row(post, by_code[post["selected_item_code"]])
+        completed.append(post)
+
+    if save:
+        total = append_posts(completed)
+        status = {"status": "saved", "added": len(completed), "stock_count": total}
+    else:
+        status = {"status": "preview", "added": 0, "stock_count": stock_count()}
+    print(json.dumps({**status, "mode": "today-remaining", "date": now.date().isoformat(), "remaining_hours": remaining_hours, "posts": completed}, ensure_ascii=False, indent=2))
+
+
 def build_stock(save=False, force=False):
     current = stock_count()
     if not force and current > REFILL_THRESHOLD:
@@ -131,14 +192,7 @@ def build_stock(save=False, force=False):
         row["scheduled_hour"] = scheduled.hour
         row["status"] = "scheduled"
         if row["type"] == "product":
-            item = by_code[row["selected_item_code"]]
-            child = str(row.get("child_text_base", "")).strip()
-            if not child:
-                raise RuntimeError(f"商品補足文が空です: {row['post_id']}")
-            image_urls = item["imageUrls"][:MAX_PRODUCT_IMAGES]
-            if not image_urls:
-                raise RuntimeError(f"商品画像がありません: {item['itemCode']}")
-            row.update({"item_name": item["itemName"], "item_code": item["itemCode"], "image_url": image_urls[0], "image_urls": image_urls, "affiliate_url": item["affiliateUrl"], "price": item["itemPrice"], "rating": item["reviewAverage"], "review_count": item["reviewCount"]})
+            row = _complete_product_row(row, by_code[row["selected_item_code"]])
         completed.append(row)
     if save:
         total = append_posts(completed)
@@ -150,7 +204,7 @@ def build_stock(save=False, force=False):
 
 def main():
     parser = argparse.ArgumentParser(description="楽天Threads自動投稿システム")
-    parser.add_argument("--mode", choices=["preview", "full-preview", "samples", "events", "stock-preview", "stock-refill"], default="preview")
+    parser.add_argument("--mode", choices=["preview", "full-preview", "samples", "events", "stock-preview", "stock-refill", "today-preview", "today-refill"], default="preview")
     parser.add_argument("--count", type=int, default=5)
     parser.add_argument("--force", action="store_true")
     args = parser.parse_args()
@@ -160,6 +214,8 @@ def main():
     elif args.mode == "events": preview_events()
     elif args.mode == "stock-preview": build_stock(save=False, force=True)
     elif args.mode == "stock-refill": build_stock(save=True, force=args.force)
+    elif args.mode == "today-preview": build_today_remaining(save=False)
+    elif args.mode == "today-refill": build_today_remaining(save=True)
 
 
 if __name__ == "__main__":
