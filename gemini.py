@@ -7,6 +7,7 @@ from openai import OpenAI
 ROOT = Path(__file__).resolve().parent
 MODEL = os.environ.get("OPENAI_MODEL", "gpt-5-mini").strip()
 MAX_OUTPUT_TOKENS = 7000
+MAX_GENERATION_ATTEMPTS = 3
 
 
 def _api_key():
@@ -78,12 +79,19 @@ def select_product(items):
 def generate_product_copy(item, recent_posts=None, events=None):
     base = _load_prompt("product.txt")
     facts = {"itemCode": item["itemCode"], "itemName": item["itemName"], "itemCaption": item.get("itemCaption", "")[:1000]}
-    result = _json_response(f"{base}\n商品:{json.dumps(facts, ensure_ascii=False)}\nイベント:{_event_instruction(events)}\n直近:{json.dumps(recent_posts or [], ensure_ascii=False)}\nJSONのみ: {{\"parent_text\":\"親投稿\",\"child_text_base\":\"具体的な補足文\"}}")
-    parent = str(result.get("parent_text", "")).strip()
-    child = str(result.get("child_text_base", "")).strip()
-    _validate_parent(parent, recent_posts)
-    _validate_child(child)
-    return parent, child
+    last_error = None
+    for attempt in range(1, MAX_GENERATION_ATTEMPTS + 1):
+        retry_note = "" if attempt == 1 else f"\n再生成{attempt}回目。直前の出力は検証で不採用。直近投稿と同一文にせず、別の切り口・表現で必ず書き直す。"
+        result = _json_response(f"{base}\n商品:{json.dumps(facts, ensure_ascii=False)}\nイベント:{_event_instruction(events)}\n直近:{json.dumps(recent_posts or [], ensure_ascii=False)}{retry_note}\nJSONのみ: {{\"parent_text\":\"親投稿\",\"child_text_base\":\"具体的な補足文\"}}")
+        parent = str(result.get("parent_text", "")).strip()
+        child = str(result.get("child_text_base", "")).strip()
+        try:
+            _validate_parent(parent, recent_posts)
+            _validate_child(child)
+            return parent, child
+        except RuntimeError as exc:
+            last_error = exc
+    raise RuntimeError(f"商品文章を{MAX_GENERATION_ATTEMPTS}回再生成しても検証を通過しませんでした: {last_error}")
 
 
 def generate_sample_batch(items, count=5, recent_posts=None, events=None):
@@ -130,12 +138,46 @@ def _arrange_editorial_order(posts, order):
     return arranged
 
 
+def _validate_mixed_result(result, items, history):
+    posts = _normalize_mixed_stock(result.get("posts", []))
+    empathy = [p for p in posts if p.get("type") == "empathy"]
+    expected_ids = {f"E{i}" for i in range(1, 7)} | {f"P{i}" for i in range(1, 5)}
+    if {p.get("post_id") for p in posts} != expected_ids:
+        raise RuntimeError("投稿IDが不正です。")
+    groups = [str(p.get("theme_group", "")).strip() for p in empathy]
+    if len(set(x for x in groups if x)) < 5:
+        raise RuntimeError(f"共感テーマ分散不足: {groups}")
+    if sum(x in {"掃除", "収納", "水回り"} for x in groups) > 2:
+        raise RuntimeError("掃除・収納・水回りに偏りすぎています。")
+    if sum(str(p.get("tone", "")) in {"neutral", "positive"} for p in empathy) < 2:
+        raise RuntimeError("共感投稿がネガティブに偏っています。")
+    valid_codes = {x["itemCode"] for x in items}
+    codes = []
+    recent = [h.get("parent_text", "") for h in history if h.get("parent_text")]
+    seen_current = set()
+    for post in posts:
+        _validate_parent(post.get("parent_text", ""), recent)
+        normalized = _normalize_for_compare(post.get("parent_text", ""))
+        if normalized in seen_current:
+            raise RuntimeError("今回生成した10投稿内で本文が完全一致しています。")
+        seen_current.add(normalized)
+        if post["type"] == "product":
+            code = post.get("selected_item_code")
+            if code not in valid_codes:
+                raise RuntimeError(f"候補外の商品コード: {code}")
+            codes.append(code)
+            _validate_child(post.get("child_text_base", ""))
+    if len(set(codes)) != 4:
+        raise RuntimeError("商品が重複しています。")
+    return _arrange_editorial_order(posts, result.get("editorial_order", []))
+
+
 def generate_mixed_stock(items, recent_history=None, existing_queue=None, events=None):
     product_prompt = _load_prompt("product.txt")
     empathy_prompt = _load_prompt("empathy.txt")
     history = recent_history or []
     queued = existing_queue or []
-    prompt = f"""
+    base_prompt = f"""
 Threadsアカウント「これ、家に欲しい」の10投稿を作成する。
 最重要: 10件は2日分の固定投稿枠。1番=07:00、2番=12:00、3番=15:00、4番=18:00、5番=21:00。6〜10番も翌日同順。
 
@@ -148,6 +190,7 @@ Threadsアカウント「これ、家に欲しい」の10投稿を作成する�
 - productは4商品重複禁止。用途を分散。掛ける/収納系は最大2件。同系統ブランド3件以上は禁止。
 - 各日必ずempathy 3件、product 2件。商品同士を連続させない。同系統テーマも固めない。
 - 時刻に不自然な本文は禁止。
+- 実投稿履歴と未投稿キューにある本文をそのまま再利用しない。意味が近くても同一文のコピーは禁止。
 
 【商品ルール】
 {product_prompt}
@@ -169,30 +212,12 @@ JSONのみ:
 ],"editorial_order":["E1","P1","E2","P2","E3","E4","P3","E5","P4","E6"]}}
 postsはE1〜E6とP1〜P4を各1件。editorial_orderも同じ10IDを重複なく1回ずつ使う。
 """
-    result = _json_response(prompt)
-    posts = _normalize_mixed_stock(result.get("posts", []))
-    empathy = [p for p in posts if p.get("type") == "empathy"]
-    expected_ids = {f"E{i}" for i in range(1, 7)} | {f"P{i}" for i in range(1, 5)}
-    if {p.get("post_id") for p in posts} != expected_ids:
-        raise RuntimeError("投稿IDが不正です。")
-    groups = [str(p.get("theme_group", "")).strip() for p in empathy]
-    if len(set(x for x in groups if x)) < 5:
-        raise RuntimeError(f"共感テーマ分散不足: {groups}")
-    if sum(x in {"掃除", "収納", "水回り"} for x in groups) > 2:
-        raise RuntimeError("掃除・収納・水回りに偏りすぎています。")
-    if sum(str(p.get("tone", "")) in {"neutral", "positive"} for p in empathy) < 2:
-        raise RuntimeError("共感投稿がネガティブに偏っています。")
-    valid_codes = {x["itemCode"] for x in items}
-    codes = []
-    recent = [h.get("parent_text", "") for h in history if h.get("parent_text")]
-    for post in posts:
-        _validate_parent(post.get("parent_text", ""), recent)
-        if post["type"] == "product":
-            code = post.get("selected_item_code")
-            if code not in valid_codes:
-                raise RuntimeError(f"候補外の商品コード: {code}")
-            codes.append(code)
-            _validate_child(post.get("child_text_base", ""))
-    if len(set(codes)) != 4:
-        raise RuntimeError("商品が重複しています。")
-    return _arrange_editorial_order(posts, result.get("editorial_order", []))
+    last_error = None
+    for attempt in range(1, MAX_GENERATION_ATTEMPTS + 1):
+        retry_note = "" if attempt == 1 else f"\n重要: 再生成{attempt}回目。直前の10投稿は検証で不採用。全10件をゼロから作り直し、履歴と完全一致する本文を絶対に出さない。"
+        result = _json_response(base_prompt + retry_note)
+        try:
+            return _validate_mixed_result(result, items, history)
+        except RuntimeError as exc:
+            last_error = exc
+    raise RuntimeError(f"10投稿を{MAX_GENERATION_ATTEMPTS}回再生成しても検証を通過しませんでした: {last_error}")
