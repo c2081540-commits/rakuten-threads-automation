@@ -1,21 +1,6 @@
 {
   "posts": [
     {
-      "post_id": "TODAY-20260810-21",
-      "type": "empathy",
-      "parent_text": "料理してるときに調味料を手元に置けるとテンポが変わる。小さい定位置があると動線がスムーズ。",
-      "theme": "食事/料理",
-      "theme_group": "食事/料理",
-      "tone": "positive",
-      "context_note": "",
-      "stock_sequence": 2,
-      "day_in_batch": 0,
-      "slot_in_day": 5,
-      "scheduled_at": "2026-08-10T21:00+09:00",
-      "scheduled_hour": 21,
-      "status": "scheduled"
-    },
-    {
       "post_id": "E1",
       "type": "empathy",
       "parent_text": "朝の一杯で体が動き出す気がする。ちょっとだけ丁寧に淹れると出勤前の慌ただしさも落ち着く。",
