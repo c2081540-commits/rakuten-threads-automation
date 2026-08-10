@@ -50,15 +50,15 @@ def publish_post(post):
     else:
         container = create_text_container(post["parent_text"])
 
-    # Meta側のコンテナ準備に短い待機を入れる。失敗時の自動リトライはしない。
     time.sleep(3)
     thread_id = publish_container(container)
 
     reply_id = None
     if post.get("type") == "product":
-        # 商品投稿は、親=短い一言+商品画像、返信=リンク+pr のみ。
-        # 商品説明・価格・評価・レビュー件数・定型PR文は返信に追加しない。
-        reply = f"{post['affiliate_url']} pr"
+        child = str(post.get("child_text_base", "")).strip()
+        if not child:
+            raise RuntimeError("商品投稿の child_text_base が空です。生成データを確認してください。")
+        reply = f"{child}\n\n【PR】\n{post['affiliate_url']}"
         reply_container = create_text_container(reply, reply_to_id=thread_id)
         time.sleep(3)
         reply_id = publish_container(reply_container)
