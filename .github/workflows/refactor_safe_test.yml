@@ -26,8 +26,34 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Run pure scheduling tests
-        run: python -m unittest discover -s tests -p 'test_*.py' -v
+      - name: Compile all Python files
+        run: python -m compileall -q .
+
+      - name: Run scheduling smoke tests
+        run: |
+          python - <<'PY'
+          from datetime import date
+          from main import DAILY_HOURS, JST, _schedule_for_two_days, arrange_stock_posts
+
+          slots = _schedule_for_two_days(date(2026, 8, 12))
+          assert len(slots) == 10
+          assert [x.hour for x in slots[:5]] == DAILY_HOURS
+          assert [x.hour for x in slots[5:]] == DAILY_HOURS
+          assert all(x.tzinfo == JST for x in slots)
+
+          posts = []
+          for i in range(1, 7):
+              posts.append({"post_id": f"E{i}", "type": "empathy"})
+          for i in range(1, 5):
+              posts.append({"post_id": f"P{i}", "type": "product"})
+          arranged = arrange_stock_posts(posts[:3] + posts[6:8] + posts[3:6] + posts[8:10])
+          assert len(arranged) == 10
+          assert sum(p["type"] == "empathy" for p in arranged[:5]) == 3
+          assert sum(p["type"] == "product" for p in arranged[:5]) == 2
+          assert sum(p["type"] == "empathy" for p in arranged[5:]) == 3
+          assert sum(p["type"] == "product" for p in arranged[5:]) == 2
+          print("OK: scheduling smoke tests passed")
+          PY
 
       - name: Preview next daily stock without saving
         env:
