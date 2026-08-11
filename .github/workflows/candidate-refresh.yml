@@ -51,7 +51,7 @@ jobs:
 
       - name: Commit latest candidate file
         run: |
-          if git diff --quiet -- data/candidates/latest.json; then
+          if [ -z "$(git status --porcelain -- data/candidates/latest.json)" ]; then
             echo "Candidate file is unchanged."
             exit 0
           fi
