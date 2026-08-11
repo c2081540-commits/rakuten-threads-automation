@@ -122,7 +122,9 @@ def _validate_empathy_text(text, hour, target_date=None):
     if sentence_count < 2 or sentence_count > 4:
         raise RuntimeError("共感投稿は2〜4文で書いてください。")
     _validate_slot_language(text, hour, target_date)
-    product_leak = ("段差や縁", "ワンタッチ", "パッキン", "折りたた", "収納時", "定位置", "場所を取らない", "持ち運びやす")
+    # 「定位置」は「鍵の定位置を決める」のような通常の日常表現にも使うため、
+    # 単語だけで商品訴求と判定しない。ここでは商品仕様に特有の表現だけを弾く。
+    product_leak = ("段差や縁", "ワンタッチ", "パッキン", "折りたた", "収納時", "場所を取らない", "持ち運びやす")
     if any(x in text for x in product_leak):
         raise RuntimeError(f"共感投稿が商品訴求に寄っています: {text}")
 

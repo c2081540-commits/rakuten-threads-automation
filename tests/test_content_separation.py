@@ -73,6 +73,13 @@ class EmpathyGateTest(unittest.TestCase):
     def test_accepts_two_sentence_scene_and_empathy(self):
         gemini._validate_empathy_text(self._valid(), 15, date(2026, 8, 13))
 
+    def test_accepts_key_fixed_place_as_normal_daily_scene(self):
+        text = (
+            "朝、出かける直前に鍵が見つからなくて靴をひっくり返す時間が嫌い。"
+            "定位置を決めればいいと分かっているのに、その30秒でイライラして結局探し物をして遅刻しそうになる。"
+        )
+        gemini._validate_empathy_text(text, 7, date(2026, 8, 12))
+
     def test_rejects_afternoon_language_in_7am_slot(self):
         with self.assertRaisesRegex(RuntimeError, "時刻表現"):
             gemini._validate_empathy_text(self._valid("午後の休憩に窓の外を見ると、仕事の手を止めたくなる。"), 7, date(2026, 8, 13))
