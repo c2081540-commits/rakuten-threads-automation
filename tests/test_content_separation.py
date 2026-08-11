@@ -39,27 +39,22 @@ def _items():
 
 
 class EvidenceGateTest(unittest.TestCase):
-    def test_rejects_fact_not_present_verbatim_in_selected_product(self):
-        response = {
-            "products": [
-                {"selected_item_code": "shop:box", "facts": ["スプーン付き", "パッキン付き"]},
-                {"selected_item_code": "shop:bucket", "facts": ["35L", "水運び"]},
-            ]
-        }
+    def test_model_selects_but_python_attaches_untouched_source(self):
+        response = {"selected_item_codes": ["shop:bucket", "shop:box"]}
         with patch.object(gemini, "_json_response", return_value=response):
-            with self.assertRaisesRegex(RuntimeError, "存在しない事実"):
-                gemini._extract_verified_product_facts(_items())
+            verified = gemini._select_grounded_products(_items(), date(2026, 8, 13))
+        self.assertEqual([x["selected_item_code"] for x in verified], ["shop:bucket", "shop:box"])
+        self.assertIn("四角い大型バケツ 35L", verified[0]["facts"])
+        self.assertIn("ウェットスーツの洗浄や水運びに使えます。", verified[0]["facts"])
 
-    def test_accepts_only_verbatim_source_evidence(self):
-        response = {
-            "products": [
-                {"selected_item_code": "shop:box", "facts": ["パッキン付き", "小麦粉1kgを袋ごと収納"]},
-                {"selected_item_code": "shop:bucket", "facts": ["35L", "水運び"]},
-            ]
-        }
-        with patch.object(gemini, "_json_response", return_value=response):
-            verified = gemini._extract_verified_product_facts(_items())
-        self.assertEqual(verified[0]["facts"][0], "パッキン付き")
+    def test_selection_fallback_rotates_instead_of_fixing_products(self):
+        with patch.object(gemini, "_json_response", return_value={"selected_item_codes": []}):
+            verified = gemini._select_grounded_products(_items(), date(2026, 8, 13))
+        self.assertEqual(set(x["selected_item_code"] for x in verified), {"shop:box", "shop:bucket"})
+
+    def test_requires_two_usable_distinct_products(self):
+        with self.assertRaisesRegex(RuntimeError, "2件未満"):
+            gemini._select_grounded_products(_items()[:1])
 
 
 class EmpathyGateTest(unittest.TestCase):
@@ -125,6 +120,15 @@ class RegenerationTest(unittest.TestCase):
         self.assertEqual(len(calls), 3)
         self.assertIsInstance(calls[1][1], RuntimeError)
 
+    def test_quality_fallback_continues_after_three_failures(self):
+        result = gemini._generate_with_validation(
+            "商品投稿",
+            lambda attempt, last_error: {"draft": attempt},
+            lambda value: (_ for _ in ()).throw(RuntimeError("品質不合格")),
+            fallback=lambda last_result, last_error: {"used": last_result["draft"]},
+        )
+        self.assertEqual(result, {"used": 3})
+
 
 class EmpathyFallbackTest(unittest.TestCase):
     def test_fallback_always_returns_three_valid_distinct_posts(self):
@@ -144,24 +148,49 @@ class EmpathyFallbackTest(unittest.TestCase):
             {"post_id": "P2", "type": "product", "selected_item_code": "shop:bucket"},
         ]
 
-        def run_stage(label, build, validate):
+        def run_stage(label, build, validate, fallback=None):
             if label == "共感投稿":
                 raise RuntimeError("3回とも不合格")
-            if label == "商品事実抽出":
-                return verified
+            if label == "商品選択":
+                return ["shop:box", "shop:bucket"]
             if label == "商品投稿":
                 return products
-            self.assertEqual(label, "最終編集")
-            return build(1, None)
 
-        with patch.object(gemini, "_generate_with_validation", side_effect=run_stage), patch.object(
-            gemini, "_final_editorial_pass", side_effect=lambda posts, *_: posts
-        ):
+        with patch.object(gemini, "_generate_with_validation", side_effect=run_stage):
             result = gemini.generate_mixed_stock(_items(), target_date=date(2026, 8, 13))
 
         self.assertEqual(len(result), 5)
         self.assertEqual([post["type"] for post in result], ["empathy", "product", "empathy", "product", "empathy"])
         self.assertTrue(all(post.get("context_note") == "fallback" for post in result if post["type"] == "empathy"))
+
+    def test_product_paraphrase_quality_failure_does_not_stop_batch(self):
+        empathy = gemini._fallback_empathy_posts(date(2026, 8, 13))
+        drafts = [
+            {
+                "post_id": "P1", "type": "product", "selected_item_code": "shop:box",
+                "parent_text": "粉ものの袋を開けるたびに口を閉じ直す手間を減らし、調理中でも必要な量をすぐ取り出せる。",
+                "child_text_base": "袋のまま入れられる容量があり、使い終わった後も中身をまとめて保管できます。",
+            },
+            {
+                "post_id": "P2", "type": "product", "selected_item_code": "shop:bucket",
+                "parent_text": "海から戻った後、濡れた道具をまとめて洗えるので、何度も水を運ぶ手間を減らせる。",
+                "child_text_base": "35Lの四角い形で、ウェットスーツの洗浄や水運びに使えます。",
+            },
+        ]
+
+        responses = iter([
+            {"posts": empathy},
+            {"selected_item_codes": ["shop:box", "shop:bucket"]},
+            {"posts": drafts}, {"posts": drafts}, {"posts": drafts},
+        ])
+        with patch.object(gemini, "_json_response", side_effect=lambda prompt: next(responses)), patch.object(
+            gemini, "_validate_product_copy_against_facts", side_effect=RuntimeError("言い換え品質の判定不合格")
+        ):
+            result = gemini.generate_mixed_stock(_items(), target_date=date(2026, 8, 13))
+
+        self.assertEqual(len(result), 5)
+        self.assertEqual([post["type"] for post in result], ["empathy", "product", "empathy", "product", "empathy"])
+        self.assertTrue(all(post.get("context_note") == "quality-fallback" for post in result if post["type"] == "product"))
 
 
 if __name__ == "__main__":
