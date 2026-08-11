@@ -122,8 +122,39 @@ def _complete_product_row(row, item):
 def build_today_remaining(save=False):
     now = datetime.now(JST)
     remaining_hours = [h for h in DAILY_HOURS if h > now.hour]
+
+    # 21時以降は「今日の残り枠なし」で終了せず、翌日分のストック生成へ切り替える。
+    # today-refill はそのまま保存、today-preview は保存せず翌日分をプレビューする。
     if not remaining_hours:
-        raise RuntimeError("本日の未到来投稿枠がありません。")
+        current = stock_count()
+        queue_data = load_queue()["posts"]
+        _, _, shortlist = get_shortlist(limit=10)
+        events = get_active_rakuten_events()
+        history = recent_entries(limit=20)
+        posts = arrange_stock_posts(generate_mixed_stock(shortlist, recent_history=history, existing_queue=queue_data, events=events))
+        by_code = {x["itemCode"]: x for x in shortlist}
+        start_date = now.date() + timedelta(days=1)
+        slots = _schedule_for_two_days(start_date)
+        completed = []
+        for sequence, (post, scheduled) in enumerate(zip(posts, slots), start=1):
+            row = dict(post)
+            row["stock_sequence"] = sequence
+            row["day_in_batch"] = 1 if sequence <= 5 else 2
+            row["slot_in_day"] = ((sequence - 1) % 5) + 1
+            row["scheduled_at"] = scheduled.isoformat(timespec="minutes")
+            row["scheduled_hour"] = scheduled.hour
+            row["status"] = "scheduled"
+            if row["type"] == "product":
+                row = _complete_product_row(row, by_code[row["selected_item_code"]])
+            completed.append(row)
+
+        if save:
+            total = append_posts(completed)
+            status = {"status": "saved", "added": len(completed), "stock_count": total}
+        else:
+            status = {"status": "preview", "added": 0, "stock_count": current}
+        print(json.dumps({**status, "mode": "next-day-stock", "date": now.date().isoformat(), "target_start_date": start_date.isoformat(), "openai_requests": 1, "ratio": {"empathy": 6, "product": 4}, "active_rakuten_events": [e["name"] for e in events], "posts": completed}, ensure_ascii=False, indent=2))
+        return
 
     queue_data = load_queue()["posts"]
     # today-refill は「空き枠追加」ではなく「本日の未到来枠を新仕様で上書き」する。
