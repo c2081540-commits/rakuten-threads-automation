@@ -93,5 +93,35 @@ class EmpathyGateTest(unittest.TestCase):
             gemini._validate_empathy_text(self._valid("段差や縁があるだけで瓶が安定して、置き場所が決まる。"), 21, date(2026, 8, 13))
 
 
+class RegenerationTest(unittest.TestCase):
+    def test_regenerates_after_validation_failure(self):
+        outputs = iter(["短い。", "具体的な日常場面と共感の着地点を含む十分な長さの完成文です。"])
+
+        def build(attempt, last_error):
+            return next(outputs)
+
+        def validate(value):
+            if len(value) < 20:
+                raise RuntimeError("短すぎます")
+            return value
+
+        result = gemini._generate_with_validation("共感投稿", build, validate)
+        self.assertEqual(result, "具体的な日常場面と共感の着地点を含む十分な長さの完成文です。")
+
+    def test_stops_after_three_failed_attempts(self):
+        calls = []
+
+        def build(attempt, last_error):
+            calls.append((attempt, last_error))
+            return "短い。"
+
+        with self.assertRaisesRegex(RuntimeError, "3回再生成"):
+            gemini._generate_with_validation(
+                "共感投稿", build, lambda value: (_ for _ in ()).throw(RuntimeError("短すぎます"))
+            )
+        self.assertEqual(len(calls), 3)
+        self.assertIsInstance(calls[1][1], RuntimeError)
+
+
 if __name__ == "__main__":
     unittest.main()

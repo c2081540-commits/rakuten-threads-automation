@@ -129,6 +129,20 @@ def _validate_empathy_text(text, hour, target_date=None):
         raise RuntimeError(f"共感投稿が商品訴求に寄っています: {text}")
 
 
+def _generate_with_validation(label, build, validate):
+    """Regenerate model output when the deterministic quality gate rejects it."""
+    last_error = None
+    for attempt in range(1, MAX_GENERATION_ATTEMPTS + 1):
+        try:
+            result = build(attempt, last_error)
+            return validate(result)
+        except RuntimeError as exc:
+            last_error = exc
+            if attempt < MAX_GENERATION_ATTEMPTS:
+                print(f"{label}の検品不合格: 自動再生成します ({attempt}/{MAX_GENERATION_ATTEMPTS}): {exc}")
+    raise RuntimeError(f"{label}を{MAX_GENERATION_ATTEMPTS}回再生成しても検品を通過しませんでした: {last_error}")
+
+
 def _final_editorial_pass(posts, verified, target_date=None):
     """Read the full day as an editor and rewrite text only; IDs and facts stay pinned."""
     facts_by_code = {x["selected_item_code"]: x["facts"] for x in verified}
@@ -438,33 +452,49 @@ def generate_mixed_stock(items, recent_history=None, existing_queue=None, events
     queued = existing_queue or []
     recent = history + queued
 
-    # Product candidates are deliberately absent from this request.
-    empathy_result = _json_response(f"""
+    empathy_hours = {"E1": 7, "E2": 15, "E3": 21}
+
+    def build_empathy(attempt, last_error):
+        retry = "" if last_error is None else f"\n前回の不合格理由:{last_error}\n理由を解消し、3件すべてを完成形で書き直す。"
+        # Product candidates are deliberately absent from this request.
+        return _json_response(f"""
 {empathy_prompt}
 次の固定枠に1件ずつ作る: E1=07:00、E2=15:00、E3=21:00。
 対象日:{target_date.isoformat() if target_date else "未指定"}
 3件は別テーマ。掃除・収納・水回りは合計1件まで。曜日や時刻と矛盾する表現は禁止。
 商品、道具の機能、形状、収納方法を連想させる前振りは禁止。
 履歴:{json.dumps(recent, ensure_ascii=False)}
+{retry}
 JSONのみ: {{"posts":[{{"post_id":"E1","type":"empathy","parent_text":"本文","theme":"テーマ","theme_group":"季節/天気|食事/料理|買い物|洗濯/衣類|朝夜/休日|休憩|掃除|収納|水回り|その他生活","tone":"neutral|positive|negative","context_note":""}}]}}
 E1、E2、E3を各1件だけ返す。
 """)
-    empathy = empathy_result.get("posts", [])
-    if {x.get("post_id") for x in empathy} != {"E1", "E2", "E3"} or len(empathy) != 3:
-        raise RuntimeError("共感投稿IDが不足または重複しています。")
-    empathy_hours = {"E1": 7, "E2": 15, "E3": 21}
-    groups = []
-    for post in empathy:
-        if post.get("type") != "empathy":
-            raise RuntimeError("共感生成に商品投稿が混入しました。")
-        _validate_empathy_text(post.get("parent_text", ""), empathy_hours[post["post_id"]], target_date)
-        groups.append(str(post.get("theme_group", "")).strip())
-    if len(set(groups)) != 3 or sum(x in {"掃除", "収納", "水回り"} for x in groups) > 1:
-        raise RuntimeError(f"共感テーマ分散不足: {groups}")
+
+    def validate_empathy(result):
+        empathy_posts = result.get("posts", [])
+        if {x.get("post_id") for x in empathy_posts} != {"E1", "E2", "E3"} or len(empathy_posts) != 3:
+            raise RuntimeError("共感投稿IDが不足または重複しています。")
+        groups = []
+        for post in empathy_posts:
+            if post.get("type") != "empathy":
+                raise RuntimeError("共感生成に商品投稿が混入しました。")
+            _validate_empathy_text(post.get("parent_text", ""), empathy_hours[post["post_id"]], target_date)
+            groups.append(str(post.get("theme_group", "")).strip())
+        if len(set(groups)) != 3 or sum(x in {"掃除", "収納", "水回り"} for x in groups) > 1:
+            raise RuntimeError(f"共感テーマ分散不足: {groups}")
+        return empathy_posts
+
+    empathy = _generate_with_validation("共感投稿", build_empathy, validate_empathy)
 
     # First pin facts to verbatim source evidence; the copy request never sees full captions.
-    verified = _extract_verified_product_facts(items)
-    product_result = _json_response(f"""
+    verified = _generate_with_validation(
+        "商品事実抽出",
+        lambda attempt, last_error: _extract_verified_product_facts(items),
+        lambda result: result,
+    )
+
+    def build_products(attempt, last_error):
+        retry = "" if last_error is None else f"\n前回の不合格理由:{last_error}\n確認済み事実だけを使って2件とも書き直す。"
+        return _json_response(f"""
 {product_prompt}
 以下は商品ページ原文との完全一致をコードで確認済みの事実抜粋だけである。
 このfacts以外の部品、機能、材質、付属品、収納方法、効果を追加してはいけない。
@@ -473,34 +503,46 @@ factsはコピーせず、事実を根拠に「具体的な使用場面＋生活
 確認済み事実:{json.dumps(verified, ensure_ascii=False)}
 履歴:{json.dumps(recent, ensure_ascii=False)}
 イベント:{_event_instruction(events)}
+{retry}
 JSONのみ: {{"posts":[{{"post_id":"P1","type":"product","selected_item_code":"itemCode","parent_text":"使用場面と便益","child_text_base":"親と異なる確認済み事実1〜2点の補足","theme":"テーマ","product_group":"用途","context_note":""}}]}}
 P1とP2を、確認済み事実の商品順に各1件返す。
 """)
-    products = product_result.get("posts", [])
     expected_codes = [x["selected_item_code"] for x in verified]
-    if [x.get("post_id") for x in products] != ["P1", "P2"] or [x.get("selected_item_code") for x in products] != expected_codes:
-        raise RuntimeError("商品投稿IDまたは商品コードが確認済み事実と一致しません。")
     facts_by_code = {x["selected_item_code"]: x["facts"] for x in verified}
-    for post in products:
-        _validate_product_copy_against_facts(post.get("parent_text", ""), post.get("child_text_base", ""), facts_by_code[post["selected_item_code"]])
+
+    def validate_products(result):
+        product_posts = result.get("posts", [])
+        if [x.get("post_id") for x in product_posts] != ["P1", "P2"] or [x.get("selected_item_code") for x in product_posts] != expected_codes:
+            raise RuntimeError("商品投稿IDまたは商品コードが確認済み事実と一致しません。")
+        for post in product_posts:
+            _validate_product_copy_against_facts(post.get("parent_text", ""), post.get("child_text_base", ""), facts_by_code[post["selected_item_code"]])
+        return product_posts
+
+    products = _generate_with_validation("商品投稿", build_products, validate_products)
 
     by_id = {x["post_id"]: x for x in empathy + products}
     arranged = [by_id[x] for x, _ in DAILY_SLOTS]
-    arranged = _final_editorial_pass(arranged, verified, target_date)
     recent_text = [h.get("parent_text", "") for h in recent if h.get("parent_text")]
-    seen = set()
-    for (_, hour), post in zip(DAILY_SLOTS, arranged):
-        if post["type"] == "empathy":
-            _validate_empathy_text(post.get("parent_text", ""), hour, target_date)
-        else:
-            _validate_product_copy_against_facts(
-                post.get("parent_text", ""),
-                post.get("child_text_base", ""),
-                facts_by_code[post["selected_item_code"]],
-            )
-        _validate_parent(post.get("parent_text", ""), recent_text, product=post["type"] == "product")
-        normalized = _normalize_for_compare(post["parent_text"])
-        if normalized in seen:
-            raise RuntimeError("今回生成した5投稿内で本文が完全一致しています。")
-        seen.add(normalized)
-    return arranged
+
+    def validate_final(edited):
+        seen = set()
+        for (_, hour), post in zip(DAILY_SLOTS, edited):
+            if post["type"] == "empathy":
+                _validate_empathy_text(post.get("parent_text", ""), hour, target_date)
+            else:
+                _validate_product_copy_against_facts(
+                    post.get("parent_text", ""), post.get("child_text_base", ""),
+                    facts_by_code[post["selected_item_code"]],
+                )
+            _validate_parent(post.get("parent_text", ""), recent_text, product=post["type"] == "product")
+            normalized = _normalize_for_compare(post["parent_text"])
+            if normalized in seen:
+                raise RuntimeError("今回生成した5投稿内で本文が完全一致しています。")
+            seen.add(normalized)
+        return edited
+
+    return _generate_with_validation(
+        "最終編集",
+        lambda attempt, last_error: _final_editorial_pass(arranged, verified, target_date),
+        validate_final,
+    )
