@@ -63,17 +63,27 @@ class EvidenceGateTest(unittest.TestCase):
 
 
 class EmpathyGateTest(unittest.TestCase):
+    def _valid(self, first="買い物へ行くと、予定になかった物までついカゴに入れてしまう。"):
+        return first + "帰宅してレシートを見ると少し反省するけど、結局ちゃんと使うならいいかと思ってしまう。次に行くとまた同じことを繰り返す。"
+
+    def test_rejects_one_line_poem(self):
+        with self.assertRaisesRegex(RuntimeError, "短すぎます"):
+            gemini._validate_empathy_text("夜ごはんのあと、食器を並べた瞬間だけ小さな満足が来る。", 21, date(2026, 8, 13))
+
+    def test_accepts_two_sentence_scene_and_empathy(self):
+        gemini._validate_empathy_text(self._valid(), 15, date(2026, 8, 13))
+
     def test_rejects_afternoon_language_in_7am_slot(self):
         with self.assertRaisesRegex(RuntimeError, "時刻表現"):
-            gemini._validate_empathy_text("午後の休憩に窓の外を見ると少し落ち着く。", 7, date(2026, 8, 13))
+            gemini._validate_empathy_text(self._valid("午後の休憩に窓の外を見ると、仕事の手を止めたくなる。"), 7, date(2026, 8, 13))
 
     def test_rejects_weekend_language_on_thursday(self):
         with self.assertRaisesRegex(RuntimeError, "週末表現"):
-            gemini._validate_empathy_text("週末に床を掃除すると気分が軽くなる。", 15, date(2026, 8, 13))
+            gemini._validate_empathy_text(self._valid("週末に床を掃除すると、部屋の空気まで変わった気がする。"), 15, date(2026, 8, 13))
 
     def test_rejects_product_feature_leak(self):
         with self.assertRaisesRegex(RuntimeError, "商品訴求"):
-            gemini._validate_empathy_text("段差や縁があるだけで瓶が安定するのがありがたい。", 21, date(2026, 8, 13))
+            gemini._validate_empathy_text(self._valid("段差や縁があるだけで瓶が安定して、置き場所が決まる。"), 21, date(2026, 8, 13))
 
 
 if __name__ == "__main__":

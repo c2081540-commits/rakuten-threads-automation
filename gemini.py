@@ -115,10 +115,69 @@ def _validate_slot_language(text, hour, target_date=None):
 
 def _validate_empathy_text(text, hour, target_date=None):
     _validate_parent(text)
+    compact = str(text).replace("\n", "").strip()
+    sentence_count = sum(compact.count(mark) for mark in ("。", "！", "？", "!", "?"))
+    if len(compact) < 70:
+        raise RuntimeError("共感投稿が短すぎます。具体的な日常場面と共感の着地点を2〜4文で書いてください。")
+    if sentence_count < 2 or sentence_count > 4:
+        raise RuntimeError("共感投稿は2〜4文で書いてください。")
     _validate_slot_language(text, hour, target_date)
     product_leak = ("段差や縁", "ワンタッチ", "パッキン", "折りたた", "収納時", "定位置", "場所を取らない", "持ち運びやす")
     if any(x in text for x in product_leak):
         raise RuntimeError(f"共感投稿が商品訴求に寄っています: {text}")
+
+
+def _final_editorial_pass(posts, verified, target_date=None):
+    """Read the full day as an editor and rewrite text only; IDs and facts stay pinned."""
+    facts_by_code = {x["selected_item_code"]: x["facts"] for x in verified}
+    review_input = []
+    for (_, hour), post in zip(DAILY_SLOTS, posts):
+        row = {
+            "post_id": post["post_id"],
+            "type": post["type"],
+            "scheduled_hour": hour,
+            "parent_text": post.get("parent_text", ""),
+        }
+        if post["type"] == "product":
+            row["selected_item_code"] = post["selected_item_code"]
+            row["child_text_base"] = post.get("child_text_base", "")
+            row["verified_facts"] = facts_by_code[post["selected_item_code"]]
+        review_input.append(row)
+
+    result = _json_response(f"""
+あなたはThreads投稿の最終編集者。以下の1日5投稿を、普通の日本語として声に出して読み、必要な文章だけ直す。
+全5件について完成文を返す。post_id、type、商品コード、商品そのものは変更禁止。
+
+共感投稿:
+- 2〜4文、80〜140字程度。具体的な日常場面→多くの人が分かる感情・あるあるまで書く。
+- 一文ポエム、気取った余韻、説明不足、狭すぎる体験、商品への前振りは禁止。
+- 行動と結果を現実に照らして確認する。因果の逆転や飛躍があれば必ず直す。
+
+商品投稿:
+- verified_facts以外の物理仕様、付属品、材質、機能を追加禁止。
+- 商品説明のコピーではなく、確認済み事実から具体的な使用場面と便益を書く。
+- 主語・動作・対象の係り受けを確認し、「壁ごと動かす」のような誤読が起きる文を直す。
+- 「おしゃれだから荷物管理が快適」のように無関係な特徴と便益を結びつけない。
+- 親と返信で同じ情報を繰り返さない。
+
+対象日:{target_date.isoformat() if target_date else "未指定"}
+投稿:{json.dumps(review_input, ensure_ascii=False)}
+JSONのみ: {{"edits":[{{"post_id":"E1","parent_text":"完成文"}},{{"post_id":"P1","parent_text":"完成文","child_text_base":"完成補足文"}}]}}
+全5件をpost_id順ではなく入力順のまま返す。
+""")
+    edits = result.get("edits", [])
+    expected_ids = [p["post_id"] for p in posts]
+    if [x.get("post_id") for x in edits] != expected_ids:
+        raise RuntimeError("最終編集結果の投稿IDまたは順序が不正です。")
+
+    edited = []
+    for original, edit in zip(posts, edits):
+        row = dict(original)
+        row["parent_text"] = str(edit.get("parent_text", "")).strip()
+        if row["type"] == "product":
+            row["child_text_base"] = str(edit.get("child_text_base", "")).strip()
+        edited.append(row)
+    return edited
 
 
 def _longest_common_run(a, b):
@@ -425,9 +484,18 @@ P1とP2を、確認済み事実の商品順に各1件返す。
 
     by_id = {x["post_id"]: x for x in empathy + products}
     arranged = [by_id[x] for x, _ in DAILY_SLOTS]
+    arranged = _final_editorial_pass(arranged, verified, target_date)
     recent_text = [h.get("parent_text", "") for h in recent if h.get("parent_text")]
     seen = set()
-    for post in arranged:
+    for (_, hour), post in zip(DAILY_SLOTS, arranged):
+        if post["type"] == "empathy":
+            _validate_empathy_text(post.get("parent_text", ""), hour, target_date)
+        else:
+            _validate_product_copy_against_facts(
+                post.get("parent_text", ""),
+                post.get("child_text_base", ""),
+                facts_by_code[post["selected_item_code"]],
+            )
         _validate_parent(post.get("parent_text", ""), recent_text, product=post["type"] == "product")
         normalized = _normalize_for_compare(post["parent_text"])
         if normalized in seen:
