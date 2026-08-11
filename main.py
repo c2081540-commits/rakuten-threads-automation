@@ -2,7 +2,14 @@ import argparse
 import json
 from datetime import datetime, timedelta, timezone
 
-from gemini import generate_product_copy, generate_sample_batch, generate_mixed_stock, select_product
+from gemini import (
+    generate_product_copy,
+    generate_sample_batch,
+    generate_mixed_stock,
+    get_openai_request_count,
+    reset_openai_request_count,
+    select_product,
+)
 from history import recent_entries, recent_texts
 from post_queue import load_queue, replace_slots, stock_count
 from rakuten import fetch_candidate_pool
@@ -111,6 +118,7 @@ def _complete_product_row(row, item):
 
 
 def build_today_remaining(save=False, now=None):
+    reset_openai_request_count()
     now = (now or datetime.now(JST)).astimezone(JST)
     is_next_day = now.hour >= 21
     target_date = now.date() + timedelta(days=1) if is_next_day else now.date()
@@ -164,7 +172,7 @@ def build_today_remaining(save=False, now=None):
             if dt.date() == target_date and dt.hour in target_hours:
                 existing_slots.append(dt.hour)
         status = {"status": "preview", "added": 0, "would_replace": len(existing_slots), "stock_count": stock_count()}
-    print(json.dumps({**status, "mode": "next-day-stock" if is_next_day else "today-replace", "run_date": now.date().isoformat(), "target_date": target_date.isoformat(), "target_hours": target_hours, "openai_requests": 1, "ratio": {"empathy": 3, "product": 2}, "active_rakuten_events": [e["name"] for e in events], "posts": completed}, ensure_ascii=False, indent=2))
+    print(json.dumps({**status, "mode": "next-day-stock" if is_next_day else "today-replace", "run_date": now.date().isoformat(), "target_date": target_date.isoformat(), "target_hours": target_hours, "openai_requests": get_openai_request_count(), "ratio": {"empathy": 3, "product": 2}, "active_rakuten_events": [e["name"] for e in events], "posts": completed}, ensure_ascii=False, indent=2))
 
 
 def build_stock(save=False, force=False):
