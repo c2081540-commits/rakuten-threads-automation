@@ -4,13 +4,81 @@ import requests
 
 API_URL = "https://openapi.rakuten.co.jp/ichibams/api/IchibaItem/Search/20260701"
 
+# 投稿者ペルソナの商品配分に対応する検索群。
+# 各カテゴリを最後まで検索し、収納・キッチンだけに偏らせない。
+SEARCH_GROUPS = [
+    {
+        "id": "after_work_kitchen",
+        "label": "仕事終わり・キッチン",
+        "weekly_slots": 3,
+        "keywords": [
+            "レンジ調理器 一人暮らし",
+            "冷凍ご飯 容器",
+            "キッチン 時短 便利グッズ",
+            "食器洗い 便利グッズ",
+        ],
+    },
+    {
+        "id": "beauty_bath",
+        "label": "美容・お風呂",
+        "weekly_slots": 3,
+        "keywords": [
+            "吸水 ヘアタオル",
+            "ドライヤー 収納",
+            "ヘアアイロン 収納 ポーチ",
+            "コスメ 収納 ポーチ",
+        ],
+    },
+    {
+        "id": "morning_fashion_bag",
+        "label": "朝の支度・服・バッグ",
+        "weekly_slots": 2,
+        "keywords": [
+            "バッグインバッグ レディース",
+            "アクセサリー 収納 持ち運び",
+            "衣類スチーマー コンパクト",
+            "毛玉取り 電動",
+        ],
+    },
+    {
+        "id": "storage_cleaning",
+        "label": "収納・掃除",
+        "weekly_slots": 2,
+        "keywords": [
+            "一人暮らし 収納 便利グッズ",
+            "コード 収納 おしゃれ",
+            "ランドリー 省スペース",
+            "掃除 便利グッズ コンパクト",
+        ],
+    },
+    {
+        "id": "travel_outing",
+        "label": "旅行・外出・推し活",
+        "weekly_slots": 2,
+        "keywords": [
+            "旅行 圧縮ポーチ",
+            "吊り下げ トラベルポーチ",
+            "折りたたみ傘 軽量 レディース",
+            "推し活 ポーチ 収納",
+        ],
+    },
+    {
+        "id": "sleep_relax",
+        "label": "睡眠・リラックス",
+        "weekly_slots": 2,
+        "keywords": [
+            "アイマスク 睡眠",
+            "シルク 枕カバー",
+            "ホットアイマスク 充電式",
+            "リラックス グッズ デスク",
+        ],
+    },
+]
+
 DEFAULT_KEYWORDS = [
-    "収納 便利グッズ",
-    "キッチン 便利グッズ",
-    "掃除 便利グッズ",
-    "洗濯 便利グッズ",
-    "隙間収納",
-    "生活雑貨 便利",
+    keyword
+    for group in SEARCH_GROUPS
+    for keyword in group["keywords"]
 ]
 
 
@@ -49,7 +117,7 @@ def normalize_item(wrapper):
         "itemUrl": item.get("itemUrl", ""),
         "shopName": item.get("shopName", ""),
         "genreId": str(item.get("genreId", "")),
-        "imageUrls": image_urls,
+        "imageUrls": image_urls[:3],
     }
 
 
@@ -66,8 +134,6 @@ def search_items(keyword, page=1, hits=30, sort="-reviewCount", timeout=20):
         "format": "json",
     }
 
-    # 楽天APIは短時間の連続アクセスで429を返すことがある。
-    # 無限リトライはせず、429だけ最大1回・2秒待って再試行する。
     for attempt in range(2):
         response = requests.get(API_URL, params=params, timeout=timeout)
         if response.status_code == 429 and attempt == 0:
@@ -91,13 +157,41 @@ def search_items(keyword, page=1, hits=30, sort="-reviewCount", timeout=20):
     raise RuntimeError("楽天API 429: 1回再試行してもレート制限が解除されませんでした。")
 
 
+def fetch_candidate_groups(search_groups=None, pages_per_keyword=1):
+    """全検索カテゴリを省略せずに取得し、商品へ検索カテゴリを付与する。"""
+    groups = search_groups or SEARCH_GROUPS
+    grouped = {}
+    request_count = 0
+
+    for group in groups:
+        collected = {}
+        for keyword in group["keywords"]:
+            for page in range(1, pages_per_keyword + 1):
+                if request_count > 0:
+                    time.sleep(1.1)
+                items = search_items(keyword=keyword, page=page, hits=30)
+                request_count += 1
+                for item in items:
+                    code = item.get("itemCode")
+                    if not code or code in collected:
+                        continue
+                    enriched = dict(item)
+                    enriched["candidateCategory"] = group["id"]
+                    enriched["candidateCategoryLabel"] = group["label"]
+                    enriched["matchedKeyword"] = keyword
+                    collected[code] = enriched
+        grouped[group["id"]] = list(collected.values())
+
+    return grouped
+
+
 def fetch_candidate_pool(keywords=None, target_raw=50, max_pages_per_keyword=3):
+    """既存処理との互換用。新しい候補出力はfetch_candidate_groupsを使う。"""
     keywords = keywords or DEFAULT_KEYWORDS
     collected = {}
     request_count = 0
     for keyword in keywords:
         for page in range(1, max_pages_per_keyword + 1):
-            # APIへの連続リクエストを避ける。初回リクエスト前には待たない。
             if request_count > 0:
                 time.sleep(1.1)
             items = search_items(keyword=keyword, page=page, hits=30)
