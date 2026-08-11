@@ -1,21 +1,6 @@
 {
   "posts": [
     {
-      "post_id": "E4",
-      "type": "empathy",
-      "parent_text": "玄関まわり、使うときだけサッと出せる掛け場所があると出かける準備が楽になる。普段は邪魔にならないのが理想。",
-      "theme": "収納",
-      "theme_group": "収納",
-      "tone": "neutral",
-      "context_note": "",
-      "stock_sequence": 6,
-      "day_in_batch": 2,
-      "slot_in_day": 1,
-      "scheduled_at": "2026-08-12T07:00+09:00",
-      "scheduled_hour": 7,
-      "status": "scheduled"
-    },
-    {
       "post_id": "P3",
       "type": "product",
       "selected_item_code": "shopmarna:10006559",
