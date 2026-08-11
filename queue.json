@@ -1,21 +1,6 @@
 {
   "posts": [
     {
-      "post_id": "E3",
-      "type": "empathy",
-      "parent_text": "料理中に調味料や小さな瓶を置く“いつもの定位置”があると手の動きがスムーズで時短になる。ちょっとした段差があると落ちにくいのもありがたい。",
-      "theme": "食事/料理",
-      "theme_group": "食事/料理",
-      "tone": "positive",
-      "context_note": "",
-      "stock_sequence": 5,
-      "day_in_batch": 1,
-      "slot_in_day": 5,
-      "scheduled_at": "2026-08-11T21:00+09:00",
-      "scheduled_hour": 21,
-      "status": "scheduled"
-    },
-    {
       "post_id": "E4",
       "type": "empathy",
       "parent_text": "玄関まわり、使うときだけサッと出せる掛け場所があると出かける準備が楽になる。普段は邪魔にならないのが理想。",
