@@ -71,7 +71,13 @@ jobs:
           RAKUTEN_APP_ID: ${{ secrets.RAKUTEN_APP_ID }}
           RAKUTEN_ACCESS_KEY: ${{ secrets.RAKUTEN_ACCESS_KEY }}
           RAKUTEN_AFFILIATE_ID: ${{ secrets.RAKUTEN_AFFILIATE_ID }}
-        run: python main.py --mode today-preview
+        run: |
+          HOUR="$(TZ=Asia/Tokyo date +%H)"
+          if [ "$HOUR" -ge 21 ]; then
+            echo "OK: JST ${HOUR}:00 — today's posting slots are finished; next-day stock preview was already run."
+          else
+            python main.py --mode today-preview
+          fi
 
       - name: Verify repository state was not changed
         run: |
