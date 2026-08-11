@@ -9,14 +9,14 @@ permissions:
 jobs:
   safe-test:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 20
     env:
       PYTHONDONTWRITEBYTECODE: '1'
     steps:
       - name: Checkout refactor branch
         uses: actions/checkout@v4
         with:
-          ref: refactor/content-separation
+          ref: main
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -33,25 +33,19 @@ jobs:
         run: |
           python - <<'PY'
           from datetime import date
-          from main import DAILY_HOURS, JST, _schedule_for_two_days, arrange_stock_posts
+          from main import DAILY_HOURS, JST, _schedule_for_day, arrange_stock_posts
 
-          slots = _schedule_for_two_days(date(2026, 8, 12))
-          assert len(slots) == 10
-          assert [x.hour for x in slots[:5]] == DAILY_HOURS
-          assert [x.hour for x in slots[5:]] == DAILY_HOURS
+          slots = _schedule_for_day(date(2026, 8, 12))
+          assert len(slots) == 5
+          assert [x.hour for x in slots] == DAILY_HOURS
           assert all(x.tzinfo == JST for x in slots)
 
-          posts = []
-          for i in range(1, 7):
-              posts.append({"post_id": f"E{i}", "type": "empathy"})
-          for i in range(1, 5):
-              posts.append({"post_id": f"P{i}", "type": "product"})
-          arranged = arrange_stock_posts(posts[:3] + posts[6:8] + posts[3:6] + posts[8:10])
-          assert len(arranged) == 10
-          assert sum(p["type"] == "empathy" for p in arranged[:5]) == 3
-          assert sum(p["type"] == "product" for p in arranged[:5]) == 2
-          assert sum(p["type"] == "empathy" for p in arranged[5:]) == 3
-          assert sum(p["type"] == "product" for p in arranged[5:]) == 2
+          posts = [{"post_id": f"E{i}", "type": "empathy"} for i in range(1, 4)]
+          posts += [{"post_id": f"P{i}", "type": "product"} for i in range(1, 3)]
+          arranged = arrange_stock_posts(posts)
+          assert len(arranged) == 5
+          assert sum(p["type"] == "empathy" for p in arranged) == 3
+          assert sum(p["type"] == "product" for p in arranged) == 2
           print("OK: scheduling smoke tests passed")
           PY
 
@@ -72,6 +66,9 @@ jobs:
           RAKUTEN_ACCESS_KEY: ${{ secrets.RAKUTEN_ACCESS_KEY }}
           RAKUTEN_AFFILIATE_ID: ${{ secrets.RAKUTEN_AFFILIATE_ID }}
         run: python main.py --mode today-preview
+
+      - name: Run unit tests
+        run: python -m unittest discover -s tests -p 'test_*.py' -v
 
       - name: Verify repository state was not changed
         run: |

@@ -8,8 +8,9 @@ def primary_filter(
     min_price=1000,
     max_price=5000,
     history_days=30,
+    excluded_item_codes=None,
 ):
-    excluded_codes = recent_product_codes(days=history_days)
+    excluded_codes = recent_product_codes(days=history_days) | set(excluded_item_codes or [])
     passed = []
 
     for item in items:

@@ -4,23 +4,21 @@ from datetime import datetime, timedelta, timezone
 
 from gemini import generate_product_copy, generate_sample_batch, generate_mixed_stock, select_product
 from history import recent_entries, recent_texts
-from post_queue import append_posts, load_queue, replace_slots, stock_count
+from post_queue import load_queue, replace_slots, stock_count
 from rakuten import fetch_candidate_pool
 from rakuten_events import get_active_rakuten_events
 from selector import build_shortlist, primary_filter
 
-STOCK_TARGET = 10
-REFILL_THRESHOLD = 3
 JST = timezone(timedelta(hours=9))
 DAILY_HOURS = [7, 12, 15, 18, 21]
 MAX_PRODUCT_IMAGES = 3
 
 
-def get_shortlist(limit=10):
+def get_shortlist(limit=10, excluded_item_codes=None):
     raw_items = fetch_candidate_pool(target_raw=50)
-    filtered = primary_filter(raw_items)
+    filtered = primary_filter(raw_items, excluded_item_codes=excluded_item_codes)
     if len(filtered) < 5:
-        filtered = primary_filter(raw_items, max_price=8000)
+        filtered = primary_filter(raw_items, max_price=8000, excluded_item_codes=excluded_item_codes)
     shortlist = build_shortlist(filtered, limit=limit)
     if not shortlist:
         raise RuntimeError("一次フィルタを通過する商品がありませんでした。")
@@ -73,14 +71,12 @@ def preview_samples(count=5):
 
 
 def arrange_stock_posts(posts):
-    if len(posts) != 10:
+    if len(posts) != 5:
         raise RuntimeError(f"投稿順を構成できません: total={len(posts)}")
-    for day_no, start in enumerate((0, 5), start=1):
-        day = posts[start:start + 5]
-        empathy_count = sum(1 for p in day if p.get("type") == "empathy")
-        product_count = sum(1 for p in day if p.get("type") == "product")
-        if empathy_count != 3 or product_count != 2:
-            raise RuntimeError(f"{day_no}日目の投稿比率が不正です: empathy={empathy_count}, product={product_count}")
+    empathy_count = sum(1 for p in posts if p.get("type") == "empathy")
+    product_count = sum(1 for p in posts if p.get("type") == "product")
+    if empathy_count != 3 or product_count != 2:
+        raise RuntimeError(f"投稿比率が不正です: empathy={empathy_count}, product={product_count}")
     return posts
 
 
@@ -99,13 +95,8 @@ def _batch_start_date(queue_posts):
     return now.date() if now.hour < DAILY_HOURS[0] else now.date() + timedelta(days=1)
 
 
-def _schedule_for_two_days(start_date):
-    slots = []
-    for day_offset in range(2):
-        day = start_date + timedelta(days=day_offset)
-        for hour in DAILY_HOURS:
-            slots.append(datetime(day.year, day.month, day.day, hour, 0, tzinfo=JST))
-    return slots
+def _schedule_for_day(target_date, hours=None):
+    return [datetime(target_date.year, target_date.month, target_date.day, hour, 0, tzinfo=JST) for hour in (hours or DAILY_HOURS)]
 
 
 def _complete_product_row(row, item):
@@ -119,46 +110,13 @@ def _complete_product_row(row, item):
     return row
 
 
-def build_today_remaining(save=False):
-    now = datetime.now(JST)
-    remaining_hours = [h for h in DAILY_HOURS if h > now.hour]
-
-    # 21時以降は「今日の残り枠なし」で終了せず、翌日分のストック生成へ切り替える。
-    # today-refill はそのまま保存、today-preview は保存せず翌日分をプレビューする。
-    if not remaining_hours:
-        current = stock_count()
-        queue_data = load_queue()["posts"]
-        _, _, shortlist = get_shortlist(limit=10)
-        events = get_active_rakuten_events()
-        history = recent_entries(limit=20)
-        posts = arrange_stock_posts(generate_mixed_stock(shortlist, recent_history=history, existing_queue=queue_data, events=events))
-        by_code = {x["itemCode"]: x for x in shortlist}
-        start_date = now.date() + timedelta(days=1)
-        slots = _schedule_for_two_days(start_date)
-        completed = []
-        for sequence, (post, scheduled) in enumerate(zip(posts, slots), start=1):
-            row = dict(post)
-            row["stock_sequence"] = sequence
-            row["day_in_batch"] = 1 if sequence <= 5 else 2
-            row["slot_in_day"] = ((sequence - 1) % 5) + 1
-            row["scheduled_at"] = scheduled.isoformat(timespec="minutes")
-            row["scheduled_hour"] = scheduled.hour
-            row["status"] = "scheduled"
-            if row["type"] == "product":
-                row = _complete_product_row(row, by_code[row["selected_item_code"]])
-            completed.append(row)
-
-        if save:
-            total = append_posts(completed)
-            status = {"status": "saved", "added": len(completed), "stock_count": total}
-        else:
-            status = {"status": "preview", "added": 0, "stock_count": current}
-        print(json.dumps({**status, "mode": "next-day-stock", "date": now.date().isoformat(), "target_start_date": start_date.isoformat(), "openai_requests": 1, "ratio": {"empathy": 6, "product": 4}, "active_rakuten_events": [e["name"] for e in events], "posts": completed}, ensure_ascii=False, indent=2))
-        return
-
+def build_today_remaining(save=False, now=None):
+    now = (now or datetime.now(JST)).astimezone(JST)
+    is_next_day = now.hour >= 21
+    target_date = now.date() + timedelta(days=1) if is_next_day else now.date()
+    target_hours = DAILY_HOURS if is_next_day else [h for h in DAILY_HOURS if h > now.hour]
     queue_data = load_queue()["posts"]
-    # today-refill は「空き枠追加」ではなく「本日の未到来枠を新仕様で上書き」する。
-    # 既存の本日分は生成時の重複チェック対象から外し、保存時に同じ scheduled_at を置換する。
+    # 置換対象の枠だけを生成時の重複比較から外す。他の日・枠の商品は候補から除外する。
     generation_queue = []
     for p in queue_data:
         try:
@@ -166,25 +124,25 @@ def build_today_remaining(save=False):
         except (ValueError, TypeError):
             generation_queue.append(p)
             continue
-        if dt.date() == now.date() and dt.hour in remaining_hours:
+        if dt.date() == target_date and dt.hour in target_hours:
             continue
         generation_queue.append(p)
 
-    _, _, shortlist = get_shortlist(limit=10)
+    queued_product_codes = {p.get("item_code") or p.get("selected_item_code") for p in generation_queue if p.get("type") == "product"}
+    queued_product_codes.discard(None)
+    _, _, shortlist = get_shortlist(limit=10, excluded_item_codes=queued_product_codes)
     events = get_active_rakuten_events()
     history = recent_entries(limit=20)
     generated = arrange_stock_posts(generate_mixed_stock(shortlist, recent_history=history, existing_queue=generation_queue, events=events))
     by_code = {x["itemCode"]: x for x in shortlist}
 
-    first_day = generated[:5]
-    slot_by_hour = dict(zip(DAILY_HOURS, first_day))
+    slot_by_hour = dict(zip(DAILY_HOURS, generated))
     completed = []
-    for sequence, hour in enumerate(remaining_hours, start=1):
+    for sequence, hour in enumerate(target_hours, start=1):
         post = dict(slot_by_hour[hour])
-        scheduled = datetime(now.year, now.month, now.day, hour, 0, tzinfo=JST)
-        post["post_id"] = f"TODAY-{now.strftime('%Y%m%d')}-{hour:02d}"
+        scheduled = datetime(target_date.year, target_date.month, target_date.day, hour, 0, tzinfo=JST)
+        post["post_id"] = f"DAY-{target_date.strftime('%Y%m%d')}-{hour:02d}"
         post["stock_sequence"] = sequence
-        post["day_in_batch"] = 0
         post["slot_in_day"] = DAILY_HOURS.index(hour) + 1
         post["scheduled_at"] = scheduled.isoformat(timespec="minutes")
         post["scheduled_hour"] = hour
@@ -203,43 +161,16 @@ def build_today_remaining(save=False):
                 dt = datetime.fromisoformat(str(p.get("scheduled_at", ""))).astimezone(JST)
             except (ValueError, TypeError):
                 continue
-            if dt.date() == now.date() and dt.hour in remaining_hours:
+            if dt.date() == target_date and dt.hour in target_hours:
                 existing_slots.append(dt.hour)
         status = {"status": "preview", "added": 0, "would_replace": len(existing_slots), "stock_count": stock_count()}
-    print(json.dumps({**status, "mode": "today-replace", "date": now.date().isoformat(), "remaining_hours": remaining_hours, "posts": completed}, ensure_ascii=False, indent=2))
+    print(json.dumps({**status, "mode": "next-day-stock" if is_next_day else "today-replace", "run_date": now.date().isoformat(), "target_date": target_date.isoformat(), "target_hours": target_hours, "openai_requests": 1, "ratio": {"empathy": 3, "product": 2}, "active_rakuten_events": [e["name"] for e in events], "posts": completed}, ensure_ascii=False, indent=2))
 
 
 def build_stock(save=False, force=False):
-    current = stock_count()
-    if not force and current > REFILL_THRESHOLD:
-        print(json.dumps({"status": "skip", "stock_count": current, "threshold": REFILL_THRESHOLD, "reason": "未来の投稿予定が十分あるためOpenAIを呼びません。"}, ensure_ascii=False, indent=2))
-        return
-    _, _, shortlist = get_shortlist(limit=10)
-    events = get_active_rakuten_events()
-    queue_data = load_queue()["posts"]
-    history = recent_entries(limit=20)
-    posts = arrange_stock_posts(generate_mixed_stock(shortlist, recent_history=history, existing_queue=queue_data, events=events))
-    by_code = {x["itemCode"]: x for x in shortlist}
-    start_date = _batch_start_date(queue_data)
-    slots = _schedule_for_two_days(start_date)
-    completed = []
-    for sequence, (post, scheduled) in enumerate(zip(posts, slots), start=1):
-        row = dict(post)
-        row["stock_sequence"] = sequence
-        row["day_in_batch"] = 1 if sequence <= 5 else 2
-        row["slot_in_day"] = ((sequence - 1) % 5) + 1
-        row["scheduled_at"] = scheduled.isoformat(timespec="minutes")
-        row["scheduled_hour"] = scheduled.hour
-        row["status"] = "scheduled"
-        if row["type"] == "product":
-            row = _complete_product_row(row, by_code[row["selected_item_code"]])
-        completed.append(row)
-    if save:
-        total = append_posts(completed)
-        status = {"status": "saved", "added": len(completed), "stock_count": total}
-    else:
-        status = {"status": "preview", "added": 0, "stock_count": current}
-    print(json.dumps({**status, "openai_requests": 1, "ratio": {"empathy": 6, "product": 4}, "posting_pattern": "fixed JST slots: 07:00/12:00/15:00/18:00/21:00; each day empathy=3/product=2", "active_rakuten_events": [e["name"] for e in events], "posts": completed}, ensure_ascii=False, indent=2))
+    # 旧stock系モードも閾値補充を行わず、実行日の翌日5枠を作る。
+    now = datetime.now(JST).replace(hour=21, minute=0, second=0, microsecond=0)
+    build_today_remaining(save=save, now=now)
 
 
 def main():

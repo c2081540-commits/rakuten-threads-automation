@@ -1,4 +1,4 @@
-name: Rakuten Today Remaining Refill
+name: Rakuten Daily Content Generation
 
 on:
   workflow_dispatch:
@@ -9,7 +9,7 @@ permissions:
 jobs:
   refill-today:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 20
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -22,7 +22,7 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Generate today's remaining posts
+      - name: Generate target-day posts (after 21:00 JST means next day)
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           OPENAI_MODEL: ${{ vars.OPENAI_MODEL || 'gpt-5-mini' }}
@@ -40,5 +40,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add queue.json
-          git commit -m "Generate today's remaining Rakuten posts"
+          git commit -m "Generate Rakuten posts for target day"
           git push

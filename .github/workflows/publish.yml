@@ -19,7 +19,7 @@ permissions:
 jobs:
   publish:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
 
@@ -37,15 +37,22 @@ jobs:
           THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
         run: python publish.py
 
-      - name: Refill future stock when 3 or fewer posts remain
+      - name: Generate tomorrow's five posts after 21:00 JST
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           RAKUTEN_APP_ID: ${{ secrets.RAKUTEN_APP_ID }}
           RAKUTEN_ACCESS_KEY: ${{ secrets.RAKUTEN_ACCESS_KEY }}
           RAKUTEN_AFFILIATE_ID: ${{ secrets.RAKUTEN_AFFILIATE_ID }}
-        run: python main.py --mode stock-refill
+        run: |
+          JST_HOUR="$(TZ=Asia/Tokyo date +%H)"
+          if [ "$JST_HOUR" -ge 21 ]; then
+            python main.py --mode today-refill
+          else
+            echo "Daily generation starts after 21:00 JST."
+          fi
 
       - name: Save queue and history
+        if: always()
         run: |
           if git diff --quiet -- queue.json history.json; then
             echo "No queue/history changes to commit."

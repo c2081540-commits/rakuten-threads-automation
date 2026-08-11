@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       force:
-        description: 'Force refill even if stock is above threshold'
+        description: 'Compatibility option (daily generation no longer uses a stock threshold)'
         required: false
         default: false
         type: boolean
@@ -19,7 +19,7 @@ permissions:
 jobs:
   refill:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
 

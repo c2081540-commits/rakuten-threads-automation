@@ -54,6 +54,9 @@ def normalize_item(wrapper):
 
 
 def search_items(keyword, page=1, hits=30, sort="-reviewCount", timeout=20):
+    keyword = " ".join(str(keyword).split())[:128]
+    if not keyword:
+        raise ValueError("楽天APIの検索キーワードが空です。")
     params = {
         **_credentials(),
         "keyword": keyword,
