@@ -37,20 +37,6 @@ jobs:
           THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
         run: python publish.py
 
-      - name: Generate tomorrow's five posts after 21:00 JST
-        env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          RAKUTEN_APP_ID: ${{ secrets.RAKUTEN_APP_ID }}
-          RAKUTEN_ACCESS_KEY: ${{ secrets.RAKUTEN_ACCESS_KEY }}
-          RAKUTEN_AFFILIATE_ID: ${{ secrets.RAKUTEN_AFFILIATE_ID }}
-        run: |
-          JST_HOUR="$(TZ=Asia/Tokyo date +%H)"
-          if [ "$JST_HOUR" -ge 21 ]; then
-            python main.py --mode today-refill
-          else
-            echo "Daily generation starts after 21:00 JST."
-          fi
-
       - name: Save queue and history
         if: always()
         run: |
@@ -61,5 +47,6 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add queue.json history.json
-          git commit -m "Record Rakuten Threads publish and stock state"
+          git commit -m "Record Rakuten Threads publish state"
+          git pull --rebase origin main
           git push
