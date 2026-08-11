@@ -11,6 +11,7 @@ MAX_OUTPUT_TOKENS = 7000
 MAX_GENERATION_ATTEMPTS = 3
 MAX_API_ATTEMPTS = 3
 OPENAI_REQUEST_COUNT = 0
+DAILY_SLOTS = [("E1", 7), ("P1", 12), ("E2", 15), ("P2", 18), ("E3", 21)]
 
 WEAK_PARENT_ENDINGS = ("便利そう", "良さそう", "いいかも", "欲しい", "便利かも", "使えそう", "使いやすそう")
 WEAK_PARENT_PHRASES = ("ちょっと掛けたいもの", "ちょっと置きたいもの", "あると便利そう", "あると良さそう")
@@ -66,6 +67,80 @@ def get_openai_request_count():
 
 def _candidate_data(items):
     return [{"itemCode": i["itemCode"], "itemName": i["itemName"], "itemCaption": i.get("itemCaption", "")[:500], "price": i["itemPrice"], "rating": i["reviewAverage"], "reviews": i["reviewCount"], "shopName": i.get("shopName", "")} for i in items]
+
+
+def _source_text(item):
+    return " ".join(f'{item.get("itemName", "")} {item.get("itemCaption", "")}'.split())
+
+
+def _extract_verified_product_facts(items):
+    """Select products and accept only evidence copied verbatim from their source."""
+    candidates = [{"itemCode": x["itemCode"], "source": _source_text(x)[:1600]} for x in items]
+    result = _json_response(f"""
+候補から用途の異なるThreads向きの商品を2件選ぶ。
+各商品のfactsには、その候補のsource内に一字一句そのまま存在する短い根拠部分だけを2〜4個抜き出す。
+要約、言い換え、補完、別商品の仕様混入は禁止。sourceにない語をfactsへ足さない。
+候補:{json.dumps(candidates, ensure_ascii=False)}
+JSONのみ: {{"products":[{{"selected_item_code":"itemCode","facts":["sourceからの原文抜粋"]}}]}}
+""")
+    products = result.get("products", [])
+    if len(products) != 2 or len({x.get("selected_item_code") for x in products}) != 2:
+        raise RuntimeError("商品事実抽出は重複なしの2商品である必要があります。")
+    by_code = {x["itemCode"]: x for x in items}
+    verified = []
+    for product in products:
+        code = product.get("selected_item_code")
+        if code not in by_code:
+            raise RuntimeError(f"候補外の商品コード: {code}")
+        source = _source_text(by_code[code])
+        facts = [" ".join(str(x).split()) for x in product.get("facts", []) if str(x).strip()]
+        if not 2 <= len(facts) <= 4:
+            raise RuntimeError(f"確認済み事実数が不正です: {code}")
+        for fact in facts:
+            if len(fact) < 2 or fact not in source:
+                raise RuntimeError(f"商品情報に存在しない事実が抽出されました: {code}: {fact}")
+        verified.append({"selected_item_code": code, "facts": facts})
+    return verified
+
+
+def _validate_slot_language(text, hour, target_date=None):
+    compact = str(text).replace(" ", "")
+    if hour == 7 and any(x in compact for x in ("午後", "昼休み", "夕方", "今夜")):
+        raise RuntimeError(f"07時枠と時刻表現が矛盾しています: {text}")
+    if hour in (12, 15, 18) and any(x in compact for x in ("今朝", "朝起き", "起きたら")):
+        raise RuntimeError(f"{hour:02d}時枠と時刻表現が矛盾しています: {text}")
+    if target_date and "週末" in compact and target_date.weekday() not in (4, 5, 6):
+        raise RuntimeError(f"平日枠に週末表現があります: {text}")
+
+
+def _validate_empathy_text(text, hour, target_date=None):
+    _validate_parent(text)
+    _validate_slot_language(text, hour, target_date)
+    product_leak = ("段差や縁", "ワンタッチ", "パッキン", "折りたた", "収納時", "定位置", "場所を取らない", "持ち運びやす")
+    if any(x in text for x in product_leak):
+        raise RuntimeError(f"共感投稿が商品訴求に寄っています: {text}")
+
+
+def _longest_common_run(a, b):
+    a, b = _normalize_for_compare(a), _normalize_for_compare(b)
+    previous = [0] * (len(b) + 1)
+    best = 0
+    for ca in a:
+        current = [0]
+        for index, cb in enumerate(b, start=1):
+            value = previous[index - 1] + 1 if ca == cb else 0
+            current.append(value)
+            best = max(best, value)
+        previous = current
+    return best
+
+
+def _validate_product_copy_against_facts(parent, child, facts):
+    _validate_parent(parent, product=True)
+    _validate_child(child, parent)
+    source = " ".join(facts)
+    if _longest_common_run(parent, source) >= 28 or _longest_common_run(child, source) >= 32:
+        raise RuntimeError("商品説明の原文コピーに寄りすぎています。")
 
 
 def _normalize_for_compare(text):
@@ -295,73 +370,67 @@ def _validate_mixed_result(result, items, history):
     return _arrange_editorial_order(posts, result.get("editorial_order", []))
 
 
-def generate_mixed_stock(items, recent_history=None, existing_queue=None, events=None):
+def generate_mixed_stock(items, recent_history=None, existing_queue=None, events=None, target_date=None):
     product_prompt = _load_prompt("product.txt")
     empathy_prompt = _load_prompt("empathy.txt")
     history = recent_history or []
     queued = existing_queue or []
-    base_prompt = f"""
-Threadsアカウント「これ、家に欲しい」の翌日分5投稿を作成する。
-最重要: 5件は1日分の固定投稿枠。1番=07:00、2番=12:00、3番=15:00、4番=18:00、5番=21:00。
+    recent = history + queued
 
-- empathy 3件、product 2件。
-- empathyは楽天商品候補を見て前振りを作らず単体で自然な日常投稿。
-- productは商品情報だけから独立して作る。
-- productは自然さだけで合格にしない。具体的な生活場面・困りごと、商品特徴、生活上のメリットのうち最低2要素を親投稿に入れる。
-- productの返信は親の言い換えではなく、購入判断に役立つ新しい具体情報を最低1つ加える。
-- 「便利そう」「良さそう」「いいかも」だけで商品の魅力を済ませない。
-- 架空の購入・使用経験は禁止。
-- empathyはE1〜E3、productはP1〜P2。
-- empathyは3テーマに分散。掃除・収納・水回りは合計1件まで。最低1件はneutral/positive。
-- productは2商品重複禁止。用途を分散。商品同士を連続させない。
-- 必ずempathy 3件、product 2件。同系統テーマを固めない。
-- 時刻に不自然な本文は禁止。
-- 実投稿履歴と未投稿キューにある本文をそのまま再利用しない。意味が近くても同一文のコピーは禁止。
-- まず下書きを作り、5件すべてをルールごとに自己審査する。不合格項目が1つでもある投稿は内部で書き直し、合格した完成稿だけをJSONへ入れる。
-- 共感投稿は「商品による解決の前振り」「前後が別の悩み」「無理なエッセイ化」「時刻との矛盾」を不合格にする。
-- 商品親投稿は最も強い便益を1つ中心にし、仕様の均等な羅列と曖昧な感想を不合格にする。
-- 商品返信は親にない具体情報を1〜2点だけ加え、商品仕様欄のような全列挙を不合格にする。
-
-【商品ルール】
-{product_prompt}
-【日常ルール】
+    # Product candidates are deliberately absent from this request.
+    empathy_result = _json_response(f"""
 {empathy_prompt}
-【商品候補】
-{json.dumps(_candidate_data(items), ensure_ascii=False)}
-【実投稿履歴】
-{json.dumps(history, ensure_ascii=False)}
-【未投稿キュー】
-{json.dumps(queued, ensure_ascii=False)}
-【イベント】
-{_event_instruction(events)}
+次の固定枠に1件ずつ作る: E1=07:00、E2=15:00、E3=21:00。
+対象日:{target_date.isoformat() if target_date else "未指定"}
+3件は別テーマ。掃除・収納・水回りは合計1件まで。曜日や時刻と矛盾する表現は禁止。
+商品、道具の機能、形状、収納方法を連想させる前振りは禁止。
+履歴:{json.dumps(recent, ensure_ascii=False)}
+JSONのみ: {{"posts":[{{"post_id":"E1","type":"empathy","parent_text":"本文","theme":"テーマ","theme_group":"季節/天気|食事/料理|買い物|洗濯/衣類|朝夜/休日|休憩|掃除|収納|水回り|その他生活","tone":"neutral|positive|negative","context_note":""}}]}}
+E1、E2、E3を各1件だけ返す。
+""")
+    empathy = empathy_result.get("posts", [])
+    if {x.get("post_id") for x in empathy} != {"E1", "E2", "E3"} or len(empathy) != 3:
+        raise RuntimeError("共感投稿IDが不足または重複しています。")
+    empathy_hours = {"E1": 7, "E2": 15, "E3": 21}
+    groups = []
+    for post in empathy:
+        if post.get("type") != "empathy":
+            raise RuntimeError("共感生成に商品投稿が混入しました。")
+        _validate_empathy_text(post.get("parent_text", ""), empathy_hours[post["post_id"]], target_date)
+        groups.append(str(post.get("theme_group", "")).strip())
+    if len(set(groups)) != 3 or sum(x in {"掃除", "収納", "水回り"} for x in groups) > 1:
+        raise RuntimeError(f"共感テーマ分散不足: {groups}")
 
-JSONのみ:
-{{"posts":[
-{{"post_id":"E1","type":"empathy","parent_text":"本文","theme":"テーマ","theme_group":"季節/天気|食事/料理|買い物|洗濯/衣類|朝夜/休日|休憩|掃除|収納|水回り|その他生活","tone":"neutral|positive|negative","context_note":""}},
-{{"post_id":"P1","type":"product","selected_item_code":"itemCode","parent_text":"親投稿","child_text_base":"具体的な補足文","theme":"テーマ","product_group":"用途","context_note":""}}
-],"editorial_order":["E1","P1","E2","P2","E3"]}}
-postsはE1〜E3とP1〜P2を各1件。editorial_orderも同じ5IDを重複なく1回ずつ使う。
-"""
-    result = _json_response(base_prompt)
-    last_errors = None
-    for repair_round in range(MAX_GENERATION_ATTEMPTS):
-        posts, errors = _collect_mixed_errors(result, items, history + queued)
-        if not errors:
-            return _arrange_editorial_order(posts, result.get("editorial_order", []))
-        last_errors = errors
-        if repair_round == MAX_GENERATION_ATTEMPTS - 1:
-            break
-        result = _repair_invalid_posts(
-            result,
-            errors,
-            items,
-            history,
-            queued,
-            product_prompt,
-            empathy_prompt,
-            events,
-        )
-    raise RuntimeError(
-        "不合格投稿だけを再生成しましたが品質検査を通過しませんでした: "
-        + json.dumps(last_errors, ensure_ascii=False)
-    )
+    # First pin facts to verbatim source evidence; the copy request never sees full captions.
+    verified = _extract_verified_product_facts(items)
+    product_result = _json_response(f"""
+{product_prompt}
+以下は商品ページ原文との完全一致をコードで確認済みの事実抜粋だけである。
+このfacts以外の部品、機能、材質、付属品、収納方法、効果を追加してはいけない。
+factsはコピーせず、事実を根拠に「具体的な使用場面＋生活上の便益」を自然に表現する。
+便益の推論は許可するが、新しい物理仕様を作ってはいけない。
+確認済み事実:{json.dumps(verified, ensure_ascii=False)}
+履歴:{json.dumps(recent, ensure_ascii=False)}
+イベント:{_event_instruction(events)}
+JSONのみ: {{"posts":[{{"post_id":"P1","type":"product","selected_item_code":"itemCode","parent_text":"使用場面と便益","child_text_base":"親と異なる確認済み事実1〜2点の補足","theme":"テーマ","product_group":"用途","context_note":""}}]}}
+P1とP2を、確認済み事実の商品順に各1件返す。
+""")
+    products = product_result.get("posts", [])
+    expected_codes = [x["selected_item_code"] for x in verified]
+    if [x.get("post_id") for x in products] != ["P1", "P2"] or [x.get("selected_item_code") for x in products] != expected_codes:
+        raise RuntimeError("商品投稿IDまたは商品コードが確認済み事実と一致しません。")
+    facts_by_code = {x["selected_item_code"]: x["facts"] for x in verified}
+    for post in products:
+        _validate_product_copy_against_facts(post.get("parent_text", ""), post.get("child_text_base", ""), facts_by_code[post["selected_item_code"]])
+
+    by_id = {x["post_id"]: x for x in empathy + products}
+    arranged = [by_id[x] for x, _ in DAILY_SLOTS]
+    recent_text = [h.get("parent_text", "") for h in recent if h.get("parent_text")]
+    seen = set()
+    for post in arranged:
+        _validate_parent(post.get("parent_text", ""), recent_text, product=post["type"] == "product")
+        normalized = _normalize_for_compare(post["parent_text"])
+        if normalized in seen:
+            raise RuntimeError("今回生成した5投稿内で本文が完全一致しています。")
+        seen.add(normalized)
+    return arranged

@@ -141,7 +141,7 @@ def build_today_remaining(save=False, now=None):
     _, _, shortlist = get_shortlist(limit=10, excluded_item_codes=queued_product_codes)
     events = get_active_rakuten_events()
     history = recent_entries(limit=20)
-    generated = arrange_stock_posts(generate_mixed_stock(shortlist, recent_history=history, existing_queue=generation_queue, events=events))
+    generated = arrange_stock_posts(generate_mixed_stock(shortlist, recent_history=history, existing_queue=generation_queue, events=events, target_date=target_date))
     by_code = {x["itemCode"]: x for x in shortlist}
 
     slot_by_hour = dict(zip(DAILY_HOURS, generated))
