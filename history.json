@@ -183,6 +183,23 @@
       "status": "published",
       "posted_at": "2026-08-11T07:00:50.328242+09:00",
       "thread_id": "17877639411622585"
+    },
+    {
+      "post_id": "E2",
+      "type": "empathy",
+      "parent_text": "洗濯物を取り込んだときに靴下の片方だけ見つからないと、どこで消えたかしばらく考えてしまう。",
+      "theme": "洗濯/衣類",
+      "theme_group": "洗濯/衣類",
+      "tone": "neutral",
+      "context_note": "",
+      "stock_sequence": 3,
+      "day_in_batch": 1,
+      "slot_in_day": 3,
+      "scheduled_at": "2026-08-11T15:00+09:00",
+      "scheduled_hour": 15,
+      "status": "published",
+      "posted_at": "2026-08-11T15:00:49.879350+09:00",
+      "thread_id": "18101028490961702"
     }
   ]
 }
