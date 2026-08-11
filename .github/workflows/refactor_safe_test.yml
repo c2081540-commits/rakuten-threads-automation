@@ -10,6 +10,8 @@ jobs:
   safe-test:
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
     steps:
       - name: Checkout refactor branch
         uses: actions/checkout@v4
@@ -47,9 +49,10 @@ jobs:
 
       - name: Verify repository state was not changed
         run: |
-          if [ -n "$(git status --porcelain)" ]; then
-            echo 'ERROR: Safe test modified repository files.'
-            git status --short
+          CHANGES="$(git status --porcelain --untracked-files=all | grep -vE '(^|/)(__pycache__|.*\.pyc)(/|$)' || true)"
+          if [ -n "$CHANGES" ]; then
+            echo 'ERROR: Safe test modified persistent repository files:'
+            echo "$CHANGES"
             exit 1
           fi
-          echo 'OK: queue/history/repository files were not modified.'
+          echo 'OK: queue/history/persistent repository files were not modified.'
