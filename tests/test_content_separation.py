@@ -138,59 +138,37 @@ class EmpathyFallbackTest(unittest.TestCase):
         for post, hour in zip(posts, (7, 15, 21)):
             gemini._validate_empathy_text(post["parent_text"], hour, date(2026, 8, 13))
 
-    def test_mixed_generation_continues_after_three_empathy_failures(self):
+class ThreeWayComparisonTest(unittest.TestCase):
+    def test_retries_only_slots_whose_three_candidates_are_rejected(self):
         verified = [
-            {"selected_item_code": "shop:box", "facts": ["パッキン付き", "小麦粉1kgを袋ごと収納"]},
-            {"selected_item_code": "shop:bucket", "facts": ["35L", "水運び"]},
+            {"selected_item_code": "shop:box", "facts": ["保存容器", "小麦粉1kgを袋ごと収納"]},
+            {"selected_item_code": "shop:bucket", "facts": ["四角い大型バケツ 35L", "水運びに使える"]},
         ]
-        products = [
-            {"post_id": "P1", "type": "product", "selected_item_code": "shop:box"},
-            {"post_id": "P2", "type": "product", "selected_item_code": "shop:bucket"},
-        ]
+        calls = []
 
-        def run_stage(label, build, validate, fallback=None):
-            if label == "共感投稿":
-                raise RuntimeError("3回とも不合格")
-            if label == "商品選択":
-                return ["shop:box", "shop:bucket"]
-            if label == "商品投稿":
-                return products
+        def generate(verified, recent, events, target_date, only_ids, rejection_reasons):
+            calls.append(list(only_ids))
+            return {f"{post_id}-A": {"candidate_id": f"{post_id}-A", "post_id": post_id,
+                    "type": "product" if post_id.startswith("P") else "empathy"}
+                    for post_id in only_ids}
 
-        with patch.object(gemini, "_generate_with_validation", side_effect=run_stage):
-            result = gemini.generate_mixed_stock(_items(), target_date=date(2026, 8, 13))
-
-        self.assertEqual(len(result), 5)
-        self.assertEqual([post["type"] for post in result], ["empathy", "product", "empathy", "product", "empathy"])
-        self.assertTrue(all(post.get("context_note") == "fallback" for post in result if post["type"] == "empathy"))
-
-    def test_product_paraphrase_quality_failure_does_not_stop_batch(self):
-        empathy = gemini._fallback_empathy_posts(date(2026, 8, 13))
-        drafts = [
-            {
-                "post_id": "P1", "type": "product", "selected_item_code": "shop:box",
-                "parent_text": "粉ものの袋を開けるたびに口を閉じ直す手間を減らし、調理中でも必要な量をすぐ取り出せる。",
-                "child_text_base": "袋のまま入れられる容量があり、使い終わった後も中身をまとめて保管できます。",
-            },
-            {
-                "post_id": "P2", "type": "product", "selected_item_code": "shop:bucket",
-                "parent_text": "海から戻った後、濡れた道具をまとめて洗えるので、何度も水を運ぶ手間を減らせる。",
-                "child_text_base": "35Lの四角い形で、ウェットスーツの洗浄や水運びに使えます。",
-            },
-        ]
-
-        responses = iter([
-            {"posts": empathy},
-            {"selected_item_codes": ["shop:box", "shop:bucket"]},
-            {"posts": drafts}, {"posts": drafts}, {"posts": drafts},
+        comparisons = iter([
+            ({"E1": {"post_id": "E1"}, "P1": {"post_id": "P1"}, "P2": {"post_id": "P2"}, "E3": {"post_id": "E3"}}, {"E2": "3案とも不自然"}),
+            ({"E2": {"post_id": "E2"}}, {}),
         ])
-        with patch.object(gemini, "_json_response", side_effect=lambda prompt: next(responses)), patch.object(
-            gemini, "_validate_product_copy_against_facts", side_effect=RuntimeError("言い換え品質の判定不合格")
-        ):
-            result = gemini.generate_mixed_stock(_items(), target_date=date(2026, 8, 13))
+        with patch.object(gemini, "_generate_three_way_candidates", side_effect=generate), \
+             patch.object(gemini, "_compare_three_way_candidates", side_effect=lambda *args: next(comparisons)):
+            result = gemini._generate_by_comparison(verified)
 
-        self.assertEqual(len(result), 5)
-        self.assertEqual([post["type"] for post in result], ["empathy", "product", "empathy", "product", "empathy"])
-        self.assertTrue(all(post.get("context_note") == "quality-fallback" for post in result if post["type"] == "product"))
+        self.assertEqual(calls, [["E1", "P1", "E2", "P2", "E3"], ["E2"]])
+        self.assertEqual([post["post_id"] for post in result], ["E1", "P1", "E2", "P2", "E3"])
+
+    def test_comparer_cannot_return_rewritten_or_unknown_candidate(self):
+        candidates = {"E1-A": {"candidate_id": "E1-A", "post_id": "E1", "type": "empathy", "parent_text": "十分な長さの具体的な日常場面がここにある。そこから自然に感じた本音も続けて書かれている。"}}
+        response = {"selections": [{"post_id": "E1", "selected_candidate_id": "E1-X", "rejection_reason": ""}]}
+        with patch.object(gemini, "_json_response", return_value=response):
+            with self.assertRaisesRegex(RuntimeError, "候補外"):
+                gemini._compare_three_way_candidates(candidates, [], [])
 
 
 if __name__ == "__main__":

@@ -122,7 +122,7 @@ def _validate_empathy_text(text, hour, target_date=None):
     _validate_parent(text)
     compact = str(text).replace("\n", "").strip()
     sentence_count = sum(compact.count(mark) for mark in ("。", "！", "？", "!", "?"))
-    if len(compact) < 60:
+    if len(compact) < 45:
         raise RuntimeError("共感投稿が短すぎます。具体的な日常場面と共感の着地点を2〜4文で書いてください。")
     if sentence_count < 2 or sentence_count > 4:
         raise RuntimeError("共感投稿は2〜4文で書いてください。")
@@ -178,13 +178,16 @@ def _fallback_empathy_posts(target_date=None):
     return posts
 
 
-def _final_editorial_pass(posts, verified, target_date=None):
-    """Read the full day as an editor and rewrite text only; IDs and facts stay pinned."""
+def _final_editorial_pass(posts, verified, recent=None, target_date=None):
+    """Turn the five drafts into publishable copy without changing their identity.
+
+    This is deliberately an editor, not a pass/fail classifier.  It receives the
+    complete day and the original Rakuten evidence, corrects only the copy, and
+    returns every post.  Python pins IDs, types and product codes afterwards.
+    """
     facts_by_code = {x["selected_item_code"]: x["facts"] for x in verified}
     review_input = []
     for (_, hour), post in zip(DAILY_SLOTS, posts):
-        if post["type"] != "product":
-            continue
         row = {
             "post_id": post["post_id"],
             "type": post["type"],
@@ -197,37 +200,209 @@ def _final_editorial_pass(posts, verified, target_date=None):
             row["verified_facts"] = facts_by_code[post["selected_item_code"]]
         review_input.append(row)
 
-    result = _json_response(f"""
-あなたはThreads投稿の最終編集者。以下の1日5投稿を、普通の日本語として声に出して読み、必要な文章だけ直す。
-全5件について完成文を返す。post_id、type、商品コード、商品そのものは変更禁止。
+    expected_ids = [p["post_id"] for p in posts]
+    last_error = None
+    for attempt in range(1, MAX_GENERATION_ATTEMPTS + 1):
+        retry = "" if last_error is None else f"\n前回の校閲結果の不備:{last_error}\nこの不備を直し、5件をすべて返す。"
+        result = _json_response(f"""
+あなたは生活系Threads投稿の校閲編集者。入力は初稿であり、合否判定だけをしてはいけない。
+5件を実際に投稿できる自然な完成文へ直して返す。問題がない文は無理に変えない。
+post_id、type、selected_item_code、商品の組合せ、5件の順番は変更禁止。
+
+全投稿の確認:
+- 普通の人が読んで意味が一度で通る口語にする。記事調、説明調、気取った余韻を避ける。
+- 行動と結果の因果、対比、主語と述語を確認する。意味のない驚きや不思議さを足さない。
+- 同じ意味の語を重ねない。事実以上に効果を強めない。
+- 投稿時刻は配信時刻にすぎない。本文の出来事を朝・昼・夜に制限しない。
+
+共感投稿:
+- 具体的な日常場面と、その場で自然に出る本音・あるあるを2〜3文、45〜140字で書く。
+- 教訓、改善方法、商品への前振り、作ったような結論を加えない。
 
 商品投稿:
-- verified_facts以外の物理仕様、付属品、材質、機能を追加禁止。
-- 商品説明のコピーではなく、確認済み事実から具体的な使用場面と便益を書く。
-- 主語・動作・対象の係り受けを確認し、「壁ごと動かす」のような誤読が起きる文を直す。
-- 「おしゃれだから荷物管理が快適」のように無関係な特徴と便益を結びつけない。
-- 親と返信で同じ情報を繰り返さない。
+- verified_factsは楽天の商品名・説明という根拠資料。転載せず自然に言い換える。
+- 根拠にない機能・素材・付属品・効果を追加しない。数値や対象条件を変えない。
+- 「幅広」を「幅を広げられる」、「容積を小さくする」を「荷物が減る」のように、言い換えで意味を変えない。
+- 親文は困り事・使用場面・何が楽になるか。補足文は親と重ならない根拠事実を1〜2点だけ使う。
+- 宣伝文句や仕様の羅列を、そのまま文章へ持ち込まない。
 
 対象日:{target_date.isoformat() if target_date else "未指定"}
-投稿:{json.dumps(review_input, ensure_ascii=False)}
-JSONのみ: {{"edits":[{{"post_id":"P1","parent_text":"完成文","child_text_base":"完成補足文"}}]}}
-商品2件だけを入力順のまま返す。
+直近投稿（同じ本文を作らない）:{json.dumps(recent or [], ensure_ascii=False)}
+初稿と商品根拠:{json.dumps(review_input, ensure_ascii=False)}
+{retry}
+JSONのみ: {{"edits":[
+{{"post_id":"E1","parent_text":"完成文"}},
+{{"post_id":"P1","parent_text":"完成文","child_text_base":"完成補足文"}},
+{{"post_id":"E2","parent_text":"完成文"}},
+{{"post_id":"P2","parent_text":"完成文","child_text_base":"完成補足文"}},
+{{"post_id":"E3","parent_text":"完成文"}}
+]}}
+入力順の5件を過不足なく返す。
 """)
-    edits = result.get("edits", [])
-    expected_ids = [p["post_id"] for p in posts if p["type"] == "product"]
-    if [x.get("post_id") for x in edits] != expected_ids:
-        raise RuntimeError("最終編集結果の投稿IDまたは順序が不正です。")
+        edits = result.get("edits", [])
+        if [x.get("post_id") for x in edits] != expected_ids:
+            last_error = "投稿IDまたは順序が不正です。"
+            continue
 
-    edited = []
-    edits_by_id = {edit["post_id"]: edit for edit in edits}
-    for original in posts:
-        row = dict(original)
-        if row["type"] == "product":
-            edit = edits_by_id[row["post_id"]]
-            row["parent_text"] = str(edit.get("parent_text", "")).strip()
-            row["child_text_base"] = str(edit.get("child_text_base", "")).strip()
-        edited.append(row)
-    return edited
+        candidate = []
+        try:
+            for original, edit in zip(posts, edits):
+                row = dict(original)
+                row["parent_text"] = str(edit.get("parent_text", "")).strip()
+                if row["type"] == "product":
+                    row["child_text_base"] = str(edit.get("child_text_base", "")).strip()
+                    _validate_product_copy_against_facts(
+                        row["parent_text"], row["child_text_base"],
+                        facts_by_code[row["selected_item_code"]],
+                    )
+                else:
+                    _validate_empathy_text(row["parent_text"], 0, None)
+                candidate.append(row)
+            normalized = [_normalize_for_compare(p["parent_text"]) for p in candidate]
+            if len(normalized) != len(set(normalized)):
+                raise RuntimeError("完成文内に同一本文があります。")
+            return candidate
+        except RuntimeError as exc:
+            last_error = str(exc)
+
+    raise RuntimeError(f"最終校閲を{MAX_GENERATION_ATTEMPTS}回行っても完成しませんでした: {last_error}")
+
+
+def _candidate_key(post_id, variant):
+    return f"{post_id}-{variant}"
+
+
+def _generate_three_way_candidates(verified, recent=None, events=None, target_date=None,
+                                   only_ids=None, rejection_reasons=None):
+    """Create three complete, independently conceived drafts for each requested slot."""
+    requested = list(only_ids or [slot_id for slot_id, _ in DAILY_SLOTS])
+    facts_by_code = {x["selected_item_code"]: x["facts"] for x in verified}
+    product_code_by_id = {
+        "P1": verified[0]["selected_item_code"],
+        "P2": verified[1]["selected_item_code"],
+    }
+    result = _json_response(f"""
+生活系Threadsの完成原稿候補を作る。対象日と直近投稿を踏まえ、指定された各枠につきA・B・Cの3案を作る。
+3案は同じ初稿の言い換えではなく、場面・切り口・文章の運びをそれぞれ独立して考える。
+
+対象日:{target_date.isoformat() if target_date else "未指定"}
+対象枠:{json.dumps(requested, ensure_ascii=False)}
+投稿枠:E1=共感、P1=商品1、E2=共感、P2=商品2、E3=共感
+商品と根拠:{json.dumps(verified, ensure_ascii=False)}
+直近投稿:{json.dumps(recent or [], ensure_ascii=False)}
+楽天イベント:{_event_instruction(events)}
+前回3案が全滅した理由:{json.dumps(rejection_reasons or {}, ensure_ascii=False)}
+
+共感投稿:
+- 誰にでも起こり得る具体的な日常場面と、その場で自然に出る本音・あるあるを書く。
+- 2〜3文、45〜140字。教訓、改善方法、商品への前振り、作ったようなオチは禁止。
+- 同時に作る共感枠は別テーマにし、掃除・収納・水回りは合計1件まで。
+
+商品投稿:
+- 指定商品のfactsだけを根拠にする。根拠にない機能・素材・効果を作らない。
+- 親文は自然な使用場面、困り事、使うと何がどう楽になるかを書く。
+- 補足文は親文と重ならない事実を1〜2点に絞る。宣伝文句や仕様を羅列しない。
+- 「幅広」を「幅を広げられる」、「容積を抑える」を「荷物が減る」のように意味を変えない。
+
+JSONのみ: {{"candidates":[
+{{"candidate_id":"E1-A","post_id":"E1","variant":"A","type":"empathy","parent_text":"完成文","theme":"テーマ","theme_group":"分類","tone":"neutral|positive|negative","context_note":""}},
+{{"candidate_id":"P1-A","post_id":"P1","variant":"A","type":"product","selected_item_code":"指定コード","parent_text":"完成文","child_text_base":"完成補足文","theme":"テーマ","product_group":"用途","context_note":""}}
+]}}
+対象枠ごとにA、B、Cを1件ずつ、合計「対象枠数×3件」を返す。
+""")
+    candidates = result.get("candidates", [])
+    expected = {_candidate_key(post_id, variant) for post_id in requested for variant in "ABC"}
+    by_key = {str(x.get("candidate_id", "")): x for x in candidates}
+    if set(by_key) != expected or len(candidates) != len(expected):
+        raise RuntimeError("3案生成の候補IDが不足または重複しています。")
+    for candidate_id, row in by_key.items():
+        post_id, variant = candidate_id.rsplit("-", 1)
+        if row.get("post_id") != post_id or row.get("variant") != variant:
+            raise RuntimeError(f"候補IDの対応が不正です: {candidate_id}")
+        if post_id.startswith("P"):
+            expected_code = product_code_by_id[post_id]
+            if row.get("type") != "product" or row.get("selected_item_code") != expected_code:
+                raise RuntimeError(f"商品候補の商品コードが不正です: {candidate_id}")
+            if not str(row.get("parent_text", "")).strip() or not str(row.get("child_text_base", "")).strip():
+                raise RuntimeError(f"商品候補の本文が空です: {candidate_id}")
+        else:
+            if row.get("type") != "empathy":
+                raise RuntimeError(f"共感候補のtypeが不正です: {candidate_id}")
+            if not str(row.get("parent_text", "")).strip():
+                raise RuntimeError(f"共感候補の本文が空です: {candidate_id}")
+    return by_key
+
+
+def _compare_three_way_candidates(candidates, verified, recent=None, target_date=None):
+    """Rank complete drafts. The comparison model may select, but never rewrite."""
+    comparison_input = [candidates[key] for key in sorted(candidates)]
+    result = _json_response(f"""
+同じ投稿枠のA・B・Cを横並びで比較し、投稿に最も適した1案を選ぶ。文章の修正・合成・新規作成は禁止。
+
+評価基準:
+1. 普通の日本語として自然で、一度で意味が通る
+2. 行動、対比、原因と結果にねじれがない
+3. 商品投稿は楽天の根拠の意味を変えず、未記載の機能や効果を加えていない
+4. 実際の生活場面として成立し、広告文・説明書・作り話のようになっていない
+5. 直近投稿と内容や着地が重なっていない
+
+商品根拠:{json.dumps(verified, ensure_ascii=False)}
+対象日:{target_date.isoformat() if target_date else "未指定"}
+直近投稿:{json.dumps(recent or [], ensure_ascii=False)}
+候補:{json.dumps(comparison_input, ensure_ascii=False)}
+
+各枠で3案すべてに明確な問題がある場合だけselected_candidate_idをnullにし、3案共通の具体的な問題をrejection_reasonへ書く。
+少し好みが分かれる程度なら最良案を選び、全滅扱いにしない。
+JSONのみ: {{"selections":[{{"post_id":"E1","selected_candidate_id":"E1-Bまたはnull","rejection_reason":"null時のみ理由"}}]}}
+候補に含まれる各post_idを1件ずつ返す。
+""")
+    selections = result.get("selections", [])
+    expected_ids = {row["post_id"] for row in candidates.values()}
+    if {x.get("post_id") for x in selections} != expected_ids or len(selections) != len(expected_ids):
+        raise RuntimeError("比較結果の投稿IDが不足または重複しています。")
+    chosen, rejected = {}, {}
+    for selection in selections:
+        post_id = selection["post_id"]
+        selected_id = selection.get("selected_candidate_id")
+        if selected_id is None:
+            rejected[post_id] = str(selection.get("rejection_reason", "3案すべて不採用"))
+        elif selected_id not in candidates or candidates[selected_id].get("post_id") != post_id:
+            raise RuntimeError(f"比較AIが候補外を選択しました: {selected_id}")
+        else:
+            candidate = candidates[selected_id]
+            try:
+                if post_id.startswith("P"):
+                    facts_by_code = {x["selected_item_code"]: x["facts"] for x in verified}
+                    _validate_product_copy_against_facts(
+                        candidate.get("parent_text", ""), candidate.get("child_text_base", ""),
+                        facts_by_code[candidate["selected_item_code"]],
+                    )
+                else:
+                    _validate_empathy_text(candidate.get("parent_text", ""), 0, target_date)
+                chosen[post_id] = candidate
+            except RuntimeError as exc:
+                rejected[post_id] = f"選択案が必須形式を満たさない: {exc}"
+    return chosen, rejected
+
+
+def _generate_by_comparison(verified, recent=None, events=None, target_date=None):
+    """Generate/compare three drafts; retry only slots whose three drafts all lose."""
+    pending = [slot_id for slot_id, _ in DAILY_SLOTS]
+    selected = {}
+    rejection_reasons = {}
+    for round_no in range(1, 3):
+        candidates = _generate_three_way_candidates(
+            verified, recent, events, target_date, only_ids=pending,
+            rejection_reasons=rejection_reasons,
+        )
+        chosen, rejected = _compare_three_way_candidates(candidates, verified, recent, target_date)
+        selected.update(chosen)
+        pending = [post_id for post_id in pending if post_id in rejected]
+        rejection_reasons = rejected
+        if not pending:
+            return [selected[slot_id] for slot_id, _ in DAILY_SLOTS]
+        print(f"3案すべて不採用の枠を新しい3案で再生成します ({round_no}/2): {pending}")
+    raise RuntimeError(f"2回の3案比較でも採用候補がありません: {rejection_reasons}")
 
 
 def _longest_common_run(a, b):
@@ -484,6 +659,14 @@ def generate_mixed_stock(items, recent_history=None, existing_queue=None, events
     queued = existing_queue or []
     recent = history + queued
 
+    # Products are selected from the already de-duplicated shortlist.  Copy is
+    # then created as three independent complete drafts per slot and selected
+    # by a separate comparison request; the comparer never edits prose.
+    verified = _select_grounded_products(items, target_date)
+    return _generate_by_comparison(
+        verified, recent=recent, events=events, target_date=target_date
+    )
+
     empathy_hours = {"E1": 7, "E2": 15, "E3": 21}
 
     def build_empathy(attempt, last_error):
@@ -495,7 +678,7 @@ def generate_mixed_stock(items, recent_history=None, existing_queue=None, events
 対象日:{target_date.isoformat() if target_date else "未指定"}
 3件は別テーマ。掃除・収納・水回りは合計1件まで。
 各本文は「誰にも起こり得る具体的な場面」を1文、「そのときの本音やあるある」を1〜2文の順で組み立てる。
-仕上がりは60〜140字、2〜4文。出力前に字数と文数を数える。
+仕上がりは45〜140字、2〜4文。長さを埋めるための結論や教訓は足さない。
 商品、道具の機能、形状、収納方法を連想させる前振りは禁止。
 履歴:{json.dumps(recent, ensure_ascii=False)}
 {retry}
@@ -573,12 +756,7 @@ P1とP2を、確認済み事実の商品順に各1件返す。
     by_id = {x["post_id"]: x for x in empathy + products}
     arranged = [by_id[x] for x, _ in DAILY_SLOTS]
 
-    # Do not send already completed posts through another AI rewrite.  The old
-    # final pass could reintroduce unsupported claims or reject an otherwise
-    # usable paraphrase, making the whole Action fail after every post existed.
-    # The two generation stages above already enforce IDs, product codes,
-    # non-empty copy and the 3/2 editorial layout.
-    normalized = [_normalize_for_compare(post.get("parent_text", "")) for post in arranged]
-    if len(set(normalized)) != len(normalized):
-        print("警告: 今回生成した投稿内に完全一致する本文があります。生成結果は保持して処理を続行します。")
-    return arranged
+    # One grounded editorial pass replaces the former pass/fail checker.  It
+    # sees all five drafts, fixes semantic and natural-language problems, while
+    # Python keeps IDs, product codes and the 3/2 layout immutable.
+    return _final_editorial_pass(arranged, verified, recent=recent, target_date=target_date)
