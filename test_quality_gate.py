@@ -52,13 +52,13 @@ class QualityGateTests(unittest.TestCase):
         errors = gemini._post_errors(post, [], self.codes, scheduled_hour=18)
         self.assertTrue(any("列挙" in error for error in errors))
 
-    def test_rejects_time_mismatch(self):
+    def test_publishing_hour_does_not_restrict_story_time(self):
         post = {
             "type": "empathy",
             "parent_text": "夕方に一息ついて、冷たい飲み物を飲む時間だけは少し落ち着く。",
         }
         errors = gemini._post_errors(post, [], self.codes, scheduled_hour=21)
-        self.assertTrue(any("矛盾" in error for error in errors))
+        self.assertEqual(errors, [])
 
     def test_accepts_focused_product_copy(self):
         post = {

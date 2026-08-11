@@ -80,9 +80,12 @@ class EmpathyGateTest(unittest.TestCase):
         )
         gemini._validate_empathy_text(text, 7, date(2026, 8, 12))
 
-    def test_rejects_afternoon_language_in_7am_slot(self):
-        with self.assertRaisesRegex(RuntimeError, "時刻表現"):
-            gemini._validate_empathy_text(self._valid("午後の休憩に窓の外を見ると、仕事の手を止めたくなる。"), 7, date(2026, 8, 13))
+    def test_publishing_hour_does_not_restrict_story_time(self):
+        gemini._validate_empathy_text(
+            self._valid("午後の休憩に窓の外を見ると、仕事の手を止めたくなる。"),
+            7,
+            date(2026, 8, 13),
+        )
 
     def test_rejects_weekend_language_on_thursday(self):
         with self.assertRaisesRegex(RuntimeError, "週末表現"):
@@ -121,6 +124,44 @@ class RegenerationTest(unittest.TestCase):
             )
         self.assertEqual(len(calls), 3)
         self.assertIsInstance(calls[1][1], RuntimeError)
+
+
+class EmpathyFallbackTest(unittest.TestCase):
+    def test_fallback_always_returns_three_valid_distinct_posts(self):
+        posts = gemini._fallback_empathy_posts(date(2026, 8, 13))
+        self.assertEqual([post["post_id"] for post in posts], ["E1", "E2", "E3"])
+        self.assertEqual(len({post["theme_group"] for post in posts}), 3)
+        for post, hour in zip(posts, (7, 15, 21)):
+            gemini._validate_empathy_text(post["parent_text"], hour, date(2026, 8, 13))
+
+    def test_mixed_generation_continues_after_three_empathy_failures(self):
+        verified = [
+            {"selected_item_code": "shop:box", "facts": ["パッキン付き", "小麦粉1kgを袋ごと収納"]},
+            {"selected_item_code": "shop:bucket", "facts": ["35L", "水運び"]},
+        ]
+        products = [
+            {"post_id": "P1", "type": "product", "selected_item_code": "shop:box"},
+            {"post_id": "P2", "type": "product", "selected_item_code": "shop:bucket"},
+        ]
+
+        def run_stage(label, build, validate):
+            if label == "共感投稿":
+                raise RuntimeError("3回とも不合格")
+            if label == "商品事実抽出":
+                return verified
+            if label == "商品投稿":
+                return products
+            self.assertEqual(label, "最終編集")
+            return build(1, None)
+
+        with patch.object(gemini, "_generate_with_validation", side_effect=run_stage), patch.object(
+            gemini, "_final_editorial_pass", side_effect=lambda posts, *_: posts
+        ):
+            result = gemini.generate_mixed_stock(_items(), target_date=date(2026, 8, 13))
+
+        self.assertEqual(len(result), 5)
+        self.assertEqual([post["type"] for post in result], ["empathy", "product", "empathy", "product", "empathy"])
+        self.assertTrue(all(post.get("context_note") == "fallback" for post in result if post["type"] == "empathy"))
 
 
 if __name__ == "__main__":

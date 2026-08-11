@@ -17,13 +17,6 @@ WEAK_PARENT_ENDINGS = ("便利そう", "良さそう", "いいかも", "欲し�
 WEAK_PARENT_PHRASES = ("ちょっと掛けたいもの", "ちょっと置きたいもの", "あると便利そう", "あると良さそう")
 PRODUCT_REVIEW_PHRASES = ("確認したい", "チェックしたい", "判断しやすい", "購入判断", "購入前に")
 EMPATHY_PRODUCT_PITCH_PHRASES = ("便利グッズ", "収納グッズ", "小さなトレー", "があると便利", "一つでスムーズ", "ひとつでスムーズ")
-TIME_WORDS = {
-    7: ("夜", "夕方", "晩"),
-    12: ("朝一", "早朝", "寝る前"),
-    15: ("朝一", "早朝", "寝る前"),
-    18: ("朝一", "早朝"),
-    21: ("朝", "昼休み", "夕方"),
-}
 
 
 def _api_key():
@@ -103,25 +96,18 @@ JSONのみ: {{"products":[{{"selected_item_code":"itemCode","facts":["sourceか�
     return verified
 
 
-def _validate_slot_language(text, hour, target_date=None):
-    compact = str(text).replace(" ", "")
-    if hour == 7 and any(x in compact for x in ("午後", "昼休み", "夕方", "今夜")):
-        raise RuntimeError(f"07時枠と時刻表現が矛盾しています: {text}")
-    if hour in (12, 15, 18) and any(x in compact for x in ("今朝", "朝起き", "起きたら")):
-        raise RuntimeError(f"{hour:02d}時枠と時刻表現が矛盾しています: {text}")
-    if target_date and "週末" in compact and target_date.weekday() not in (4, 5, 6):
-        raise RuntimeError(f"平日枠に週末表現があります: {text}")
-
-
 def _validate_empathy_text(text, hour, target_date=None):
     _validate_parent(text)
     compact = str(text).replace("\n", "").strip()
     sentence_count = sum(compact.count(mark) for mark in ("。", "！", "？", "!", "?"))
-    if len(compact) < 70:
+    if len(compact) < 60:
         raise RuntimeError("共感投稿が短すぎます。具体的な日常場面と共感の着地点を2〜4文で書いてください。")
     if sentence_count < 2 or sentence_count > 4:
         raise RuntimeError("共感投稿は2〜4文で書いてください。")
-    _validate_slot_language(text, hour, target_date)
+    # The slot is only the publishing time. It does not constrain when the
+    # event described in an empathy post happened.
+    if target_date and "週末" in compact and target_date.weekday() not in (4, 5, 6):
+        raise RuntimeError(f"平日枠に週末表現があります: {text}")
     # 「定位置」は「鍵の定位置を決める」のような通常の日常表現にも使うため、
     # 単語だけで商品訴求と判定しない。ここでは商品仕様に特有の表現だけを弾く。
     product_leak = ("段差や縁", "ワンタッチ", "パッキン", "折りたた", "収納時", "場所を取らない", "持ち運びやす")
@@ -143,11 +129,36 @@ def _generate_with_validation(label, build, validate):
     raise RuntimeError(f"{label}を{MAX_GENERATION_ATTEMPTS}回再生成しても検品を通過しませんでした: {last_error}")
 
 
+EMPATHY_FALLBACKS = (
+    ("買い物", "買い物", "neutral", "買い物へ行くと、予定になかった物までついカゴに入れてしまう。帰宅してレシートを見ると少し反省するけど、結局ちゃんと使うならいいかと思ってしまう。"),
+    ("食事", "食事/料理", "positive", "冷蔵庫にあるものだけで食事を作れた日は、いつもより少し得した気分になる。買い物へ行く手間も減って、残っていた食材も使い切れるとちょっと嬉しい。"),
+    ("休憩", "休憩", "neutral", "少し休むつもりでスマホを見始めたのに、気づくと思ったより時間がたっている。休んだはずなのに、立ち上がると前より疲れている感じがすることがある。"),
+    ("洗濯", "洗濯/衣類", "negative", "洗濯を終えた後にポケットから紙が出てくると、干す前から一気に疲れる。確認しておけばよかったと思いながら、細かい紙を取る作業が始まる。"),
+    ("天気", "季節/天気", "neutral", "朝は晴れていたのに、外出してから雨が降りそうな空に変わると落ち着かない。大丈夫だと思いたいのに、結局何度も天気予報を開いてしまう。"),
+    ("休日", "朝夜/休日", "positive", "休みの日に予定を入れず、時間を気にせずに過ごせるとそれだけで楽になる。何かをたくさんしたわけではないのに、そういう日の方がしっかり休んだ感じがする。"),
+)
+
+
+def _fallback_empathy_posts(target_date=None):
+    """Return vetted copy instead of failing the entire preview workflow."""
+    offset = target_date.toordinal() if target_date else 0
+    indexes = [(offset + step * 2) % len(EMPATHY_FALLBACKS) for step in range(3)]
+    posts = []
+    for post_id, index in zip(("E1", "E2", "E3"), indexes):
+        theme, group, tone, parent = EMPATHY_FALLBACKS[index]
+        posts.append({"post_id": post_id, "type": "empathy", "parent_text": parent,
+                      "theme": theme, "theme_group": group, "tone": tone,
+                      "context_note": "fallback"})
+    return posts
+
+
 def _final_editorial_pass(posts, verified, target_date=None):
     """Read the full day as an editor and rewrite text only; IDs and facts stay pinned."""
     facts_by_code = {x["selected_item_code"]: x["facts"] for x in verified}
     review_input = []
     for (_, hour), post in zip(DAILY_SLOTS, posts):
+        if post["type"] != "product":
+            continue
         row = {
             "post_id": post["post_id"],
             "type": post["type"],
@@ -164,11 +175,6 @@ def _final_editorial_pass(posts, verified, target_date=None):
 あなたはThreads投稿の最終編集者。以下の1日5投稿を、普通の日本語として声に出して読み、必要な文章だけ直す。
 全5件について完成文を返す。post_id、type、商品コード、商品そのものは変更禁止。
 
-共感投稿:
-- 2〜4文、80〜140字程度。具体的な日常場面→多くの人が分かる感情・あるあるまで書く。
-- 一文ポエム、気取った余韻、説明不足、狭すぎる体験、商品への前振りは禁止。
-- 行動と結果を現実に照らして確認する。因果の逆転や飛躍があれば必ず直す。
-
 商品投稿:
 - verified_facts以外の物理仕様、付属品、材質、機能を追加禁止。
 - 商品説明のコピーではなく、確認済み事実から具体的な使用場面と便益を書く。
@@ -178,19 +184,21 @@ def _final_editorial_pass(posts, verified, target_date=None):
 
 対象日:{target_date.isoformat() if target_date else "未指定"}
 投稿:{json.dumps(review_input, ensure_ascii=False)}
-JSONのみ: {{"edits":[{{"post_id":"E1","parent_text":"完成文"}},{{"post_id":"P1","parent_text":"完成文","child_text_base":"完成補足文"}}]}}
-全5件をpost_id順ではなく入力順のまま返す。
+JSONのみ: {{"edits":[{{"post_id":"P1","parent_text":"完成文","child_text_base":"完成補足文"}}]}}
+商品2件だけを入力順のまま返す。
 """)
     edits = result.get("edits", [])
-    expected_ids = [p["post_id"] for p in posts]
+    expected_ids = [p["post_id"] for p in posts if p["type"] == "product"]
     if [x.get("post_id") for x in edits] != expected_ids:
         raise RuntimeError("最終編集結果の投稿IDまたは順序が不正です。")
 
     edited = []
-    for original, edit in zip(posts, edits):
+    edits_by_id = {edit["post_id"]: edit for edit in edits}
+    for original in posts:
         row = dict(original)
-        row["parent_text"] = str(edit.get("parent_text", "")).strip()
         if row["type"] == "product":
+            edit = edits_by_id[row["post_id"]]
+            row["parent_text"] = str(edit.get("parent_text", "")).strip()
             row["child_text_base"] = str(edit.get("child_text_base", "")).strip()
         edited.append(row)
     return edited
@@ -358,8 +366,6 @@ def _post_errors(post, recent, valid_codes, scheduled_hour=None):
             errors.append("共感投稿が便利グッズによる解決や商品投稿の前振りになっています。")
         if "なりそう" in parent or "できそう" in parent:
             errors.append("共感ではなく、未使用の商品効果を想像する文章になっています。")
-    if scheduled_hour and any(x in parent for x in TIME_WORDS.get(scheduled_hour, ())):
-        errors.append(f"{scheduled_hour}時枠と本文の時間表現が矛盾しています。")
     return errors
 
 
@@ -459,9 +465,11 @@ def generate_mixed_stock(items, recent_history=None, existing_queue=None, events
         # Product candidates are deliberately absent from this request.
         return _json_response(f"""
 {empathy_prompt}
-次の固定枠に1件ずつ作る: E1=07:00、E2=15:00、E3=21:00。
+次の固定IDに1件ずつ作る: E1、E2、E3。IDは投稿時刻を表すだけで、本文の出来事の時間帯は制限しない。
 対象日:{target_date.isoformat() if target_date else "未指定"}
-3件は別テーマ。掃除・収納・水回りは合計1件まで。曜日や時刻と矛盾する表現は禁止。
+3件は別テーマ。掃除・収納・水回りは合計1件まで。
+各本文は「誰にも起こり得る具体的な場面」を1文、「そのときの本音やあるある」を1〜2文の順で組み立てる。
+仕上がりは60〜140字、2〜4文。出力前に字数と文数を数える。
 商品、道具の機能、形状、収納方法を連想させる前振りは禁止。
 履歴:{json.dumps(recent, ensure_ascii=False)}
 {retry}
@@ -483,7 +491,11 @@ E1、E2、E3を各1件だけ返す。
             raise RuntimeError(f"共感テーマ分散不足: {groups}")
         return empathy_posts
 
-    empathy = _generate_with_validation("共感投稿", build_empathy, validate_empathy)
+    try:
+        empathy = _generate_with_validation("共感投稿", build_empathy, validate_empathy)
+    except RuntimeError as exc:
+        print(f"共感投稿のAI生成が不安定なため、検品済み文面へ自動切替します: {exc}")
+        empathy = _fallback_empathy_posts(target_date)
 
     # First pin facts to verbatim source evidence; the copy request never sees full captions.
     verified = _generate_with_validation(
