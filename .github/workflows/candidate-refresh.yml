@@ -1,0 +1,63 @@
+name: Rakuten Candidate Refresh
+
+on:
+  workflow_dispatch:
+    inputs:
+      target_count:
+        description: 'latest.jsonに保存する候補数'
+        required: true
+        default: '80'
+        type: string
+      minimum_count:
+        description: 'これ未満なら更新せず失敗'
+        required: true
+        default: '50'
+        type: string
+
+concurrency:
+  group: rakuten-candidate-refresh
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Fetch and filter Rakuten candidates
+        env:
+          RAKUTEN_APP_ID: ${{ secrets.RAKUTEN_APP_ID }}
+          RAKUTEN_ACCESS_KEY: ${{ secrets.RAKUTEN_ACCESS_KEY }}
+          RAKUTEN_AFFILIATE_ID: ${{ secrets.RAKUTEN_AFFILIATE_ID }}
+        run: |
+          python fetch_candidates.py \
+            --target-count "${{ inputs.target_count }}" \
+            --minimum-count "${{ inputs.minimum_count }}" \
+            --output data/candidates/latest.json
+
+      - name: Commit latest candidate file
+        run: |
+          if git diff --quiet -- data/candidates/latest.json; then
+            echo "Candidate file is unchanged."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/candidates/latest.json
+          git commit -m "Refresh Rakuten candidate products"
+          git pull --rebase origin main
+          git push origin HEAD:main
