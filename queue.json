@@ -1,34 +1,6 @@
 {
   "posts": [
     {
-      "post_id": "P4",
-      "type": "product",
-      "selected_item_code": "roomy:10016037",
-      "parent_text": "米を研ぐ・湯切り・レンジ加熱まで兼用できるザルとボウルのセットだと、工程ごとに洗い物が減って作業がスムーズ。入れ子式で収納できるとキッチンが散らかりにくい。",
-      "child_text_base": "深型・浅型のザルとボウル計6点セットで、電子レンジ使用や湯切りが可能な耐熱仕様。ボウルにザルを重ねられる入れ子構造で収納はコンパクト、米とぎから下ごしらえ、湯切りまで一貫して使えます。",
-      "theme": "食事/料理",
-      "product_group": "調理器具",
-      "context_note": "",
-      "stock_sequence": 9,
-      "day_in_batch": 2,
-      "slot_in_day": 4,
-      "scheduled_at": "2026-08-12T18:00+09:00",
-      "scheduled_hour": 18,
-      "status": "scheduled",
-      "item_name": "楽天1位【特典付き】米とぎ ザル ボウル 日本製 ライクイット 6点セット お米 米 米研ぎ 米とぎ器 米研ぎボウル 食洗機対応 レンジ対応 耐熱 米とぎざる ザルボウル ボール レンジ 深型 浅型 水切り 湯切り LBK-10［ like-it 米とぎにも使えるザルとボウル 6点セット ］",
-      "item_code": "roomy:10016037",
-      "image_url": "https://thumbnail.image.rakuten.co.jp/@0_mall/roomy/cabinet/500cart_all/500cart_11g/p2n-5/lit5231-pw011-0_gt01.jpg",
-      "image_urls": [
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/roomy/cabinet/500cart_all/500cart_11g/p2n-5/lit5231-pw011-0_gt01.jpg",
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/roomy/cabinet/500cart_all/500cart_pr_2/nvb1-06f-026-028-029.jpg",
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/roomy/cabinet/500cart_all/500cart_ca2_5/lit5231-pw011-0_sz03.jpg"
-      ],
-      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00qb0ln.z7eis6c8.g00qb0ln.z7eit2ac/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Froomy%2Flit22sep06h04%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Froomy%2Fi%2F10016037%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f",
-      "price": 4730,
-      "rating": 4.71,
-      "review_count": 1284
-    },
-    {
       "post_id": "E6",
       "type": "empathy",
       "parent_text": "午後の休憩に少しだけスマホを置いて窓の外を見る時間を作ると、その後の仕事が少しだけ集中できる気がする。",
