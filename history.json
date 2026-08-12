@@ -296,6 +296,23 @@
       "status": "published",
       "posted_at": "2026-08-12T07:00:54.076313+09:00",
       "thread_id": "18104376692604816"
+    },
+    {
+      "post_id": "E5",
+      "type": "empathy",
+      "parent_text": "週末のちょっとした掃除、終わったあとの床のすっきり感がやっぱり気持ちいい。細かいスペースが片付くと気分も変わる。",
+      "theme": "掃除",
+      "theme_group": "掃除",
+      "tone": "positive",
+      "context_note": "",
+      "stock_sequence": 8,
+      "day_in_batch": 2,
+      "slot_in_day": 3,
+      "scheduled_at": "2026-08-12T15:00+09:00",
+      "scheduled_hour": 15,
+      "status": "published",
+      "posted_at": "2026-08-12T15:00:39.783718+09:00",
+      "thread_id": "17980018578074320"
     }
   ]
 }
