@@ -1,34 +1,6 @@
 {
   "posts": [
     {
-      "post_id": "P3",
-      "type": "product",
-      "selected_item_code": "shopmarna:10006559",
-      "parent_text": "料理中に片手でフタを開けられて、すり切り一杯がそのまま量れる調味料ポットがあると、炒め物や味付けのテンポが崩れにくい。パッキン付きで湿気対策できるのも嬉しい。",
-      "child_text_base": "ワンタッチ開閉の調味料ポット3個セット。すり切り機能付きスプーンとパッキンで湿気を防ぎ、フタは奥に開くので調理中でも片手で使いやすい設計です。パーツは取り外して洗える作りになっています。",
-      "theme": "食事/料理",
-      "product_group": "収納",
-      "context_note": "",
-      "stock_sequence": 7,
-      "day_in_batch": 2,
-      "slot_in_day": 2,
-      "scheduled_at": "2026-08-12T12:00+09:00",
-      "scheduled_hour": 12,
-      "status": "scheduled",
-      "item_name": "送料無料【マーナ公式】調味料ポット 3個セット 調味料入れ スプーン付き おしゃれ 使いやすい 調味料ケース 密閉 保存容器 塩 砂糖入れ 片手 パッキン 小さじ すりきり ラベルシール付き キャニスター 収納 ワンタッチ コンパクト キッチン 便利グッズ 一人暮らし X126",
-      "item_code": "shopmarna:10006559",
-      "image_url": "https://thumbnail.image.rakuten.co.jp/@0_mall/shopmarna/cabinet/item_top/k5/x126.jpg",
-      "image_urls": [
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/shopmarna/cabinet/item_top/k5/x126.jpg",
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/shopmarna/cabinet/item_top/k4/k736cl_1.jpg",
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/shopmarna/cabinet/item_top/k3/k736_3.jpg"
-      ],
-      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00qtg2n.z7eis2dc.g00qtg2n.z7eitd7a/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fshopmarna%2Fx126%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fshopmarna%2Fi%2F10006559%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f",
-      "price": 3840,
-      "rating": 4.71,
-      "review_count": 673
-    },
-    {
       "post_id": "E5",
       "type": "empathy",
       "parent_text": "週末のちょっとした掃除、終わったあとの床のすっきり感がやっぱり気持ちいい。細かいスペースが片付くと気分も変わる。",
