@@ -1,21 +1,6 @@
 {
   "posts": [
     {
-      "post_id": "E6",
-      "type": "empathy",
-      "parent_text": "午後の休憩に少しだけスマホを置いて窓の外を見る時間を作ると、その後の仕事が少しだけ集中できる気がする。",
-      "theme": "休憩",
-      "theme_group": "休憩",
-      "tone": "neutral",
-      "context_note": "",
-      "stock_sequence": 10,
-      "day_in_batch": 2,
-      "slot_in_day": 5,
-      "scheduled_at": "2026-08-12T21:00+09:00",
-      "scheduled_hour": 21,
-      "status": "scheduled"
-    },
-    {
       "post_id": "W20260813-01",
       "stock_sequence": 1,
       "day_in_batch": 1,

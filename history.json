@@ -344,6 +344,23 @@
       "status": "published",
       "posted_at": "2026-08-12T15:00:39.783718+09:00",
       "thread_id": "17980018578074320"
+    },
+    {
+      "post_id": "E6",
+      "type": "empathy",
+      "parent_text": "午後の休憩に少しだけスマホを置いて窓の外を見る時間を作ると、その後の仕事が少しだけ集中できる気がする。",
+      "theme": "休憩",
+      "theme_group": "休憩",
+      "tone": "neutral",
+      "context_note": "",
+      "stock_sequence": 10,
+      "day_in_batch": 2,
+      "slot_in_day": 5,
+      "scheduled_at": "2026-08-12T21:00+09:00",
+      "scheduled_hour": 21,
+      "status": "published",
+      "posted_at": "2026-08-12T21:00:43.971676+09:00",
+      "thread_id": "18110242327935896"
     }
   ]
 }
