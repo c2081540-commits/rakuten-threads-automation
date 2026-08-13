@@ -1,21 +1,6 @@
 {
   "posts": [
     {
-      "post_id": "W20260814-01",
-      "stock_sequence": 6,
-      "day_in_batch": 2,
-      "slot_in_day": 1,
-      "scheduled_at": "2026-08-14T07:00+09:00",
-      "scheduled_hour": 7,
-      "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "連休中は曜日の感覚がなくなる。\n\n朝起きて「今日って何曜日だっけ」と確認するところから一日が始まる。",
-      "theme": "連休/休日",
-      "theme_group": "連休/休日",
-      "tone": "personal",
-      "context_note": "seasonal"
-    },
-    {
       "post_id": "W20260814-02",
       "stock_sequence": 7,
       "day_in_batch": 2,
