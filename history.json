@@ -237,6 +237,37 @@
       "posted_at": "2026-08-13T12:11:33.129172+09:00",
       "thread_id": "18146883658534774",
       "reply_id": "18118501351880272"
+    },
+    {
+      "post_id": "W20260813-04",
+      "stock_sequence": 4,
+      "day_in_batch": 1,
+      "slot_in_day": 4,
+      "scheduled_at": "2026-08-13T18:00+09:00",
+      "scheduled_hour": 18,
+      "status": "published",
+      "type": "product",
+      "selected_item_code": "angers:10065508",
+      "parent_text": "旅行のスキンケアとメイク用品、ポーチを分けるほど現地で探すことになる。\n\nまとめて持って行って、そのまま洗面所に吊るしたい。",
+      "child_text_base": "3つの取り外せるメッシュポーチと内ポケットが付いた吊り下げ式トラベルポーチ。広げたまま吊るせて、必要なポーチだけ外して持ち運べます。本体は約20×23×8cm、重さは約165〜170gです。",
+      "theme": "旅行/洗面ポーチ",
+      "product_group": "旅行・外出・推し活",
+      "context_note": "seasonal",
+      "item_name": "トラベルポーチ 吊り下げ トラベルポーチ 洗面用具トラベルポーチ 化粧品 コスメ ポーチ トラベルポーチ ポーチ 旅行 便利グッズ トラベルグッズyrh／取り外せる 吊り下げポーチ／bon moment ボンモマン",
+      "item_code": "angers:10065508",
+      "image_url": "https://thumbnail.image.rakuten.co.jp/@0_mall/angers/cabinet/item_main0080/159803.jpg",
+      "image_urls": [
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/angers/cabinet/item_main0080/159803.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/angers/cabinet/item_main0080/159803-m02.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/angers/cabinet/item_main0080/159803-m03.jpg"
+      ],
+      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00pksvn.z7eisa26.g00pksvn.z7eitb13/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fangers%2F159803%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fangers%2Fi%2F10065508%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f",
+      "price": 2200,
+      "rating": 4.66,
+      "review_count": 632,
+      "posted_at": "2026-08-13T18:01:24.737316+09:00",
+      "thread_id": "18061492928782829",
+      "reply_id": "18112030834999337"
     }
   ],
   "empathy_history": [
