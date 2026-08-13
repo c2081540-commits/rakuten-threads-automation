@@ -1,21 +1,6 @@
 {
   "posts": [
     {
-      "post_id": "W20260813-03",
-      "stock_sequence": 3,
-      "day_in_batch": 1,
-      "slot_in_day": 3,
-      "scheduled_at": "2026-08-13T15:00+09:00",
-      "scheduled_hour": 15,
-      "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "帰省前になると、充電器、薬、メイク用品みたいな小物だけ何度も確認してる。\n\n服より小さい物の方が、忘れたときに困る。",
-      "theme": "お盆/帰省準備",
-      "theme_group": "お盆/帰省準備",
-      "tone": "personal",
-      "context_note": "seasonal"
-    },
-    {
       "post_id": "W20260813-04",
       "stock_sequence": 4,
       "day_in_batch": 1,
