@@ -1,34 +1,6 @@
 {
   "posts": [
     {
-      "post_id": "W20260813-02",
-      "stock_sequence": 2,
-      "day_in_batch": 1,
-      "slot_in_day": 2,
-      "scheduled_at": "2026-08-13T12:00+09:00",
-      "scheduled_hour": 12,
-      "status": "scheduled",
-      "type": "product",
-      "selected_item_code": "joy-parts1:10000194",
-      "parent_text": "旅行の荷物、減らしたつもりでも着替えだけでスーツケースが埋まる。\n\n帰りの洗濯物まで分けて入れられる余裕がほしい。",
-      "child_text_base": "ファスナーで圧縮できる両面収納のトラベルポーチ。S・M・L・XSの4サイズがあり、着る前と着た後の衣類などを分けて収納できます。ナイロン100％で洗濯可能です。",
-      "theme": "旅行/圧縮ポーチ",
-      "product_group": "旅行・外出・推し活",
-      "context_note": "seasonal",
-      "item_name": "【大幅お値下げ中〜レビュー4.78】トラベルポーチ 圧縮 圧縮バッグ 旅行用圧縮袋 ファスナー 2面 仕切り 収納ポーチ 大容量 撥水 おしゃれ 旅行バッグ 国内 海外 卒業旅行 修学旅行 出張 帰省 ジム サウナ 遠征 推し活 子供 着替え 衣替え 洗濯可",
-      "item_code": "joy-parts1:10000194",
-      "image_url": "https://thumbnail.image.rakuten.co.jp/@0_mall/joy-parts1/cabinet/cron/items_const/bk-143/1.jpg",
-      "image_urls": [
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/joy-parts1/cabinet/cron/items_const/bk-143/1.jpg",
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/joy-parts1/cabinet/10397322/11276974/01.jpg",
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/joy-parts1/cabinet/10397322/11276974/02.jpg"
-      ],
-      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00u5xgn.z7eisa2a.g00u5xgn.z7eitab0/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fjoy-parts1%2Fbk-143%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fjoy-parts1%2Fi%2F10000194%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f",
-      "price": 1375,
-      "rating": 4.77,
-      "review_count": 413
-    },
-    {
       "post_id": "W20260813-03",
       "stock_sequence": 3,
       "day_in_batch": 1,
