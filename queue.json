@@ -1,34 +1,6 @@
 {
   "posts": [
     {
-      "post_id": "W20260814-04",
-      "stock_sequence": 9,
-      "day_in_batch": 2,
-      "slot_in_day": 4,
-      "scheduled_at": "2026-08-14T18:00+09:00",
-      "scheduled_hour": 18,
-      "status": "scheduled",
-      "type": "product",
-      "selected_item_code": "hibiwa:10000001",
-      "parent_text": "実家やホテルで寝ると、カーテンの隙間や家電の小さな光が妙に気になる。\n\n暗さだけでも自分の部屋に近づけたい。",
-      "child_text_base": "遮光率99.99％と表示された立体型アイマスク。約25×10×3cm、重さ約34gで、頭囲44〜88cmに調整できます。洗濯ネットに入れて洗濯機で洗える仕様です。",
-      "theme": "睡眠/アイマスク",
-      "product_group": "睡眠・リラックス",
-      "context_note": "seasonal",
-      "item_name": "【工学博士×脳の専門医が開発】 アイマスク 《遮光率99.99%／3Dフェイスマッピング搭載》 睡眠 飛行機 快適 グッズ 安眠 シルク質感 立体 遮光 軽量 就寝 目隠し 旅行 快眠 仮眠 繰り返し使える 洗える 洗濯OK スヤミー Suyamee 公式 【信頼の日本メーカー保証1年】",
-      "item_code": "hibiwa:10000001",
-      "image_url": "https://thumbnail.image.rakuten.co.jp/@0_mall/hibiwa/cabinet/10549764/10659795/12608328/suyamee_251220.jpg",
-      "image_urls": [
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/hibiwa/cabinet/10549764/10659795/12608328/suyamee_251220.jpg",
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/hibiwa/cabinet/10549764/10775696/12855341/suyamee_bk.jpg",
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/hibiwa/cabinet/10549764/10775696/10987120/suyamee_05_0831.jpg"
-      ],
-      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00uks4n.z7eiscf4.g00uks4n.z7eit409/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fhibiwa%2Fsuyamee-000%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fhibiwa%2Fi%2F10000001%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f",
-      "price": 2490,
-      "rating": 4.7,
-      "review_count": 940
-    },
-    {
       "post_id": "W20260814-05",
       "stock_sequence": 10,
       "day_in_batch": 2,
