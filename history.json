@@ -268,6 +268,37 @@
       "posted_at": "2026-08-13T18:01:24.737316+09:00",
       "thread_id": "18061492928782829",
       "reply_id": "18112030834999337"
+    },
+    {
+      "post_id": "W20260814-02",
+      "stock_sequence": 7,
+      "day_in_batch": 2,
+      "slot_in_day": 2,
+      "scheduled_at": "2026-08-14T12:00+09:00",
+      "scheduled_hour": 12,
+      "status": "published",
+      "type": "product",
+      "selected_item_code": "angelique:10047977",
+      "parent_text": "出かける直前までヘアアイロンを使うと、熱が冷めるのを待つ時間がない。\n\nそのまま持ち運べる収納がほしい。",
+      "child_text_base": "内側の耐熱温度が約300℃のヘアアイロンポーチ。レギュラーは約31×14cm、スリムは約29×12cmで、コード用ポケットと吊り下げストラップが付いています。収納時は電源を抜き、外側の熱に注意が必要です。",
+      "theme": "美容/ヘアアイロン",
+      "product_group": "美容・お風呂",
+      "context_note": "seasonal",
+      "item_name": "＼レビューで選べる特典あり／ ヘアアイロンポーチ ヘアアイロンケース カバー スリム ミニ 耐熱 38mm 対応 持ち運び 旅行 便利グッズ 熱いまま 吊り下げ ヘアアイロン収納 耐熱ポーチ 小さめ アイロンポーチ ヘアアイロン 収納 かわいい おしゃれ コテ | アンドチョコ",
+      "item_code": "angelique:10047977",
+      "image_url": "https://thumbnail.image.rakuten.co.jp/@0_mall/angelique/cabinet/choco/choco-001_2025.jpg",
+      "image_urls": [
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/angelique/cabinet/choco/choco-001_2025.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/angelique/cabinet/choco/choco-001_21.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/angelique/cabinet/choco/choco-001_1.jpg"
+      ],
+      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00psb8n.z7eis5e2.g00psb8n.z7eit583/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fangelique%2Fchoco-001%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fangelique%2Fi%2F10047977%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f",
+      "price": 1980,
+      "rating": 4.8,
+      "review_count": 292,
+      "posted_at": "2026-08-14T12:01:23.642229+09:00",
+      "thread_id": "18083696975256887",
+      "reply_id": "17915670663430789"
     }
   ],
   "empathy_history": [
