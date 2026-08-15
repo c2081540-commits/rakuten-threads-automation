@@ -1,21 +1,6 @@
 {
   "posts": [
     {
-      "post_id": "W20260815-05",
-      "stock_sequence": 15,
-      "day_in_batch": 3,
-      "slot_in_day": 5,
-      "scheduled_at": "2026-08-15T21:00+09:00",
-      "scheduled_hour": 21,
-      "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "家じゃない場所で寝ると、枕の高さもエアコンの音も全部気になる。\n\nそれでも朝になると、意外とちゃんと寝てる。",
-      "theme": "お盆/外泊",
-      "theme_group": "お盆/外泊",
-      "tone": "personal",
-      "context_note": "seasonal"
-    },
-    {
       "post_id": "W20260816-01",
       "stock_sequence": 16,
       "day_in_batch": 4,
