@@ -1,34 +1,6 @@
 {
   "posts": [
     {
-      "post_id": "W20260815-04",
-      "stock_sequence": 14,
-      "day_in_batch": 3,
-      "slot_in_day": 4,
-      "scheduled_at": "2026-08-15T18:00+09:00",
-      "scheduled_hour": 18,
-      "status": "scheduled",
-      "type": "product",
-      "selected_item_code": "chikyukagu:10033533",
-      "parent_text": "暑い夜は、枕に触れる髪や顔まわりの蒸れまで気になる。\n\n寝具を全部替えるほどではないから、まず枕カバーだけ変えてみたい。",
-      "child_text_base": "表面に22匁のシルク100％、裏面に再生繊維100％を使った43×63cmの枕カバー。封筒タイプとファスナータイプから選べます。手洗いと陰干しが推奨されています。",
-      "theme": "睡眠/枕カバー",
-      "product_group": "睡眠・リラックス",
-      "context_note": "seasonal",
-      "item_name": "枕カバー シルク 片面 22匁 43cm×63cm シルク100% 封筒タイプ ファスナータイプ 1枚 2枚組 シルク枕カバー ピローケース ヘアケア スキンケア おしゃれ 髪 肌 シルク 枕 カバー まくらカバー Pure Silk",
-      "item_code": "chikyukagu:10033533",
-      "image_url": "https://thumbnail.image.rakuten.co.jp/@0_mall/chikyukagu/cabinet/base2/skpc-4363.jpg",
-      "image_urls": [
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/chikyukagu/cabinet/base2/skpc-4363.jpg",
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/chikyukagu/cabinet/base2/skpc-4363_1.jpg",
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/chikyukagu/cabinet/base2/skpc-4363_2.jpg"
-      ],
-      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00s5min.z7eisbf5.g00s5min.z7eit693/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fchikyukagu%2Fskpc-4363%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fchikyukagu%2Fi%2F10033533%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f",
-      "price": 2780,
-      "rating": 4.72,
-      "review_count": 684
-    },
-    {
       "post_id": "W20260815-05",
       "stock_sequence": 15,
       "day_in_batch": 3,
