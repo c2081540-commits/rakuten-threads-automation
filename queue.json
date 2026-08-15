@@ -1,21 +1,6 @@
 {
   "posts": [
     {
-      "post_id": "W20260816-01",
-      "stock_sequence": 16,
-      "day_in_batch": 4,
-      "slot_in_day": 1,
-      "scheduled_at": "2026-08-16T07:00+09:00",
-      "scheduled_hour": 7,
-      "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "連休最終日、「今日はゆっくりする」と決めたのに、明日のことが少しずつ頭に入ってくる。\n\n夕方から急に休みが終わる実感が出る。",
-      "theme": "連休最終日",
-      "theme_group": "連休最終日",
-      "tone": "personal",
-      "context_note": "seasonal"
-    },
-    {
       "post_id": "W20260816-02",
       "stock_sequence": 17,
       "day_in_batch": 4,
