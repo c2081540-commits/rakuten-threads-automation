@@ -1,21 +1,6 @@
 {
   "posts": [
     {
-      "post_id": "W20260815-03",
-      "stock_sequence": 13,
-      "day_in_batch": 3,
-      "slot_in_day": 3,
-      "scheduled_at": "2026-08-15T15:00+09:00",
-      "scheduled_hour": 15,
-      "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "出かける直前に服を変えると、バッグも靴もアクセサリーも全部やり直しになる。\n\n最初に決めた服で出られた日は、それだけで優秀。",
-      "theme": "休日/外出準備",
-      "theme_group": "休日/外出準備",
-      "tone": "personal",
-      "context_note": "seasonal"
-    },
-    {
       "post_id": "W20260815-04",
       "stock_sequence": 14,
       "day_in_batch": 3,
