@@ -1,34 +1,6 @@
 {
   "posts": [
     {
-      "post_id": "W20260815-02",
-      "stock_sequence": 12,
-      "day_in_batch": 3,
-      "slot_in_day": 2,
-      "scheduled_at": "2026-08-15T12:00+09:00",
-      "scheduled_hour": 12,
-      "status": "scheduled",
-      "type": "product",
-      "selected_item_code": "ajiro:10002414",
-      "parent_text": "旅行にアクセサリーを持って行くと、ピアスやネックレスがポーチの底で一緒になる。\n\n小さく持ち歩けて、現地では中身を広げて見たい。",
-      "child_text_base": "広げると直径約20cm、閉じると直径約9cmになる巾着型アクセサリーポーチ。仕切り付きで、リング・ピアス・ネックレスなどを分けて収納できます。重さは約23gです。",
-      "theme": "朝支度/アクセサリー",
-      "product_group": "朝の支度・服・バッグ",
-      "context_note": "seasonal",
-      "item_name": "【10％OFFクーポン配布中】★6/15新色追加★ H011 ジュエリーポーチ アクセサリーポーチ 巾着 ベロア 指輪 ピアス ネックレス 収納 ケース 旅行 持ち運び コンパクト おしゃれ ギフト プレゼント",
-      "item_code": "ajiro:10002414",
-      "image_url": "https://thumbnail.image.rakuten.co.jp/@0_mall/ajiro/cabinet/biiino/item/main-image-13/20260611152042_1.jpg",
-      "image_urls": [
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/ajiro/cabinet/biiino/item/main-image-13/20260611152042_1.jpg",
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/ajiro/cabinet/biiino/item/main-image-13/20260611170259_2.jpg",
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/ajiro/cabinet/biiino/item/main-image-12/20260111113032_8.jpg"
-      ],
-      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00tibtn.z7eisacb.g00tibtn.z7eited3/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fajiro%2Fot0014%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fajiro%2Fi%2F10002414%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f",
-      "price": 1650,
-      "rating": 4.73,
-      "review_count": 1481
-    },
-    {
       "post_id": "W20260815-03",
       "stock_sequence": 13,
       "day_in_batch": 3,
