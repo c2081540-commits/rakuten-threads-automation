@@ -423,6 +423,37 @@
       "posted_at": "2026-08-16T12:01:48.209448+09:00",
       "thread_id": "18112853483000514",
       "reply_id": "18112089284084187"
+    },
+    {
+      "post_id": "W20260816-04",
+      "stock_sequence": 19,
+      "day_in_batch": 4,
+      "slot_in_day": 4,
+      "scheduled_at": "2026-08-16T18:00+09:00",
+      "scheduled_hour": 18,
+      "status": "published",
+      "type": "product",
+      "selected_item_code": "soutowelshop:10000195",
+      "parent_text": "お風呂上がり、髪を乾かす時間がとにかく長い。\n\nドライヤー前に、もっと水分を取っておきたい。",
+      "child_text_base": "大判の吸水・速乾タイプのヘアドライタオル。60×120cmで、髪を包みながら全身にも使える大きめサイズです。素材はポリエステル85％、ナイロン15％です。",
+      "theme": "美容/ヘアタオル",
+      "product_group": "美容・お風呂",
+      "context_note": "seasonal",
+      "item_name": "ヘアドライタオル 0359 big マイクロファイバー タオル バスタオル 吸水 速乾 水泳 家事 時短 吸水タオル 速乾タオル ロング ヘア 髪 ドライタオル 髪の毛 ヘアタオル 大きめ 速乾性 吸水性 すぐ乾く",
+      "item_code": "soutowelshop:10000195",
+      "image_url": "https://thumbnail.image.rakuten.co.jp/@0_mall/soutowelshop/cabinet/thumbnails//0359big.jpg",
+      "image_urls": [
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/soutowelshop/cabinet/thumbnails//0359big.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/soutowelshop/cabinet/0359big/omakase2set.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/soutowelshop/cabinet/08908744/imgrc0109122830.jpg"
+      ],
+      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00u5inn.z7eis4dc.g00u5inn.z7eitfe4/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fsoutowelshop%2F0359big%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fsoutowelshop%2Fi%2F10000195%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f",
+      "price": 1650,
+      "rating": 4.73,
+      "review_count": 1575,
+      "posted_at": "2026-08-16T18:01:15.398459+09:00",
+      "thread_id": "17973538154915667",
+      "reply_id": "18107257072869325"
     }
   ],
   "empathy_history": [
