@@ -1,21 +1,6 @@
 {
   "posts": [
     {
-      "post_id": "W20260816-03",
-      "stock_sequence": 18,
-      "day_in_batch": 4,
-      "slot_in_day": 3,
-      "scheduled_at": "2026-08-16T15:00+09:00",
-      "scheduled_hour": 15,
-      "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "帰ってきたスーツケース、開けるところまではできる。\n\nでも洗濯物と使わなかった物を全部戻すのは、翌日まで残りがち。",
-      "theme": "連休最終日/片付け",
-      "theme_group": "連休最終日/片付け",
-      "tone": "personal",
-      "context_note": "seasonal"
-    },
-    {
       "post_id": "W20260816-04",
       "stock_sequence": 19,
       "day_in_batch": 4,
