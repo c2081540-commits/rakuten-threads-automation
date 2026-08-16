@@ -392,6 +392,37 @@
       "posted_at": "2026-08-15T18:03:00.556835+09:00",
       "thread_id": "18070821851708805",
       "reply_id": "18070957790453560"
+    },
+    {
+      "post_id": "W20260816-02",
+      "stock_sequence": 17,
+      "day_in_batch": 4,
+      "slot_in_day": 2,
+      "scheduled_at": "2026-08-16T12:00+09:00",
+      "scheduled_hour": 12,
+      "status": "published",
+      "type": "product",
+      "selected_item_code": "hphvnmkt:10000501",
+      "parent_text": "帰省や旅行中、靴下や下着だけ洗って干したいのに、ホテルには掛ける場所が少ない。\n\n小物用の物干しを一つだけ持って行きたい。",
+      "child_text_base": "折り畳んで持ち運べるピンチハンガー2個セット。布部分は約32×10cm、洗濯ばさみは約5cmで、靴下や下着などの小物干しに使えます。",
+      "theme": "収納/携帯物干し",
+      "product_group": "収納・掃除",
+      "context_note": "seasonal",
+      "item_name": "ピンチハンガー 携帯用 トラベル 折りたたみ 洗濯ハンガー 洗濯バサミ 旅行 物干し 2個セット コンパクト 軽量 小物干し 収納ポーチ付き どこでも洗濯バサミ 部屋干し 靴下 下着 出張 ホテル 一人暮らし 帰省 お盆 夏休み 入院 車中泊 キャンプ 便利グッズ ポスト投函",
+      "item_code": "hphvnmkt:10000501",
+      "image_url": "https://thumbnail.image.rakuten.co.jp/@0_mall/hphvnmkt/cabinet/09976286/imgrc0115452853.jpg",
+      "image_urls": [
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/hphvnmkt/cabinet/09976286/imgrc0115452853.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/hphvnmkt/cabinet/biiino/item/main-image/20241106110853_2.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/hphvnmkt/cabinet/biiino/item/main-image/20241106110853_3.jpg"
+      ],
+      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00ufg8n.z7eis940.g00ufg8n.z7eita38/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fhphvnmkt%2F20241106sentakubasami%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fhphvnmkt%2Fi%2F10000501%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f",
+      "price": 1398,
+      "rating": 4.72,
+      "review_count": 126,
+      "posted_at": "2026-08-16T12:01:48.209448+09:00",
+      "thread_id": "18112853483000514",
+      "reply_id": "18112089284084187"
     }
   ],
   "empathy_history": [
