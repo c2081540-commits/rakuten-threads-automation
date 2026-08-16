@@ -1,21 +1,6 @@
 {
   "posts": [
     {
-      "post_id": "W20260816-05",
-      "stock_sequence": 20,
-      "day_in_batch": 4,
-      "slot_in_day": 5,
-      "scheduled_at": "2026-08-16T21:00+09:00",
-      "scheduled_hour": 21,
-      "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "明日の服とバッグを夜のうちに決めれば、朝がラクなのは分かってる。\n\nでも連休最後の夜まで、明日の自分に任せたくなる。",
-      "theme": "連休明け準備",
-      "theme_group": "連休明け準備",
-      "tone": "personal",
-      "context_note": "seasonal"
-    },
-    {
       "post_id": "W20260817-01",
       "stock_sequence": 21,
       "day_in_batch": 5,
