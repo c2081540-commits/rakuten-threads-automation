@@ -454,6 +454,37 @@
       "posted_at": "2026-08-16T18:01:15.398459+09:00",
       "thread_id": "17973538154915667",
       "reply_id": "18107257072869325"
+    },
+    {
+      "post_id": "W20260817-02",
+      "stock_sequence": 22,
+      "day_in_batch": 5,
+      "slot_in_day": 2,
+      "scheduled_at": "2026-08-17T12:00+09:00",
+      "scheduled_hour": 12,
+      "status": "published",
+      "type": "product",
+      "selected_item_code": "roomy:10017372",
+      "parent_text": "連休明けは、自炊する気力もお弁当を考える余裕もない。\n\n冷凍ごはんだけでも、すぐ食べられる状態にしておきたい。",
+      "child_text_base": "ザル付き二重構造の冷凍ごはん容器6個セット。1個に約160〜200g入り、ふたをしたまま電子レンジで加熱できます。食洗機対応で、容器は約11.3×11.3×5.5cmです。",
+      "theme": "キッチン/冷凍ごはん",
+      "product_group": "仕事終わり・キッチン",
+      "context_note": "seasonal",
+      "item_name": "冷凍ごはん容器 6個セット【特典付き】ライクイット 冷凍ご飯容器 日本製 冷凍ごはん 冷凍 容器 冷凍保存 一膳 200g 大きめ ざる付き レンジ 蒸し器 ご飯 保存容器 食洗機 電子レンジ 対応 LBK-21［ like-it 蒸気であたためる冷凍ごはん容器 6個組 ］",
+      "item_code": "roomy:10017372",
+      "image_url": "https://thumbnail.image.rakuten.co.jp/@0_mall/roomy/cabinet/500cart_all/500cart_11g/p2n-7/lit5505-sp02f-0_gt01.jpg",
+      "image_urls": [
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/roomy/cabinet/500cart_all/500cart_11g/p2n-7/lit5505-sp02f-0_gt01.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/roomy/cabinet/500cart_all/500cart_pr_2/nvb1-091-08a-028-04b.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/roomy/cabinet/500cart_all/500cart_ca2_6/lit5505-sp02d-0_sz01.jpg"
+      ],
+      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00qb0ln.z7eis6c8.g00qb0ln.z7eit2ac/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Froomy%2Flit25feb25h03%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Froomy%2Fi%2F10017372%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f",
+      "price": 3520,
+      "rating": 4.74,
+      "review_count": 162,
+      "posted_at": "2026-08-17T12:01:27.463296+09:00",
+      "thread_id": "18122746088493972",
+      "reply_id": "17899568238353876"
     }
   ],
   "empathy_history": [
