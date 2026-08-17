@@ -1,21 +1,6 @@
 {
   "posts": [
     {
-      "post_id": "W20260817-03",
-      "stock_sequence": 23,
-      "day_in_batch": 5,
-      "slot_in_day": 3,
-      "scheduled_at": "2026-08-17T15:00+09:00",
-      "scheduled_hour": 15,
-      "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "休み明け、午前中だけで一日分働いた気持ちになる。\n\nメールと予定を確認しただけなのに、頭だけ先に疲れてる。",
-      "theme": "連休明け/仕事",
-      "theme_group": "連休明け/仕事",
-      "tone": "personal",
-      "context_note": "seasonal"
-    },
-    {
       "post_id": "W20260817-04",
       "stock_sequence": 24,
       "day_in_batch": 5,
