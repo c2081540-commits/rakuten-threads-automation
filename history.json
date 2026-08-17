@@ -485,6 +485,37 @@
       "posted_at": "2026-08-17T12:01:27.463296+09:00",
       "thread_id": "18122746088493972",
       "reply_id": "17899568238353876"
+    },
+    {
+      "post_id": "W20260817-04",
+      "stock_sequence": 24,
+      "day_in_batch": 5,
+      "slot_in_day": 4,
+      "scheduled_at": "2026-08-17T18:00+09:00",
+      "scheduled_hour": 18,
+      "status": "published",
+      "type": "product",
+      "selected_item_code": "annekor:10000055",
+      "parent_text": "連休明けのバッグ、旅行の小物が残ったままで必要な物が見つからない。\n\nバッグを替えても、中身をまとめて移せるようにしたい。",
+      "child_text_base": "ポケット付きのナイロン製バッグインバッグ。Mは約20×30×11cm・約220g、Lは約24×40×15cm・約300gで、使うときだけ引き出せる持ち手が付いています。",
+      "theme": "朝支度/バッグ",
+      "product_group": "朝の支度・服・バッグ",
+      "context_note": "seasonal",
+      "item_name": "＼マラソン限定クーポン！／ バッグインバッグ 【楽天1位！高評価★4.68】 とびだす持ち手【底板付】上質ナイロン バックインバック インナーバッグ 軽量 撥水 自立 ファスナー ポーチ インナーポーチ レディース メンズ 収納 整理整頓 ギフト 贈り物 Annekor アンコール",
+      "item_code": "annekor:10000055",
+      "image_url": "https://thumbnail.image.rakuten.co.jp/@0_mall/annekor/cabinet/08675219/ads_029/imgrc0093425224.jpg",
+      "image_urls": [
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/annekor/cabinet/08675219/ads_029/imgrc0093425224.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/annekor/cabinet/08675219/ads_029/029_0rank_manzoku.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/annekor/cabinet/08675219/ads_029/029_0review.jpg"
+      ],
+      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00u3dyn.z7eise31.g00u3dyn.z7eit40b/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fannekor%2Fads_029%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fannekor%2Fi%2F10000055%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f",
+      "price": 2480,
+      "rating": 4.68,
+      "review_count": 2707,
+      "posted_at": "2026-08-17T18:01:19.406515+09:00",
+      "thread_id": "17908660071282036",
+      "reply_id": "17858924184694664"
     }
   ],
   "empathy_history": [
