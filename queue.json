@@ -1,21 +1,6 @@
 {
   "posts": [
     {
-      "post_id": "W20260818-01",
-      "stock_sequence": 26,
-      "day_in_batch": 6,
-      "slot_in_day": 1,
-      "scheduled_at": "2026-08-18T07:00+09:00",
-      "scheduled_hour": 7,
-      "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "連休明け二日目、昨日より起きられるけど疲れはまだ残ってる。\n\n生活リズムって、休みに崩すのは一瞬なのに戻すのは遅い。",
-      "theme": "連休明け/生活リズム",
-      "theme_group": "連休明け/生活リズム",
-      "tone": "personal",
-      "context_note": "seasonal"
-    },
-    {
       "post_id": "W20260818-02",
       "stock_sequence": 27,
       "day_in_batch": 6,
