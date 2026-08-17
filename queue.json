@@ -1,21 +1,6 @@
 {
   "posts": [
     {
-      "post_id": "W20260817-05",
-      "stock_sequence": 25,
-      "day_in_batch": 5,
-      "slot_in_day": 5,
-      "scheduled_at": "2026-08-17T21:00+09:00",
-      "scheduled_hour": 21,
-      "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "連休明け初日の帰宅後は、ごはんより先に座りたい。\n\n一度座ると動けなくなるのも分かってるけど、とりあえず座る。",
-      "theme": "連休明け/帰宅",
-      "theme_group": "連休明け/帰宅",
-      "tone": "personal",
-      "context_note": "seasonal"
-    },
-    {
       "post_id": "W20260818-01",
       "stock_sequence": 26,
       "day_in_batch": 6,
