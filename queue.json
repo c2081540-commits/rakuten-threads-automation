@@ -1,13 +1,6 @@
 {
   "posts": [
     {
-      "post_id": "W20260819-01",
-      "scheduled_at": "2026-08-19T07:00+09:00",
-      "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "まだ水曜なのに、気持ちはもう金曜くらい疲れてる。\n\n連休明けの一週間、体感だけやたら長い。"
-    },
-    {
       "post_id": "W20260819-02",
       "scheduled_at": "2026-08-19T12:00+09:00",
       "status": "scheduled",
