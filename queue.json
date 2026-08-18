@@ -1,13 +1,6 @@
 {
   "posts": [
     {
-      "post_id": "W20260818-05",
-      "scheduled_at": "2026-08-18T21:00+09:00",
-      "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "仕事の日、お風呂に入るまでは面倒なのに、入った後は早く入ればよかったと思う。\n\n毎回同じことを思ってる。"
-    },
-    {
       "post_id": "W20260819-01",
       "scheduled_at": "2026-08-19T07:00+09:00",
       "status": "scheduled",
