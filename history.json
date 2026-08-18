@@ -516,6 +516,37 @@
       "posted_at": "2026-08-17T18:01:19.406515+09:00",
       "thread_id": "17908660071282036",
       "reply_id": "17858924184694664"
+    },
+    {
+      "post_id": "W20260818-02",
+      "stock_sequence": 27,
+      "day_in_batch": 6,
+      "slot_in_day": 2,
+      "scheduled_at": "2026-08-18T12:00+09:00",
+      "scheduled_hour": 12,
+      "status": "published",
+      "type": "product",
+      "selected_item_code": "risu-onlineshop:10002060",
+      "parent_text": "平日に野菜を食べようと思っても、洗って水を切って加熱する工程が面倒。\n\n一つの容器でまとめて済ませたい。",
+      "child_text_base": "洗う・水切り・レンジ調理・冷蔵保存に使える、ふた付きのボール＆コランダー。Sは直径約18cm・容量約1.2Lで、電子レンジと食洗機に対応しています。",
+      "theme": "キッチン/レンジ調理",
+      "product_group": "仕事終わり・キッチン",
+      "context_note": "seasonal",
+      "item_name": "【レビューでプレゼント有り】ボルコラ ボール・コランダー セット ザル ボウル セット 耐熱 リベラリスタ キッチン ざる プラスチック ふた付き フタ付き 温野菜 電子レンジ対応 食洗機対応 時短 調理器具 便利 リスオンラインショップ",
+      "item_code": "risu-onlineshop:10002060",
+      "image_url": "https://thumbnail.image.rakuten.co.jp/@0_mall/risu-onlineshop/cabinet/images/ll-kw/borukora-1-01.jpg",
+      "image_urls": [
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/risu-onlineshop/cabinet/images/ll-kw/borukora-1-01.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/risu-onlineshop/cabinet/images/ll-kw/borukora-1-02.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/risu-onlineshop/cabinet/images/ll-kw/borukora-1-03.jpg"
+      ],
+      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00rbwun.z7eis021.g00rbwun.z7eit482/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Frisu-onlineshop%2F15930-8%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Frisu-onlineshop%2Fi%2F10002060%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f",
+      "price": 1400,
+      "rating": 4.71,
+      "review_count": 1898,
+      "posted_at": "2026-08-18T12:01:27.365422+09:00",
+      "thread_id": "18130823527629241",
+      "reply_id": "18127215073680719"
     }
   ],
   "empathy_history": [
