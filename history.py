@@ -34,24 +34,68 @@ def record_success(post, thread_id, reply_id=None):
     save_history(data)
 
 
-def recent_product_codes(days=30):
+def _recent_product_entries(days=30):
     history = load_history()["product_history"]
     cutoff = datetime.now(JST) - timedelta(days=days)
-    codes = set()
+    recent = []
     for entry in history:
-        code = entry.get("item_code")
         raw_date = entry.get("posted_at")
-        if not code or not raw_date:
+        if not raw_date:
             continue
         try:
             posted = datetime.fromisoformat(raw_date)
             if posted.tzinfo is None:
                 posted = posted.replace(tzinfo=JST)
             if posted >= cutoff:
-                codes.add(code)
+                recent.append(entry)
         except ValueError:
             continue
+    return recent
+
+
+def recent_product_codes(days=30):
+    codes = set()
+    for entry in _recent_product_entries(days=days):
+        # Older queue/history entries used item_code, while the current queue uses
+        # selected_item_code. Accept both so the 30-day exclusion is reliable.
+        code = entry.get("selected_item_code") or entry.get("item_code")
+        if code:
+            codes.add(code)
     return codes
+
+
+def recent_product_axes(days=30):
+    """Return recent persuasion metadata for duplicate-avoidance during generation.
+
+    New product posts may carry problem_axis, benefit_axis and sales_structure.
+    Old history remains valid; missing metadata is simply ignored.
+    """
+    axes = {
+        "problem_axis": set(),
+        "benefit_axis": set(),
+        "sales_structure": set(),
+    }
+    for entry in _recent_product_entries(days=days):
+        for key in axes:
+            value = str(entry.get(key, "")).strip()
+            if value:
+                axes[key].add(value)
+    return {key: sorted(values) for key, values in axes.items()}
+
+
+def recent_product_strategy_entries(days=30, limit=30):
+    """Compact recent product history for prompts and strategy comparisons."""
+    rows = []
+    for entry in _recent_product_entries(days=days)[-limit:]:
+        rows.append({
+            "selected_item_code": entry.get("selected_item_code") or entry.get("item_code", ""),
+            "parent_text": entry.get("parent_text", ""),
+            "problem_axis": entry.get("problem_axis", ""),
+            "benefit_axis": entry.get("benefit_axis", ""),
+            "sales_structure": entry.get("sales_structure", ""),
+            "posted_at": entry.get("posted_at", ""),
+        })
+    return rows
 
 
 def recent_texts(kind, limit=5):
