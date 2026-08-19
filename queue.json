@@ -1,13 +1,6 @@
 {
   "posts": [
     {
-      "post_id": "W20260820-01",
-      "scheduled_at": "2026-08-20T07:00+09:00",
-      "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "休み明けの一週間、木曜まで来ると少し安心する。\n\nあと二日なのに、その二日がいちばん長い。"
-    },
-    {
       "post_id": "W20260820-02",
       "scheduled_at": "2026-08-20T12:00+09:00",
       "status": "scheduled",
