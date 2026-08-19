@@ -1,21 +1,6 @@
 {
   "posts": [
     {
-      "post_id": "W20260819-02",
-      "scheduled_at": "2026-08-19T12:00+09:00",
-      "status": "scheduled",
-      "type": "product",
-      "parent_text": "連休中に後回しにした掃除、平日にまとめてやる気はない。\n\nトイレだけでも、使った部分をそのまま捨てられる道具にしたい。",
-      "selected_item_code": "shopmarna:10006751",
-      "child_text_base": "流せるトイレシートなどを挟んで使うトイレクリーナー。バネ式でシートを取り付けられ、付属スタンドに自立収納できます。柄は約36.8cmで、使用後はすすいで乾燥させます。",
-      "image_urls": [
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/shopmarna/cabinet/item_top/w2/w669.jpg",
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/shopmarna/cabinet/item_top/w/w669_1.jpg",
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/shopmarna/cabinet/item_top/w/w669_2.jpg"
-      ],
-      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00qtg2n.z7eis2dc.g00qtg2n.z7eitd7a/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fshopmarna%2Fw669%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fshopmarna%2Fi%2F10006751%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f"
-    },
-    {
       "post_id": "W20260819-03",
       "scheduled_at": "2026-08-19T15:00+09:00",
       "status": "scheduled",
