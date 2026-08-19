@@ -1,13 +1,6 @@
 {
   "posts": [
     {
-      "post_id": "W20260819-03",
-      "scheduled_at": "2026-08-19T15:00+09:00",
-      "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "平日の自炊は、作る時間より洗い物を想像した瞬間にやる気がなくなる。\n\nフライパン一つで終わる料理ばかり選びたくなる。"
-    },
-    {
       "post_id": "W20260819-04",
       "scheduled_at": "2026-08-19T18:00+09:00",
       "status": "scheduled",
