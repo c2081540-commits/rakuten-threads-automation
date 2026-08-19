@@ -1,21 +1,6 @@
 {
   "posts": [
     {
-      "post_id": "W20260819-04",
-      "scheduled_at": "2026-08-19T18:00+09:00",
-      "status": "scheduled",
-      "type": "product",
-      "parent_text": "魚は食べたいけど、グリルの網と受け皿を洗うところまで考えるとやめてしまう。\n\n汚れる場所をトレー一枚に減らしたい。",
-      "selected_item_code": "le-cure:10002233",
-      "child_text_base": "約28×20×1.6cmのグリル専用焼き魚トレー。穴なしの波型で、表面はフッ素樹脂塗装、耐熱温度は300℃です。購入前に自宅のグリルへ収まるかサイズ確認が必要です。",
-      "image_urls": [
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/le-cure/cabinet/new-sum2/im-1008947-sum-1.jpg",
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/le-cure/cabinet/kitchen_zakka/im-1008947-rank.jpg",
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/le-cure/cabinet/ec-up/rakuichi/imgrc0105096804.jpg"
-      ],
-      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00rlifn.z7eise71.g00rlifn.z7eitafa/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fle-cure%2Fim-1007123%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fle-cure%2Fi%2F10002233%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f"
-    },
-    {
       "post_id": "W20260819-05",
       "scheduled_at": "2026-08-19T21:00+09:00",
       "status": "scheduled",
