@@ -1,13 +1,6 @@
 {
   "posts": [
     {
-      "post_id": "W20260819-05",
-      "scheduled_at": "2026-08-19T21:00+09:00",
-      "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "連休明けは、週末までがいつもより遠い。\n\nあと二日と思えば短いのに、朝のアラームはまだ二回来る。"
-    },
-    {
       "post_id": "W20260820-01",
       "scheduled_at": "2026-08-20T07:00+09:00",
       "status": "scheduled",
