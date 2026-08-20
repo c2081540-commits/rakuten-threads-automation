@@ -1,13 +1,6 @@
 {
   "posts": [
     {
-      "post_id": "W20260820-03",
-      "scheduled_at": "2026-08-20T15:00+09:00",
-      "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "昼休みって、ご飯を食べてスマホ見てたらもう終わる。\n\n何もしないための休憩が、もう30分ほしい。"
-    },
-    {
       "post_id": "W20260820-04",
       "scheduled_at": "2026-08-20T18:00+09:00",
       "status": "scheduled",
