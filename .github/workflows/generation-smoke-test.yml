@@ -1,0 +1,45 @@
+name: Rakuten Generation Smoke Test
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: rakuten-generation-smoke-test
+  cancel-in-progress: false
+
+jobs:
+  test-generation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Generate test stock without publishing or changing queue
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_MODEL: ${{ vars.OPENAI_MODEL || 'gpt-5-mini' }}
+        run: python generation_smoke_test.py
+
+      - name: Save smoke test result only
+        run: |
+          if git diff --quiet -- data/tests/latest_generation_smoke.json; then
+            echo "No smoke-test result changes."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/tests/latest_generation_smoke.json
+          git commit -m "Record generation smoke test result"
+          git pull --rebase origin main
+          git push
