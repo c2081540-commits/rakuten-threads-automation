@@ -34,6 +34,28 @@ def record_success(post, thread_id, reply_id=None):
     save_history(data)
 
 
+def update_post_insights(thread_id, metrics, collected_at=None):
+    """Attach a latest Threads insight snapshot to a published history entry."""
+    data = load_history()
+    snapshot = {
+        "collected_at": collected_at or datetime.now(JST).isoformat(timespec="seconds"),
+        "metrics": {str(k): int(v or 0) for k, v in (metrics or {}).items()},
+    }
+    updated = False
+    for key in ("product_history", "empathy_history"):
+        for entry in data[key]:
+            if str(entry.get("thread_id", "")) != str(thread_id):
+                continue
+            entry["insights"] = snapshot
+            updated = True
+            break
+        if updated:
+            break
+    if updated:
+        save_history(data)
+    return updated
+
+
 def _recent_product_entries(days=30):
     history = load_history()["product_history"]
     cutoff = datetime.now(JST) - timedelta(days=days)
@@ -87,6 +109,7 @@ def recent_product_strategy_entries(days=30, limit=30):
     """Compact recent product history for prompts and strategy comparisons."""
     rows = []
     for entry in _recent_product_entries(days=days)[-limit:]:
+        insights = entry.get("insights") or {}
         rows.append({
             "selected_item_code": entry.get("selected_item_code") or entry.get("item_code", ""),
             "parent_text": entry.get("parent_text", ""),
@@ -94,6 +117,7 @@ def recent_product_strategy_entries(days=30, limit=30):
             "benefit_axis": entry.get("benefit_axis", ""),
             "sales_structure": entry.get("sales_structure", ""),
             "posted_at": entry.get("posted_at", ""),
+            "insights": insights.get("metrics", {}),
         })
     return rows
 
