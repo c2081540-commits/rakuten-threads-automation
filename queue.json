@@ -1,13 +1,6 @@
 {
   "posts": [
     {
-      "post_id": "W20260820-05",
-      "scheduled_at": "2026-08-20T21:00+09:00",
-      "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "仕事から帰って「5分だけ座ろう」は信用してはいけない。\n\nそのまま30分経ってる。"
-    },
-    {
       "post_id": "W20260821-01",
       "scheduled_at": "2026-08-21T07:00+09:00",
       "status": "scheduled",
