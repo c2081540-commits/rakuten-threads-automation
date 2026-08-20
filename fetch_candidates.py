@@ -29,6 +29,42 @@ def _category_targets(target_count):
     return targets
 
 
+def _image_count_summary(items):
+    counts = [
+        int(item.get("imageCount") or len(item.get("imageUrls") or []))
+        for item in items
+    ]
+    if not counts:
+        return {
+            "minimum": 0,
+            "maximum": 0,
+            "average": 0.0,
+            "buckets": {"1": 0, "2": 0, "3": 0, "4-5": 0, "6-10": 0, "11+": 0},
+        }
+
+    buckets = {"1": 0, "2": 0, "3": 0, "4-5": 0, "6-10": 0, "11+": 0}
+    for count in counts:
+        if count <= 1:
+            buckets["1"] += 1
+        elif count == 2:
+            buckets["2"] += 1
+        elif count == 3:
+            buckets["3"] += 1
+        elif count <= 5:
+            buckets["4-5"] += 1
+        elif count <= 10:
+            buckets["6-10"] += 1
+        else:
+            buckets["11+"] += 1
+
+    return {
+        "minimum": min(counts),
+        "maximum": max(counts),
+        "average": round(sum(counts) / len(counts), 2),
+        "buckets": buckets,
+    }
+
+
 def build_payload(target_count=80, minimum_count=50):
     raw_groups = fetch_candidate_groups(pages_per_keyword=1)
     category_targets = _category_targets(target_count)
@@ -85,6 +121,8 @@ def build_payload(target_count=80, minimum_count=50):
             f"最低{minimum_count}件必要なため、latest.jsonは更新しません。"
         )
 
+    image_summary = _image_count_summary(selected)
+
     return {
         "generatedAt": datetime.now(JST).isoformat(timespec="seconds"),
         "source": "Rakuten Ichiba Item Search API",
@@ -103,6 +141,7 @@ def build_payload(target_count=80, minimum_count=50):
             "rawItemsAcrossCategories": total_raw,
             "filteredItemsAcrossCategories": total_filtered,
             "savedUniqueItems": len(selected),
+            "imageCandidates": image_summary,
             "byCategory": category_counts,
         },
         "products": selected,
@@ -144,6 +183,12 @@ def main():
         f"(カテゴリ横断取得{counts['rawItemsAcrossCategories']}件 / "
         f"条件通過{counts['filteredItemsAcrossCategories']}件 / "
         f"重複除外後保存{counts['savedUniqueItems']}件)"
+    )
+    image_summary = counts["imageCandidates"]
+    print(
+        "- 画像候補数: "
+        f"最小{image_summary['minimum']} / 最大{image_summary['maximum']} / "
+        f"平均{image_summary['average']} / 分布{image_summary['buckets']}"
     )
     for details in counts["byCategory"].values():
         print(
