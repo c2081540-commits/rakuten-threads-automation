@@ -3,7 +3,10 @@ import os
 import time
 from pathlib import Path
 
-from history import recent_product_strategy_entries
+from history import (
+    product_performance_feedback,
+    recent_product_strategy_entries,
+)
 
 from openai import APIConnectionError, APITimeoutError, OpenAI, RateLimitError
 
@@ -312,6 +315,11 @@ def _generate_three_way_candidates(verified, recent=None, events=None, target_da
 - 直近30日の戦略履歴と同じ problem_axis / benefit_axis / sales_structure の組合せを避ける。完全一致する軸が多い案より、新しい切り口を優先する。
 
 直近30日の商品戦略履歴:{json.dumps(recent_product_strategy_entries(days=30, limit=30), ensure_ascii=False)}
+実績フィードバック:{json.dumps(product_performance_feedback(days=60, min_samples=3), ensure_ascii=False)}
+- 実績フィードバックは ready=true の場合だけ参考にする。
+- ready=false の場合は実績による優劣を付けない。
+- ready=true でも高実績軸を強制しない。商品根拠、自然さ、訴求の具体性、直近との重複回避を優先し、同程度の案なら実績の良い傾向を補助的に優先する。
+- サンプル数が少ない傾向を一般化しない。
 
 JSONのみ: {{"candidates":[
 {{"candidate_id":"E1-A","post_id":"E1","variant":"A","type":"empathy","parent_text":"完成文","theme":"テーマ","theme_group":"分類","tone":"neutral|positive|negative","context_note":""}},
@@ -374,6 +382,11 @@ def _compare_three_way_candidates(candidates, verified, recent=None, target_date
 8. A/B/Cの中では文章の巧さだけでなく、最も購買理由が明確な訴求仮説を優先する
 
 直近30日の商品戦略:{json.dumps(recent_product_strategy_entries(days=30, limit=30), ensure_ascii=False)}
+実績フィードバック:{json.dumps(product_performance_feedback(days=60, min_samples=3), ensure_ascii=False)}
+実績の扱い:
+- ready=false なら実績を選考理由に使わない。
+- ready=true でも実績は補助評価に限定する。商品根拠、文章の自然さ、購買理由の明確さ、重複回避を先に評価する。
+- 上記が同程度の候補同士でのみ、十分なサンプルがある高実績傾向を優先材料にする。
 商品根拠:{json.dumps(verified, ensure_ascii=False)}
 対象日:{target_date.isoformat() if target_date else "未指定"}
 直近投稿:{json.dumps(recent or [], ensure_ascii=False)}
