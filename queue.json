@@ -27,38 +27,16 @@
       "scheduled_at": "2026-08-21T07:00+09:00",
       "status": "scheduled",
       "type": "empathy",
-      "parent_text": "金曜の朝だけは、目覚ましを止めても少し気持ちが軽い。\n\n今日さえ終われば休み、は強い。"
+      "parent_text": "冷蔵庫に麦茶がちょっとだけ残ってる時、飲み切るか残すかで一瞬迷う。\n\n結局飲み切って、次を作る仕事までついてくる。"
     },
     {
       "post_id": "W20260821-02",
       "scheduled_at": "2026-08-21T12:00+09:00",
       "status": "scheduled",
       "type": "product",
-      "parent_text": "炒め物しながら胡椒を足したい時、片手には菜箸。\n\nこういう時にボタンひとつで挽けるミルなら、いちいち手を止めなくていい。",
-      "selected_item_code": "n-raffine:10010706",
-      "child_text_base": "ボタンを押して使える充電式の電動ミル。高さ約14cmのミニサイズで、USB Type-C充電に対応しています。",
-      "image_urls": [
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/n-raffine/cabinet/07848197/nui.jpg",
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/n-raffine/cabinet/07848197/7941-2.jpg",
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/n-raffine/cabinet/07848197/7941-3.jpg"
-      ],
-      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00py1en.z7eis874.g00py1en.z7eit731/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fn-raffine%2Frh-7941%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fn-raffine%2Fi%2F10010706%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f"
-    },
-    {
-      "post_id": "W20260821-03",
-      "scheduled_at": "2026-08-21T15:00+09:00",
-      "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "金曜15時くらいから、仕事より夜何食べるかを考えてる。\n\n今週もよく働いたことにしていい時間。"
-    },
-    {
-      "post_id": "W20260821-04",
-      "scheduled_at": "2026-08-21T18:00+09:00",
-      "status": "scheduled",
-      "type": "product",
-      "parent_text": "出かける直前まで使ったヘアアイロン。\n\nまだ熱いから出しっぱなしにするしかないと思ってたけど、最初から耐熱の置き場所を作っておけばいい。",
+      "parent_text": "え、ヘアアイロンって熱いまましまえるポーチあるんだ。\n\n出かける前の「冷めるまで待つ」がなくなるの、かなり大きい。",
       "selected_item_code": "angers:10065234",
-      "child_text_base": "約11×30×6cmのヘアアイロン用ポーチ。内側は耐熱温度300℃の生地で、吊り下げ収納にも対応しています。",
+      "child_text_base": "内側は耐熱温度300℃の生地。吊り下げて置けるので、洗面所でも旅行先でも収納場所を作れます。",
       "image_urls": [
         "https://thumbnail.image.rakuten.co.jp/@0_mall/angers/cabinet/item_main0077/158748.jpg",
         "https://thumbnail.image.rakuten.co.jp/@0_mall/angers/cabinet/item_main0077/158748-m02.jpg",
@@ -67,27 +45,49 @@
       "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00pksvn.z7eisa26.g00pksvn.z7eitb13/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fangers%2F158748%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fangers%2Fi%2F10065234%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f"
     },
     {
+      "post_id": "W20260821-03",
+      "scheduled_at": "2026-08-21T15:00+09:00",
+      "status": "scheduled",
+      "type": "empathy",
+      "parent_text": "スーパーに寄ると、買う予定じゃなかったアイスだけは妙にすぐ決まる。\n\n夕飯のおかずはずっと迷ってるのに。"
+    },
+    {
+      "post_id": "W20260821-04",
+      "scheduled_at": "2026-08-21T18:00+09:00",
+      "status": "scheduled",
+      "type": "product",
+      "parent_text": "レンジで焼き魚までいけるの、ちょっと反則じゃない？\n\n火を使わずに「焼く」までできるなら、平日のごはんがだいぶ変わる。",
+      "selected_item_code": "livinza:10010346",
+      "child_text_base": "電子レンジで焼く・炒める・蒸す・茹でる・炊く・煮るの6通りに対応。セラミックで加熱して焼き目も付けられる調理器です。",
+      "image_urls": [
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/livinza/cabinet/baeworld/mwcp-p1_11_1.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/livinza/cabinet/baeworld/mwcp-p1_12.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/livinza/cabinet/baeworld/mwcp-p1_12-5.gif"
+      ],
+      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00q0tjn.z7eis5ad.g00q0tjn.z7eite27/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Flivinza%2F10010346%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Flivinza%2Fi%2F10010346%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f"
+    },
+    {
       "post_id": "W20260821-05",
       "scheduled_at": "2026-08-21T21:00+09:00",
       "status": "scheduled",
       "type": "empathy",
-      "parent_text": "金曜の夜は夜更かししてもいい。\n\nそう思ってスマホ見てたら、特に何もしないまま深夜になる。"
+      "parent_text": "金曜の夜、何かしようと思ってたのにソファに座ったら終わった。\n\nまあ今週はもうこれでいい。"
     },
     {
       "post_id": "W20260822-01",
       "scheduled_at": "2026-08-22T07:00+09:00",
       "status": "scheduled",
       "type": "empathy",
-      "parent_text": "平日は何回鳴っても起きないのに、休みの日だけ目覚ましなしで起きる。\n\nこの機能、曜日を間違えてる。"
+      "parent_text": "洗濯機を回したあとにポケットからティッシュを見つけた時の絶望。\n\nまだ開けてないのに、もう結果が分かる。"
     },
     {
       "post_id": "W20260822-02",
       "scheduled_at": "2026-08-22T12:00+09:00",
       "status": "scheduled",
       "type": "product",
-      "parent_text": "外出先でピアスやリングを外した時、バッグのポケットにそのまま入れたくない。\n\nなくす前に、小さいアクセサリー専用の場所をひとつ作っておきたい。",
+      "parent_text": "これくらい小さいジュエリーケース、むしろ欲しかった。\n\n旅行でピアス2つ持っていくだけなのに、大きいケースはいらないんよ。",
       "selected_item_code": "jw-copal:10002659",
-      "child_text_base": "約8.7×5.8×3.5cmの携帯用ジュエリーケース。リングやピアスなどをまとめて持ち歩けるコンパクトサイズです。",
+      "child_text_base": "約8.7×5.8×3.5cmの携帯用ケース。リングやピアスなど、小さいアクセサリーをまとめて持ち歩けます。",
       "image_urls": [
         "https://thumbnail.image.rakuten.co.jp/@0_gold/jw-copal/komono/jewerlycase/mine1-3.jpg",
         "https://thumbnail.image.rakuten.co.jp/@0_gold/jw-copal/komono/jewerlycase/new-1.jpg",
@@ -100,16 +100,16 @@
       "scheduled_at": "2026-08-22T15:00+09:00",
       "status": "scheduled",
       "type": "empathy",
-      "parent_text": "出かける予定は楽しみ。\n\nでも服決めて、メイクして、髪やって、バッグの中身確認するところは誰かやってほしい。"
+      "parent_text": "出かける前は服がないと思うのに、帰ってくると洗濯物だけは山ほどある。\n\nこの矛盾だけずっと解決しない。"
     },
     {
       "post_id": "W20260822-04",
       "scheduled_at": "2026-08-22T18:00+09:00",
       "status": "scheduled",
       "type": "product",
-      "parent_text": "推しのカード、数枚の頃は適当にしまってた。\n\n増えてきたら、まとめて見返せるファイルに入れておく方が絶対楽しい。",
+      "parent_text": "推しのカード、増えてくると『収納』じゃなくて『眺める場所』が欲しくなる。\n\n160枚まとめて見返せるの、普通に楽しそう。",
       "selected_item_code": "diaxino:10000016",
-      "child_text_base": "トレカやチェキを収納できるA5サイズのファイル。最大160枚入るので、増えてきたカードを一か所にまとめられます。",
+      "child_text_base": "A5サイズのトレカ・チェキ用ファイルで、最大160枚収納。増えたカードを一冊にまとめて見返せます。",
       "image_urls": [
         "https://thumbnail.image.rakuten.co.jp/@0_mall/diaxino/cabinet/11246453/3.jpg",
         "https://thumbnail.image.rakuten.co.jp/@0_mall/diaxino/cabinet/11246453/imgrc0103340590.jpg",
@@ -122,23 +122,23 @@
       "scheduled_at": "2026-08-22T21:00+09:00",
       "status": "scheduled",
       "type": "empathy",
-      "parent_text": "土曜の夜の「明日も休み」はかなり強い。\n\n日曜の夜にも一回だけ使わせてほしい。"
+      "parent_text": "休日って、予定を一個こなしただけでかなり充実した気になる。\n\n平日の自分には見せられない基準。"
     },
     {
       "post_id": "W20260823-01",
       "scheduled_at": "2026-08-23T07:00+09:00",
       "status": "scheduled",
       "type": "empathy",
-      "parent_text": "日曜は午前中ならまだ完全に休日。\n\n夕方くらいから月曜日が勝手に入ってくる。"
+      "parent_text": "エアコンを切ると暑い。つけるとちょっと寒い。\n\n8月後半、寝る時の正解が毎晩変わる。"
     },
     {
       "post_id": "W20260823-02",
       "scheduled_at": "2026-08-23T12:00+09:00",
       "status": "scheduled",
       "type": "product",
-      "parent_text": "スティック掃除機って、使いやすい場所に置きたいのに毎回どこへ立てかけるか迷う。\n\nだったら床置きのスタンドで、最初から定位置を作ればいい。",
+      "parent_text": "スティック掃除機、壁に立てかけて倒れるまでがセットだと思ってた。\n\n穴を開けずに定位置を作れるなら、最初からこれでいい。",
       "selected_item_code": "roomy:10015687",
-      "child_text_base": "スティッククリーナーを立てて収納できる床置き型スタンド。壁に穴を開けずに、掃除機の置き場所を作れます。",
+      "child_text_base": "床置き型のスティッククリーナースタンド。壁への穴あけ不要で、掃除機を立てて収納できます。",
       "image_urls": [
         "https://thumbnail.image.rakuten.co.jp/@0_mall/roomy/cabinet/500cart_all/500cart_11g/p5-8/ymz1084-sz000-0_gt01.jpg",
         "https://thumbnail.image.rakuten.co.jp/@0_mall/roomy/cabinet/500cart_all/500cart_ca2_7/ymz1084-sz000-0_sz01.jpg",
@@ -151,16 +151,16 @@
       "scheduled_at": "2026-08-23T15:00+09:00",
       "status": "scheduled",
       "type": "empathy",
-      "parent_text": "日曜に部屋をきれいにすると、今週こそ維持できる気がする。\n\nだいたい水曜には元に戻る。"
+      "parent_text": "冷蔵庫を開けて何もないと思ったのに、賞味期限が近いものだけはちゃんとある。\n\n今夜の献立はだいたいそこから決まる。"
     },
     {
       "post_id": "W20260823-04",
       "scheduled_at": "2026-08-23T18:00+09:00",
       "status": "scheduled",
       "type": "product",
-      "parent_text": "しばらく使わない服や寝具、そのまま収納するとクローゼットがすぐ埋まる。\n\n次に使うまで圧縮しておけば、その分ほかの物を入れられる。",
+      "parent_text": "冬物の布団、使ってない時までクローゼットの主役なの納得いかない。\n\n次の出番まで小さくなっててもらおう。",
       "selected_item_code": "sixspace:10001661",
-      "child_text_base": "衣類や寝具などに使える圧縮収納袋。M・Lのサイズがあり、かさばる季節物などをコンパクトに収納できます。",
+      "child_text_base": "衣類や寝具に使える圧縮収納袋。M・Lサイズがあり、かさばる季節物を圧縮して保管できます。",
       "image_urls": [
         "https://thumbnail.image.rakuten.co.jp/@0_mall/sixspace/cabinet/11877432/11877441/dbjj-main001.jpg",
         "https://thumbnail.image.rakuten.co.jp/@0_mall/sixspace/cabinet/09249806/11275599/dbtjj-001.jpg",
@@ -173,23 +173,23 @@
       "scheduled_at": "2026-08-23T21:00+09:00",
       "status": "scheduled",
       "type": "empathy",
-      "parent_text": "明日に備えて早く寝ようと思った日ほど、寝る前のスマホが長い。\n\n日曜だけ毎週これ。"
+      "parent_text": "日曜の夜だけ、急に部屋の細かいところが気になる。\n\n今やらなくていい掃除を始めるくらいなら、早く寝ればいいのに。"
     },
     {
       "post_id": "W20260824-01",
       "scheduled_at": "2026-08-24T07:00+09:00",
       "status": "scheduled",
       "type": "empathy",
-      "parent_text": "月曜の朝は、家を出た時点でかなり頑張った気がする。\n\n残念ながら仕事はここから。"
+      "parent_text": "朝ちゃんと日焼け止めを塗ったのに、駅まで歩いただけでもう全部流れた気がする。\n\n残暑、まだ普通に夏。"
     },
     {
       "post_id": "W20260824-02",
       "scheduled_at": "2026-08-24T12:00+09:00",
       "status": "scheduled",
       "type": "product",
-      "parent_text": "出かける直前に服の毛玉を見つけた。\n\n着替えるほどじゃないから、気になるところだけサッと取ってそのまま出たい。\n\nこういう時用に充電式を置いておくのはあり。",
+      "parent_text": "毛玉で着るのやめてた服、取るだけでまだいけるなら捨てるの早かったかも。\n\nこういうのは一回きれいになるところ見たら止まらなそう。",
       "selected_item_code": "catmart:10000129",
-      "child_text_base": "約156gのUSB-C充電式毛玉取り。3段階で調整できるので、衣類に合わせて使い分けできます。",
+      "child_text_base": "USB-C充電式の電動毛玉取り。6枚刃で、衣類に合わせて3段階の速度を切り替えられます。",
       "image_urls": [
         "https://thumbnail.image.rakuten.co.jp/@0_mall/catmart/cabinet/09284353/12112655/12399820/imgrc0119294861.jpg",
         "https://thumbnail.image.rakuten.co.jp/@0_mall/catmart/cabinet/09284353/12112655/12399820/3.jpg",
@@ -202,16 +202,16 @@
       "scheduled_at": "2026-08-24T15:00+09:00",
       "status": "scheduled",
       "type": "empathy",
-      "parent_text": "月曜の15時にカレンダーを見ると、金曜が遠すぎる。\n\nまだ一週間始まったばかりなのを認めたくない。"
+      "parent_text": "お昼を食べた直後はもう何もいらないと思う。\n\n15時になると普通に甘いものを探してる。"
     },
     {
       "post_id": "W20260824-04",
       "scheduled_at": "2026-08-24T18:00+09:00",
       "status": "scheduled",
       "type": "product",
-      "parent_text": "バッグを替えるたびに、財布、鍵、リップ、イヤホンを全部移してる。\n\n中身をこれにまとめておけば、バッグを替える時は丸ごと移すだけで済む。",
+      "parent_text": "バッグを替えるたびに中身を全部引っ越しさせてたの、これにまとめれば終わるじゃん。\n\nバッグだけ替えたい日にちょうどいい。",
       "selected_item_code": "annekor:10000006",
-      "child_text_base": "小物をまとめて収納できるフェルト製バッグインバッグ。約120gで、底板と複数のポケットが付いています。",
+      "child_text_base": "小物をまとめられるフェルト製バッグインバッグ。約120gで、底板と複数ポケット付きです。",
       "image_urls": [
         "https://thumbnail.image.rakuten.co.jp/@0_mall/annekor/cabinet/2021/ads_003/imgrc0093702138.jpg",
         "https://thumbnail.image.rakuten.co.jp/@0_mall/annekor/cabinet/2021/ads_003/003_0rank_manzoku.jpg",
@@ -224,23 +224,23 @@
       "scheduled_at": "2026-08-24T21:00+09:00",
       "status": "scheduled",
       "type": "empathy",
-      "parent_text": "月曜の夜は何もする気にならない。\n\n仕事に行って帰ってきただけで今日の予定は全部終了。"
+      "parent_text": "帰宅してバッグを床に置いた瞬間、今日使った物を元に戻す気力まで一緒に落ちる。"
     },
     {
       "post_id": "W20260825-01",
       "scheduled_at": "2026-08-25T07:00+09:00",
       "status": "scheduled",
       "type": "empathy",
-      "parent_text": "給料日、口座を見る瞬間だけちょっと嬉しい。\n\n家賃とかカードの支払いを思い出すまでは。"
+      "parent_text": "給料日って、入った金額を見る時間より引かれる予定を確認する時間の方が長い。\n\n一瞬だけ金持ちだった。"
     },
     {
       "post_id": "W20260825-02",
       "scheduled_at": "2026-08-25T12:00+09:00",
       "status": "scheduled",
       "type": "product",
-      "parent_text": "一泊だから小さいバッグで行けると思ったのに、着替えを入れたらもうパンパン。\n\n服だけ圧縮できれば、お土産を入れる余裕も残せる。",
+      "parent_text": "旅行って行きより帰りの方が荷物増えてない？\n\n服だけファスナーで圧縮できるなら、お土産の場所を先に空けとける。",
       "selected_item_code": "stela1:10000006",
-      "child_text_base": "ファスナーで圧縮できる両面収納タイプのトラベルポーチ。S・M・Lのサイズがあり、衣類を分けながら収納できます。",
+      "child_text_base": "ファスナーで圧縮する両面収納タイプのトラベルポーチ。S・M・Lがあり、衣類を分けながら収納できます。",
       "image_urls": [
         "https://thumbnail.image.rakuten.co.jp/@0_mall/stela1/cabinet/11574206/rakuten_travel_main.jpg",
         "https://thumbnail.image.rakuten.co.jp/@0_mall/stela1/cabinet/11574206/13595951/01_travel-pouch.jpg",
@@ -253,16 +253,16 @@
       "scheduled_at": "2026-08-25T15:00+09:00",
       "status": "scheduled",
       "type": "empathy",
-      "parent_text": "給料日に欲しい物を見ると、いつもより安く感じる。\n\n値段は昨日から一円も変わってない。"
+      "parent_text": "コンビニで飲み物だけ買うつもりだったのに、レジに着く頃には何か食べる物も持ってる。\n\nあの数十秒で予定が変わる。"
     },
     {
       "post_id": "W20260825-04",
       "scheduled_at": "2026-08-25T18:00+09:00",
       "status": "scheduled",
       "type": "product",
-      "parent_text": "ホテルに着いたら洗面用品をこれごとフックに掛ける。\n\n化粧水も歯ブラシもそこから取れれば、洗面台に全部並べなくていい。",
+      "parent_text": "ホテルの洗面台、物を全部並べるから一瞬で自宅みたいになる。\n\nポーチごと吊るして、そこから使うのが一番ラクそう。",
       "selected_item_code": "luckyhill:10000112",
-      "child_text_base": "洗面用品やコスメをまとめて収納できる吊り下げ式トラベルポーチ。開いた状態で吊るして使えて、普段の収納ポーチとしても使えるタイプです。",
+      "child_text_base": "フックで吊り下げて開いたまま使えるトラベルポーチ。コスメや洗面用品をまとめて持ち運べます。",
       "image_urls": [
         "https://thumbnail.image.rakuten.co.jp/@0_mall/luckyhill/cabinet/nz-42tc5.jpg",
         "https://thumbnail.image.rakuten.co.jp/@0_mall/luckyhill/cabinet/nz-42tc2_magazine2.jpg",
@@ -275,23 +275,23 @@
       "scheduled_at": "2026-08-25T21:00+09:00",
       "status": "scheduled",
       "type": "empathy",
-      "parent_text": "火曜が終わって「今週も結構働いたな」と思う。\n\nまだ二日しか働いてない。"
+      "parent_text": "お風呂に入るまでは頑張れる。\n\n出たあと髪を乾かす工程だけ、毎日別料金にしてほしいくらい面倒。"
     },
     {
       "post_id": "W20260826-01",
       "scheduled_at": "2026-08-26T07:00+09:00",
       "status": "scheduled",
       "type": "empathy",
-      "parent_text": "水曜になると「今週も半分終わった」と自分に言い聞かせる。\n\n気持ちだけでも後半戦に入りたい。"
+      "parent_text": "朝、昨日より5分早く起きただけで今日は余裕あると思う。\n\nその5分、だいたいスマホで消える。"
     },
     {
       "post_id": "W20260826-02",
       "scheduled_at": "2026-08-26T12:00+09:00",
       "status": "scheduled",
       "type": "product",
-      "parent_text": "寝ようと思って電気を消したのに、スマホが視界にあるとまた触ってしまう。\n\n寝ると決めたらアイマスクをつける、くらい強制的に終わらせるのもありかもしれない。",
+      "parent_text": "寝る時くらい、視界を強制終了させたい。\n\nスマホを置けないなら先に目を隠す、くらいでちょうどいいかも。",
       "selected_item_code": "yukinosizuku:10010750",
-      "child_text_base": "シルク100％生地を使ったアイマスク。ベルト部分は調整できるタイプなので、頭まわりに合わせて装着できます。",
+      "child_text_base": "シルク100％生地のアイマスク。ベルトは長さを調整でき、頭まわりに合わせて装着できます。",
       "image_urls": [
         "https://thumbnail.image.rakuten.co.jp/@0_mall/yukinosizuku/cabinet/10659028/imgrc0111952597.jpg",
         "https://thumbnail.image.rakuten.co.jp/@0_mall/yukinosizuku/cabinet/10659028/imgrc0106250631.jpg",
@@ -304,16 +304,16 @@
       "scheduled_at": "2026-08-26T15:00+09:00",
       "status": "scheduled",
       "type": "empathy",
-      "parent_text": "午後になると甘いものが欲しくなる。\n\nお腹が空いてるのか、ただ疲れてるのかは分からない。"
+      "parent_text": "デスクの上を片づけると仕事できそうな気がする。\n\n片づけたことで満足して、始めるのは少し遅れる。"
     },
     {
       "post_id": "W20260826-04",
       "scheduled_at": "2026-08-26T18:00+09:00",
       "status": "scheduled",
       "type": "product",
-      "parent_text": "バッグの中でリップを探すために、毎回ほかの物まで全部かき分けてる。\n\n小物は一つの大きいポーチに詰めるより、用途ごとに分けて中身が見える方が探しやすい。",
+      "parent_text": "ポーチの中でまた物を探すなら、もうポーチを3つに分けた方が早くない？\n\nしかも中身が見える。これでいい。",
       "selected_item_code": "liviewstore:10003507",
-      "child_text_base": "L・M・Sの3サイズがセットになったメッシュポーチ。3点合わせて約40g。中身が見えるので、コスメや小物を用途別に分けて収納できます。",
+      "child_text_base": "L・M・Sのメッシュポーチ3点セット。合計約40gで、中身を見ながら用途別に仕分けできます。",
       "image_urls": [
         "https://thumbnail.image.rakuten.co.jp/@0_mall/liviewstore/cabinet/zk/010-019/zk-select017n.jpg",
         "https://thumbnail.image.rakuten.co.jp/@0_mall/liviewstore/cabinet/zk/010-019/zk-select017_1.jpg",
@@ -326,7 +326,58 @@
       "scheduled_at": "2026-08-26T21:00+09:00",
       "status": "scheduled",
       "type": "empathy",
-      "parent_text": "水曜の夜は「あと二日」。\n\n木曜の朝になると「まだ二日」。\n\n同じ二日なのに全然違う。"
+      "parent_text": "寝る前に一回だけSNSを見るつもりで開く。\n\n『一回』に終わりがないことは毎晩知ってる。"
+    },
+    {
+      "post_id": "W20260827-01",
+      "scheduled_at": "2026-08-27T07:00+09:00",
+      "status": "scheduled",
+      "type": "empathy",
+      "parent_text": "冷たい飲み物ばかり選んでたのに、朝だけ少し温かいものが欲しくなる日が出てきた。\n\n夏の終わりってこういうところから来る。"
+    },
+    {
+      "post_id": "W20260827-02",
+      "scheduled_at": "2026-08-27T12:00+09:00",
+      "status": "scheduled",
+      "type": "product",
+      "parent_text": "包丁とまな板を出すほどじゃない時、キッチンバサミが強すぎる。\n\n肉も野菜もそのまま切れるなら、もう下ごしらえの主役でいい。",
+      "selected_item_code": "k-kitchen:10081138",
+      "child_text_base": "貝印のカーブ刃キッチンバサミ。食材を切り分けやすい形で、食洗機にも対応しています。",
+      "image_urls": [
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/k-kitchen/cabinet/tasya93/9181196.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/k-kitchen/cabinet/img-up_1_951/1534_k1_308187_13.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/k-kitchen/cabinet/img-up_1_951/1534_k3_308187_9.jpg"
+      ],
+      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00qzr8n.z7eisc64.g00qzr8n.z7eitb88/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fk-kitchen%2F9181196%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fk-kitchen%2Fi%2F10081138%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f"
+    },
+    {
+      "post_id": "W20260827-03",
+      "scheduled_at": "2026-08-27T15:00+09:00",
+      "status": "scheduled",
+      "type": "empathy",
+      "parent_text": "買い物メモを作った日は安心して、メモにない物まで買う。\n\n忘れ物は減るけど出費はあまり減らない。"
+    },
+    {
+      "post_id": "W20260827-04",
+      "scheduled_at": "2026-08-27T18:00+09:00",
+      "status": "scheduled",
+      "type": "product",
+      "parent_text": "胡椒を挽くためだけに両手を空けるの、考えたら地味に面倒だった。\n\nボタンひとつで片手で挽けるなら、料理中はこっちがいい。",
+      "selected_item_code": "n-raffine:10010706",
+      "child_text_base": "上部のボタンで電動挽きできる充電式ミル。約4×4×14cmのミニサイズで、USB Type-C充電に対応しています。",
+      "image_urls": [
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/n-raffine/cabinet/07848197/nui.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/n-raffine/cabinet/07848197/7941-2.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/n-raffine/cabinet/07848197/7941-3.jpg"
+      ],
+      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00py1en.z7eis874.g00py1en.z7eit731/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fn-raffine%2Frh-7941%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fn-raffine%2Fi%2F10010706%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f"
+    },
+    {
+      "post_id": "W20260827-05",
+      "scheduled_at": "2026-08-27T21:00+09:00",
+      "status": "scheduled",
+      "type": "empathy",
+      "parent_text": "木曜の夜は、もう気持ちだけ金曜に片足入ってる。\n\nあと一日なら何とかなる、でだいたい何とかする。"
     }
   ],
   "expired": []
