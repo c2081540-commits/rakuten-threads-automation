@@ -22,6 +22,7 @@ WEAK_PARENT_ENDINGS = ("便利そう", "良さそう", "いいかも", "便利�
 WEAK_PARENT_PHRASES = ("ちょっと掛けたいもの", "ちょっと置きたいもの", "あると便利そう", "あると良さそう")
 PRODUCT_REVIEW_PHRASES = ("確認したい", "チェックしたい", "判断しやすい", "購入判断", "購入前に")
 EMPATHY_PRODUCT_PITCH_PHRASES = ("便利グッズ", "収納グッズ", "小さなトレー", "があると便利", "一つでスムーズ", "ひとつでスムーズ")
+AI_WRAPPED_EMOTION_PHRASES = ("嬉しい発見", "なら助かる", "理想的", "使い勝手がいい", "使い勝手が良い", "日常導入のハードル", "導入のハードル", "便利な発見", "うれしい発見")
 
 
 def _api_key():
@@ -72,63 +73,74 @@ def _source_text(item):
 
 
 def _select_grounded_products(items, target_date=None):
-    """Let the model choose products, then attach source text in Python.
-
-    The model never extracts or rewrites facts in this stage.  Therefore a valid
-    paraphrase cannot be rejected merely because it is not a verbatim substring.
-    """
+    """Choose only products with a strong, natural emotion-first Threads hook."""
     usable = [item for item in items if item.get("itemCode") and _source_text(item)]
     if len({item["itemCode"] for item in usable}) < 2:
         raise RuntimeError("商品候補が2件未満のため投稿を作成できません。")
     candidates = _candidate_data(usable)
+    emotion_rules = _load_prompt("emotion_first_product.txt")
 
     def build(attempt, last_error):
-        retry = "" if last_error is None else f"\n前回の不合格理由:{last_error}"
-        emotion_rules = _load_prompt("emotion_first_product.txt")
+        retry = "" if last_error is None else f"\n前回の不合格理由:{last_error}\n弱い商品を選ばず、別の商品を評価する。"
         return _json_response(f"""
 {emotion_rules}
 
-候補からThreadsで紹介する用途の異なる商品を2件選ぶ。候補外・同一商品の重複は禁止。
-最優先は、商品を見た一般ユーザーから自然で具体的な感情反応が生まれること。
-「便利だから」だけでは弱い。驚き、発見、理想、これでいい、助かる、面倒からの解放、意外性など、
-親投稿に短く強い第一反応を作れる商品を選ぶ。強い感情フックを無理なく作れない商品は落とす。
-未使用なのに「使った」「戻れない」「愛用」などの体験を前提にしない。
+候補商品をThreadsで見た瞬間の「人間の反応」で評価し、最も強い2商品を選ぶ。
+商品説明の充実度ではなく、親投稿で短く自然な第一声が出るかを最重要視する。
+
+強い例の方向性: 「これ何？」「こういうの欲しかった」「その発想はなかった」「これでいいじゃん」など。
+ただし例文のコピーは禁止。商品固有の事実から自然に出る反応にする。
+「便利そう」「助かる」「時短になる」しか出ない商品は弱い。
+未使用なのに使用経験を前提にしない。
+
+各選択商品について以下を必ず返す。
+- hook_strength: 1〜10。7未満は選択禁止。
+- natural_reaction: その商品を画像で見た人が口にしそうな短い第一声。
+- why_shareable: なぜThreadsで人に見せたくなる商品なのか。
+- hook_evidence: その反応を支える商品説明中の具体的事実。
+
 対象日:{target_date.isoformat() if target_date else "未指定"}
 候補:{json.dumps(candidates, ensure_ascii=False)}
 {retry}
-JSONのみ: {{"selected_item_codes":["itemCode1","itemCode2"]}}
+JSONのみ: {{"selected_products":[{{"itemCode":"...","hook_strength":8,"natural_reaction":"...","why_shareable":"...","hook_evidence":"..."}},{{...}}]}}
 """)
 
     valid_codes = {item["itemCode"] for item in usable}
 
     def validate(result):
-        codes = result.get("selected_item_codes", [])
-        if len(codes) != 2 or len(set(codes)) != 2 or any(code not in valid_codes for code in codes):
+        rows = result.get("selected_products", [])
+        codes = [row.get("itemCode") for row in rows]
+        if len(rows) != 2 or len(set(codes)) != 2 or any(code not in valid_codes for code in codes):
             raise RuntimeError("商品選択が候補内の重複なし2件になっていません。")
-        return codes
+        for row in rows:
+            try:
+                strength = int(row.get("hook_strength", 0))
+            except (TypeError, ValueError):
+                strength = 0
+            if strength < 7:
+                raise RuntimeError(f"感情フック強度が不足しています: {row.get('itemCode')}={strength}")
+            for key in ("natural_reaction", "why_shareable", "hook_evidence"):
+                if not str(row.get(key, "")).strip():
+                    raise RuntimeError(f"商品選択評価の{key}が空です。")
+        return rows
 
-    def rotate_fallback(last_result, last_error):
-        # Only selection falls back.  The chosen products and generated copy are
-        # not fixed: the date changes the starting point and copy is generated later.
-        unique = list(dict.fromkeys(item["itemCode"] for item in usable))
-        offset = (target_date.toordinal() if target_date else 0) % len(unique)
-        return [unique[offset], unique[(offset + 1) % len(unique)]]
-
-    codes = _generate_with_validation(
-        "商品選択", build, validate, fallback=rotate_fallback
-    )
+    selected = _generate_with_validation("感情フック商品選択", build, validate)
     by_code = {item["itemCode"]: item for item in usable}
     grounded = []
-    for code in codes:
+    for choice in selected:
+        code = choice["itemCode"]
         item = by_code[code]
         name = " ".join(str(item.get("itemName", "")).split())
         caption = " ".join(str(item.get("itemCaption", "")).split())[:1200]
         grounded.append({
             "selected_item_code": code,
             "facts": [text for text in (name, caption) if text],
+            "selection_hook_strength": int(choice["hook_strength"]),
+            "selection_natural_reaction": str(choice["natural_reaction"]).strip(),
+            "selection_why_shareable": str(choice["why_shareable"]).strip(),
+            "selection_hook_evidence": str(choice["hook_evidence"]).strip(),
         })
     return grounded
-
 
 def _validate_empathy_text(text, hour, target_date=None):
     _validate_parent(text)
@@ -287,7 +299,7 @@ def _candidate_key(post_id, variant):
 def _generate_three_way_candidates(verified, recent=None, events=None, target_date=None,
                                    only_ids=None, rejection_reasons=None):
     """Create three complete, independently conceived drafts for each requested slot."""
-    requested = list(only_ids or [slot_id for slot_id, _ in DAILY_SLOTS])
+    requested = list(only_ids or ["P1", "P2"])
     facts_by_code = {x["selected_item_code"]: x["facts"] for x in verified}
     product_code_by_id = {
         "P1": verified[0]["selected_item_code"],
@@ -326,6 +338,8 @@ def _generate_three_way_candidates(verified, recent=None, events=None, target_da
 - A/B/Cは、強い感想型・比較/乗り換え型・具体場面/欲望型など、商品に自然に合う異なる反応を競わせる。合わない型を無理に使わない。
 - 直近30日の感情反応・フック型・購買トリガーと同じ組合せを避ける。
 - 「便利そう」「良さそう」で逃げず、何に反応したのかが一読で分かる言葉にする。
+- 「嬉しい発見」「〜なら助かる」「理想的」「使い勝手がいい」「導入のハードル」のような、説明文を感情語で包んだだけのAI表現は禁止。
+- 親投稿は友達に画像を見せながら一言言う感覚を優先し、二文目で商品説明に戻らない。
 - 「幅広」を「幅を広げられる」、「容積を抑える」を「荷物が減る」のように意味を変えない。
 
 直近30日の商品戦略履歴:{json.dumps(recent_product_strategy_entries(days=30, limit=30), ensure_ascii=False)}
@@ -448,7 +462,7 @@ JSONのみ: {{"selections":[{{"post_id":"E1","selected_candidate_id":"E1-Bまた
 
 def _generate_by_comparison(verified, recent=None, events=None, target_date=None):
     """Generate/compare three drafts; retry only slots whose three drafts all lose."""
-    pending = [slot_id for slot_id, _ in DAILY_SLOTS]
+    pending = ["P1", "P2"]
     selected = {}
     rejection_reasons = {}
     for round_no in range(1, 3):
@@ -461,7 +475,7 @@ def _generate_by_comparison(verified, recent=None, events=None, target_date=None
         pending = [post_id for post_id in pending if post_id in rejected]
         rejection_reasons = rejected
         if not pending:
-            return [selected[slot_id] for slot_id, _ in DAILY_SLOTS]
+            return [selected[slot_id] for slot_id in ("P1", "P2")]
         print(f"3案すべて不採用の枠を新しい3案で再生成します ({round_no}/2): {pending}")
     raise RuntimeError(f"2回の3案比較でも採用候補がありません: {rejection_reasons}")
 
@@ -510,6 +524,8 @@ def _validate_parent(parent, recent_posts=None, product=False):
             raise RuntimeError("商品親投稿に曖昧な感想表現があります。具体的な生活上の変化へ書き換えてください。")
         if any(x in compact for x in PRODUCT_REVIEW_PHRASES):
             raise RuntimeError("商品親投稿が購入ガイド・比較記事調です。")
+        if any(x in compact for x in AI_WRAPPED_EMOTION_PHRASES):
+            raise RuntimeError("商品親投稿が説明文を感情語で包んだAI表現になっています。")
         # 感情先行型では親投稿を短く保つ。具体仕様は返信側で補う。
         if len(compact) > 110:
             raise RuntimeError("商品親投稿が説明過多です。感情フックと最低限の理由に絞ってください。")
@@ -713,111 +729,71 @@ def _validate_mixed_result(result, items, history):
     return _arrange_editorial_order(posts, result.get("editorial_order", []))
 
 
-def generate_mixed_stock(items, recent_history=None, existing_queue=None, events=None, target_date=None):
-    product_prompt = _load_prompt("product.txt")
+def _generate_empathy_only(recent=None, target_date=None):
+    """Generate empathy posts in a request that never receives product data."""
     empathy_prompt = _load_prompt("empathy.txt")
+    hours = {"E1": 7, "E2": 15, "E3": 21}
+
+    def build(attempt, last_error):
+        retry = "" if last_error is None else f"\n前回の不合格理由:{last_error}\n商品への前振りを作らず、3件とも別テーマで書き直す。"
+        return _json_response(f"""
+{empathy_prompt}
+
+共感投稿だけを3件作る。このリクエストには商品情報は存在しない。
+E1/E2/E3は配信枠のIDにすぎず、朝昼夜の実況連作にしない。
+3件は互いに独立した生活テーマにする。
+商品の機能を連想させる悩み→解決、便利グッズへの前振り、買い物誘導は禁止。
+一般論や教訓ではなく、その瞬間に本人が感じた本音として2〜4文、45〜140字。
+対象日:{target_date.isoformat() if target_date else "未指定"}
+直近の投稿（重複回避のみ）:{json.dumps(recent or [], ensure_ascii=False)}
+{retry}
+JSONのみ: {{"posts":[
+{{"post_id":"E1","type":"empathy","parent_text":"本文","theme":"テーマ","theme_group":"分類","tone":"neutral|positive|negative","context_note":""}},
+{{"post_id":"E2","type":"empathy","parent_text":"本文","theme":"テーマ","theme_group":"分類","tone":"neutral|positive|negative","context_note":""}},
+{{"post_id":"E3","type":"empathy","parent_text":"本文","theme":"テーマ","theme_group":"分類","tone":"neutral|positive|negative","context_note":""}}
+]}}
+""")
+
+    def validate(result):
+        posts = result.get("posts", [])
+        if [p.get("post_id") for p in posts] != ["E1", "E2", "E3"]:
+            raise RuntimeError("共感投稿IDがE1/E2/E3になっていません。")
+        groups = []
+        for post in posts:
+            if post.get("type") != "empathy":
+                raise RuntimeError("共感生成に商品投稿が混入しました。")
+            if str(post.get("tone", "")) not in {"neutral", "positive", "negative"}:
+                raise RuntimeError("共感投稿のtoneが不正です。")
+            _validate_empathy_text(post.get("parent_text", ""), hours[post["post_id"]], target_date)
+            groups.append(str(post.get("theme_group", "")).strip())
+        if len(set(groups)) != 3:
+            raise RuntimeError(f"共感3件のテーマが重複しています: {groups}")
+        return posts
+
+    try:
+        return _generate_with_validation("独立共感投稿", build, validate)
+    except RuntimeError as exc:
+        print(f"独立共感投稿の生成が不安定なため検品済み文面へ切替: {exc}")
+        return _fallback_empathy_posts(target_date)
+
+
+def generate_mixed_stock(items, recent_history=None, existing_queue=None, events=None, target_date=None):
     history = recent_history or []
     queued = existing_queue or []
     recent = history + queued
 
-    # Products are selected from the already de-duplicated shortlist.  Copy is
-    # then created as three independent complete drafts per slot and selected
-    # by a separate comparison request; the comparer never edits prose.
+    # 1) Empathy is generated in complete isolation: no product names, facts or selected items.
+    empathy = _generate_empathy_only(recent=recent, target_date=target_date)
+
+    # 2) Products are selected by emotion-hook strength, then only product slots get A/B/C drafts.
     verified = _select_grounded_products(items, target_date)
-    return _generate_by_comparison(
+    products = _generate_by_comparison(
         verified, recent=recent, events=events, target_date=target_date
     )
 
-    empathy_hours = {"E1": 7, "E2": 15, "E3": 21}
+    by_id = {post["post_id"]: post for post in empathy + products}
+    arranged = [by_id[slot_id] for slot_id, _ in DAILY_SLOTS]
+    if [p["post_id"] for p in arranged] != ["E1", "P1", "E2", "P2", "E3"]:
+        raise RuntimeError("E/P/E/P/Eの固定構成を作れませんでした。")
+    return arranged
 
-    def build_empathy(attempt, last_error):
-        retry = "" if last_error is None else f"\n前回の不合格理由:{last_error}\n理由を解消し、3件すべてを完成形で書き直す。"
-        # Product candidates are deliberately absent from this request.
-        return _json_response(f"""
-{empathy_prompt}
-次の固定IDに1件ずつ作る: E1、E2、E3。IDは投稿時刻を表すだけで、本文の出来事の時間帯は制限しない。
-対象日:{target_date.isoformat() if target_date else "未指定"}
-3件は別テーマ。掃除・収納・水回りは合計1件まで。
-各本文は「誰にも起こり得る具体的な場面」を1文、「そのときの本音やあるある」を1〜2文の順で組み立てる。
-仕上がりは45〜140字、2〜4文。長さを埋めるための結論や教訓は足さない。
-商品、道具の機能、形状、収納方法を連想させる前振りは禁止。
-履歴:{json.dumps(recent, ensure_ascii=False)}
-{retry}
-JSONのみ: {{"posts":[{{"post_id":"E1","type":"empathy","parent_text":"本文","theme":"テーマ","theme_group":"季節/天気|食事/料理|買い物|洗濯/衣類|朝夜/休日|休憩|掃除|収納|水回り|その他生活","tone":"neutral|positive|negative","context_note":""}}]}}
-E1、E2、E3を各1件だけ返す。
-""")
-
-    def validate_empathy(result):
-        empathy_posts = result.get("posts", [])
-        if {x.get("post_id") for x in empathy_posts} != {"E1", "E2", "E3"} or len(empathy_posts) != 3:
-            raise RuntimeError("共感投稿IDが不足または重複しています。")
-        groups = []
-        for post in empathy_posts:
-            if post.get("type") != "empathy":
-                raise RuntimeError("共感生成に商品投稿が混入しました。")
-            _validate_empathy_text(post.get("parent_text", ""), empathy_hours[post["post_id"]], target_date)
-            groups.append(str(post.get("theme_group", "")).strip())
-        if len(set(groups)) != 3 or sum(x in {"掃除", "収納", "水回り"} for x in groups) > 1:
-            raise RuntimeError(f"共感テーマ分散不足: {groups}")
-        return empathy_posts
-
-    try:
-        empathy = _generate_with_validation("共感投稿", build_empathy, validate_empathy)
-    except RuntimeError as exc:
-        print(f"共感投稿のAI生成が不安定なため、検品済み文面へ自動切替します: {exc}")
-        empathy = _fallback_empathy_posts(target_date)
-
-    # The model chooses the products, while Python attaches the untouched Rakuten
-    # source as grounding.  Source wording is reference material, not post copy.
-    verified = _select_grounded_products(items, target_date)
-
-    def build_products(attempt, last_error):
-        retry = "" if last_error is None else f"\n前回の不合格理由:{last_error}\n確認済み事実だけを使って2件とも書き直す。"
-        return _json_response(f"""
-{product_prompt}
-以下のfactsは選択商品の楽天商品名・商品説明であり、投稿にはそのまま転載しない。
-このfacts以外の部品、機能、材質、付属品、収納方法、効果を追加してはいけない。
-factsを根拠資料として読み、内容を自然な日本語へ言い換えて「具体的な使用場面＋生活上の便益」を表現する。
-便益の推論は許可するが、新しい物理仕様を作ってはいけない。
-確認済み事実:{json.dumps(verified, ensure_ascii=False)}
-履歴:{json.dumps(recent, ensure_ascii=False)}
-イベント:{_event_instruction(events)}
-{retry}
-JSONのみ: {{"posts":[{{"post_id":"P1","type":"product","selected_item_code":"itemCode","parent_text":"使用場面と便益","child_text_base":"親と異なる確認済み事実1〜2点の補足","theme":"テーマ","product_group":"用途","context_note":""}}]}}
-P1とP2を、確認済み事実の商品順に各1件返す。
-""")
-    expected_codes = [x["selected_item_code"] for x in verified]
-    facts_by_code = {x["selected_item_code"]: x["facts"] for x in verified}
-
-    def validate_products(result):
-        product_posts = result.get("posts", [])
-        if [x.get("post_id") for x in product_posts] != ["P1", "P2"] or [x.get("selected_item_code") for x in product_posts] != expected_codes:
-            raise RuntimeError("商品投稿IDまたは商品コードが確認済み事実と一致しません。")
-        for post in product_posts:
-            _validate_product_copy_against_facts(post.get("parent_text", ""), post.get("child_text_base", ""), facts_by_code[post["selected_item_code"]])
-        return product_posts
-
-    def fallback_products(last_result, last_error):
-        """Keep a structurally usable draft; quality failures must not kill Actions."""
-        drafts = (last_result or {}).get("posts", [])
-        if [x.get("post_id") for x in drafts] != ["P1", "P2"]:
-            raise RuntimeError(f"商品投稿JSONが不完全です: {last_error}")
-        if [x.get("selected_item_code") for x in drafts] != expected_codes:
-            raise RuntimeError(f"商品投稿の商品コードが不正です: {last_error}")
-        for draft in drafts:
-            if not str(draft.get("parent_text", "")).strip() or not str(draft.get("child_text_base", "")).strip():
-                raise RuntimeError(f"商品投稿本文が空です: {last_error}")
-            draft["context_note"] = "quality-fallback"
-        return drafts
-
-    products = _generate_with_validation(
-        "商品投稿", build_products, validate_products, fallback=fallback_products
-    )
-
-    by_id = {x["post_id"]: x for x in empathy + products}
-    arranged = [by_id[x] for x, _ in DAILY_SLOTS]
-
-    # One grounded editorial pass replaces the former pass/fail checker.  It
-    # sees all five drafts, fixes semantic and natural-language problems, while
-    # Python keeps IDs, product codes and the 3/2 layout immutable.
-    return _final_editorial_pass(arranged, verified, recent=recent, target_date=target_date)
