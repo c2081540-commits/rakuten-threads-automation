@@ -98,13 +98,19 @@ def normalize_item(wrapper):
     item = wrapper.get("Item", wrapper)
     images = item.get("mediumImageUrls") or []
     image_urls = []
+    seen_urls = set()
     for image in images:
         if isinstance(image, dict):
             url = image.get("imageUrl")
         else:
             url = str(image)
-        if url:
-            image_urls.append(url.split("?")[0])
+        if not url:
+            continue
+        normalized_url = url.split("?")[0]
+        if normalized_url in seen_urls:
+            continue
+        seen_urls.add(normalized_url)
+        image_urls.append(normalized_url)
 
     return {
         "itemCode": item.get("itemCode", ""),
@@ -117,7 +123,10 @@ def normalize_item(wrapper):
         "itemUrl": item.get("itemUrl", ""),
         "shopName": item.get("shopName", ""),
         "genreId": str(item.get("genreId", "")),
-        "imageUrls": image_urls[:3],
+        # 候補取得段階では楽天APIが返した画像を捨てない。
+        # 実投稿側の枚数上限とは分離し、後段で意味のある画像だけ選べるようにする。
+        "imageUrls": image_urls,
+        "imageCount": len(image_urls),
     }
 
 
