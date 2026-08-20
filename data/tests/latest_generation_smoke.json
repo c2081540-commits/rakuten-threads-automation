@@ -1,5 +1,5 @@
 {
-  "tested_at": "2026-08-20T14:39:38+09:00",
+  "tested_at": "2026-08-20T14:48:47+09:00",
   "target_date": "2026-08-21",
   "openai_request_count": 4,
   "performance_feedback": {
@@ -31,25 +31,25 @@
     {
       "post_id": "E1",
       "type": "empathy",
-      "parent_text": "仕事帰り、冷蔵庫を開けて材料とにらめっこする時間が長い。結局『これなら失敗しない』と麺類に逃げてしまう自分がいる。",
-      "theme": "夜ごはん/献立決め",
-      "theme_group": "キッチン/料理",
+      "parent_text": "夕方のスーパーでつい目についた惣菜をカゴに入れる。帰ってレシートを見て少し反省するけど、疲れてる日の夕飯に手間がかからないのは正義だと思ってしまう。",
+      "theme": "買い物/惣菜",
+      "theme_group": "買い物/惣菜",
       "tone": "neutral",
-      "context_note": ""
+      "context_note": "seasonal"
     },
     {
-      "candidate_id": "P1-B",
+      "candidate_id": "P1-C",
       "post_id": "P1",
-      "variant": "B",
+      "variant": "C",
       "type": "product",
       "selected_item_code": "n-raffine:10010706",
-      "parent_text": "これなら炒め物中に菜箸持ったままでも胡椒足せるね。挽くたびに手を止めなくて済むのがいい。",
-      "child_text_base": "ミル上部のボタンで電動動作、片手操作サイズ（約W4×D4×H14cm）。充電はUSB Type-Cでフル充電約1時間、リチウムポリマー電池（3.7V/300mAh）を搭載。キャビンは透明で残量確認、広めの充填口で塩・胡椒の詰め替えも簡単です。",
-      "theme": "キッチン/調理中のワンアクション",
-      "product_group": "調理家電・便利グッズ",
-      "emotional_reaction": "実用的安心（調理中の動作を止めない）",
-      "hook_type": "比較",
-      "purchase_trigger": "片手操作＋充電式で動作の中断が減る点（手を止めず挽ける・充電で電池交換不要）が料理テンポに直結するため",
+      "parent_text": "炒め物中でも片手でワンタッチで胡椒が挽けるのいいな…。\n\n手が濡れてても押せそうなシンプル操作。",
+      "child_text_base": "ミル上部のワンプッシュで電動挽き、片手サイズで調理中に手を止めず使える設計。付属はType-C充電ケーブル・キャップ・スタンド・ブラシで、1本約180gの軽量感。",
+      "theme": "キッチン/調理の時短",
+      "product_group": "調味料・ミル",
+      "emotional_reaction": "欲望（調理中の手軽さ）",
+      "hook_type": "欲望",
+      "purchase_trigger": "片手で操作できる電動挽き＋充電式で調理のテンポを崩さずテーブルに置ける点が即決理由になる",
       "problem_axis": "",
       "benefit_axis": "",
       "sales_structure": "",
@@ -58,11 +58,11 @@
     {
       "post_id": "E2",
       "type": "empathy",
-      "parent_text": "不在票を見つけると開けたくてウズウズするのに、受け取りに行ける時間が合わない。玄関に置かれた箱たちが罪悪感と楽しみを同時にくれる。",
-      "theme": "受け取り/宅配",
-      "theme_group": "買い物・配送",
+      "parent_text": "レシピを見ながら作り始めて、途中で「調味料が足りない」ことに気づく。代わりの調味料でごまかすけど、出来上がるまでずっと本物の味と比べてしまう。",
+      "theme": "料理/調味料不足",
+      "theme_group": "料理/調味料",
       "tone": "negative",
-      "context_note": ""
+      "context_note": "seasonal"
     },
     {
       "candidate_id": "P2-A",
@@ -70,13 +70,13 @@
       "variant": "A",
       "type": "product",
       "selected_item_code": "shopmarna:10006585",
-      "parent_text": "え、ごはんが“炊き立てみたい”に戻る容器って本当にあるの！？",
-      "child_text_base": "『極 冷凍ごはん容器』はふたをしたまま電子レンジで加熱でき、ムラなくふっくら解凍できる形状を追求していると明記。1個あたり約280mlで一膳（約180g）サイズ、食洗機対応・耐熱約140℃／耐冷約−20℃です。",
+      "parent_text": "えっ、冷凍ご飯がふっくら？レンジで炊き立てみたいに温まるの？",
+      "child_text_base": "ふたをしたまま電子レンジ加熱できる容器で、冷凍ご飯をムラなくふっくら解凍・加熱する形状設計。目安は一膳（約180g）で500W約3分30秒、材質は耐熱ポリプロピレン（耐熱約140℃）。",
       "theme": "キッチン/冷凍ごはん",
-      "product_group": "保存容器・時短調理",
-      "emotional_reaction": "驚き（冷凍ごはんを炊き立てに近づけるという発見）",
-      "hook_type": "驚き",
-      "purchase_trigger": "ふたをしたままレンジでムラなくふっくら加熱できる設計（容量・形状の工夫）と一膳サイズで使いやすい点が冷凍ごはんの不満を直接解消するから",
+      "product_group": "保存容器・レンジ調理",
+      "emotional_reaction": "驚き（冷凍＝パサつきの常識が覆る）",
+      "hook_type": "発見",
+      "purchase_trigger": "フタをしたままレンジで均一にふっくら加熱できる設計と明確な加熱目安が、冷凍ごはん利用の不安を取り除く",
       "problem_axis": "",
       "benefit_axis": "",
       "sales_structure": "",
@@ -85,10 +85,10 @@
     {
       "post_id": "E3",
       "type": "empathy",
-      "parent_text": "つめたい朝でもついお風呂に浸かってしまう日がある。出かける時間が迫っても、数分だけでも体を温めるとやっぱり気持ちが切り替わる。",
-      "theme": "入浴/リラックス",
-      "theme_group": "お風呂・リラックス",
-      "tone": "positive",
+      "parent_text": "出かける直前にスマホの充電ケーブルが見つからなくて、バッグの中をひっくり返す。結局いつも入れてるポケットに入ってて、自分の雑さに呆れる。",
+      "theme": "外出準備/忘れ物",
+      "theme_group": "外出準備/忘れ物",
+      "tone": "negative",
       "context_note": ""
     }
   ]
