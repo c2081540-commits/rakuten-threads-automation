@@ -1,6 +1,9 @@
 name: Rakuten Candidate Refresh
 
 on:
+  schedule:
+    # GitHub Actions cron is UTC. 21:00 UTC = 06:00 JST.
+    - cron: '0 21 * * *'
   workflow_dispatch:
     inputs:
       target_count:
@@ -43,10 +46,12 @@ jobs:
           RAKUTEN_APP_ID: ${{ secrets.RAKUTEN_APP_ID }}
           RAKUTEN_ACCESS_KEY: ${{ secrets.RAKUTEN_ACCESS_KEY }}
           RAKUTEN_AFFILIATE_ID: ${{ secrets.RAKUTEN_AFFILIATE_ID }}
+          TARGET_COUNT: ${{ inputs.target_count || '80' }}
+          MINIMUM_COUNT: ${{ inputs.minimum_count || '50' }}
         run: |
           python fetch_candidates.py \
-            --target-count "${{ inputs.target_count }}" \
-            --minimum-count "${{ inputs.minimum_count }}" \
+            --target-count "$TARGET_COUNT" \
+            --minimum-count "$MINIMUM_COUNT" \
             --output data/candidates/latest.json
 
       - name: Commit latest candidate file
