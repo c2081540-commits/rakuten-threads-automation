@@ -1,13 +1,6 @@
 {
   "posts": [
     {
-      "post_id": "W20260821-01",
-      "scheduled_at": "2026-08-21T07:00+09:00",
-      "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "冷蔵庫に麦茶がちょっとだけ残ってる時、飲み切るか残すかで一瞬迷う。\n\n結局飲み切って、次を作る仕事までついてくる。"
-    },
-    {
       "post_id": "W20260821-02",
       "scheduled_at": "2026-08-21T12:00+09:00",
       "status": "scheduled",
