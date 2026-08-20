@@ -1,0 +1,95 @@
+{
+  "tested_at": "2026-08-20T13:55:25+09:00",
+  "target_date": "2026-08-21",
+  "openai_request_count": 3,
+  "performance_feedback": {
+    "days": 60,
+    "minimum_samples": 3,
+    "eligible_posts_with_insights": 20,
+    "ready": true,
+    "note": "サンプル不足の軸は評価に使わない。傾向は生成時の補助情報であり強制ルールではない。",
+    "tendencies": [
+      {
+        "dimension": "scheduled_hour",
+        "value": "12",
+        "samples": 8,
+        "average_views": 24.1,
+        "average_interaction_score": 2.0,
+        "interaction_per_100_views": 8.29
+      },
+      {
+        "dimension": "scheduled_hour",
+        "value": "18",
+        "samples": 8,
+        "average_views": 27.4,
+        "average_interaction_score": 2.12,
+        "interaction_per_100_views": 7.76
+      }
+    ]
+  },
+  "posts": [
+    {
+      "candidate_id": "E1-B",
+      "post_id": "E1",
+      "variant": "B",
+      "type": "empathy",
+      "parent_text": "金曜の朝は忙しくても、コーヒーの一口で気持ちが軽くなる。\n\n午前中だけ耐えればいい、と思える魔法の一杯。",
+      "theme": "金曜/朝",
+      "theme_group": "平日/気分転換",
+      "tone": "personal",
+      "context_note": "seasonal"
+    },
+    {
+      "candidate_id": "P1-B",
+      "post_id": "P1",
+      "variant": "B",
+      "type": "product",
+      "selected_item_code": "n-raffine:10010706",
+      "parent_text": "テーブルで食事中にさっと胡椒を足したい場面、いちいち電池交換するより充電式で置いておけるほうが使い勝手がいい。",
+      "child_text_base": "電池不要の充電式ミルで長期的なコストダウンに。キャビンは透明で残量が見え、広めの充填口で塩や胡椒の補充が簡単です。",
+      "theme": "食卓/仕上げ調味",
+      "product_group": "キッチン家電・便利グッズ",
+      "problem_axis": "食事中に使う調味ミルの電池切れや残量確認の手間",
+      "benefit_axis": "USB充電で電池不要、透明キャビンで残量が一目で分かり補充も楽になる",
+      "sales_structure": "発見型",
+      "context_note": ""
+    },
+    {
+      "candidate_id": "E2-C",
+      "post_id": "E2",
+      "variant": "C",
+      "type": "empathy",
+      "parent_text": "金曜の午後、急にお腹が空いてくる。\n\nまだ仕事は終わってないのに、頭の中はもう夜ごはんモード。",
+      "theme": "金曜/午後",
+      "theme_group": "平日/生理的感覚",
+      "tone": "personal",
+      "context_note": "seasonal"
+    },
+    {
+      "candidate_id": "P2-A",
+      "post_id": "P2",
+      "variant": "A",
+      "type": "product",
+      "selected_item_code": "roomy:10017146",
+      "parent_text": "出かける直前にヘアアイロンを使って熱くても、そのまま折りたたんでバッグに入れられれば準備がラクになる。",
+      "child_text_base": "内側は耐熱300℃の生地で熱いまま収納可能。吊り下げストラップ付きで洗面所に浮かせてスッキリ保管できます。",
+      "theme": "朝支度/ヘアアイロン",
+      "product_group": "ヘアケア・収納",
+      "problem_axis": "ヘアアイロン使用後、熱が冷めるまで置き場所に困る",
+      "benefit_axis": "耐熱素材で熱いまま収納でき、吊り下げ収納で置き場所を決められる",
+      "sales_structure": "具体場面型",
+      "context_note": ""
+    },
+    {
+      "candidate_id": "E3-C",
+      "post_id": "E3",
+      "variant": "C",
+      "type": "empathy",
+      "parent_text": "週末初日の夜は、普段よりつい遅くまで起きていたくなる。\n\n夜中に飲む何でもないお茶が余計に美味しく感じる。",
+      "theme": "金曜/夜",
+      "theme_group": "休日/夜更かし",
+      "tone": "personal",
+      "context_note": "seasonal"
+    }
+  ]
+}
