@@ -839,6 +839,24 @@
           "shares": 0
         }
       }
+    },
+    {
+      "post_id": "W20260820-04",
+      "scheduled_at": "2026-08-20T18:00+09:00",
+      "status": "published",
+      "type": "product",
+      "parent_text": "朝、味噌汁と卵焼きを作るだけなのに、細かい調理道具がどんどん増える。\n\nこれなら味噌を溶くのも卵を混ぜるのも1本。洗い物もひとつ減らせる。",
+      "selected_item_code": "shimoyama-onlineshop:10001811",
+      "child_text_base": "味噌マドラーと卵ときを1本にまとめた2WAYタイプ。長さは約21.5cm。使用後は食洗機でも洗えます。",
+      "image_urls": [
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/shimoyama-onlineshop/cabinet/11952568/imgrc0080831447.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/shimoyama-onlineshop/cabinet/11952568/imgrc0080831448.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/shimoyama-onlineshop/cabinet/11952568/imgrc0080831449.jpg"
+      ],
+      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00ssg5n.z7eis545.g00ssg5n.z7eit1d3/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fshimoyama-onlineshop%2F2111aux001%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fshimoyama-onlineshop%2Fi%2F10001811%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f",
+      "posted_at": "2026-08-20T18:01:25.577719+09:00",
+      "thread_id": "18131665537734454",
+      "reply_id": "18112585906991758"
     }
   ],
   "empathy_history": [
