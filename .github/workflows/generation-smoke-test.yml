@@ -33,7 +33,7 @@ jobs:
 
       - name: Save smoke test result only
         run: |
-          if git diff --quiet -- data/tests/latest_generation_smoke.json; then
+          if [ -z "$(git status --porcelain -- data/tests/latest_generation_smoke.json)" ]; then
             echo "No smoke-test result changes."
             exit 0
           fi
