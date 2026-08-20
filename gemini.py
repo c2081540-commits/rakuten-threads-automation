@@ -3,6 +3,8 @@ import os
 import time
 from pathlib import Path
 
+from history import recent_product_strategy_entries
+
 from openai import APIConnectionError, APITimeoutError, OpenAI, RateLimitError
 
 ROOT = Path(__file__).resolve().parent
@@ -303,10 +305,17 @@ def _generate_three_way_candidates(verified, recent=None, events=None, target_da
 - 親文は自然な使用場面、困り事、使うと何がどう楽になるかを書く。
 - 補足文は親文と重ならない事実を1〜2点に絞る。宣伝文句や仕様を羅列しない。
 - 「幅広」を「幅を広げられる」、「容積を抑える」を「荷物が減る」のように意味を変えない。
+- 商品候補には problem_axis（解決する具体的な悩み）、benefit_axis（得られる具体的な利便性）、sales_structure（販売導線の型）を必ず付ける。
+- sales_structure は 直接型|発見型|用途型|比較型|疑問→解決型|願望→商品型|具体場面型 のいずれか。
+- 同じ商品枠のA/B/Cは、単なる言い換えを禁止する。problem_axis、benefit_axis、sales_structureをそれぞれ別にする。
+- Aは最も強い実用便益を中心にする。BはAとは別の生活場面・悩みを中心にする。CはA/Bとは別の機能・便益と販売構造を使う。
+- 直近30日の戦略履歴と同じ problem_axis / benefit_axis / sales_structure の組合せを避ける。完全一致する軸が多い案より、新しい切り口を優先する。
+
+直近30日の商品戦略履歴:{json.dumps(recent_product_strategy_entries(days=30, limit=30), ensure_ascii=False)}
 
 JSONのみ: {{"candidates":[
 {{"candidate_id":"E1-A","post_id":"E1","variant":"A","type":"empathy","parent_text":"完成文","theme":"テーマ","theme_group":"分類","tone":"neutral|positive|negative","context_note":""}},
-{{"candidate_id":"P1-A","post_id":"P1","variant":"A","type":"product","selected_item_code":"指定コード","parent_text":"完成文","child_text_base":"完成補足文","theme":"テーマ","product_group":"用途","context_note":""}}
+{{"candidate_id":"P1-A","post_id":"P1","variant":"A","type":"product","selected_item_code":"指定コード","parent_text":"完成文","child_text_base":"完成補足文","theme":"テーマ","product_group":"用途","problem_axis":"具体的な悩み","benefit_axis":"具体的な利便性","sales_structure":"直接型|発見型|用途型|比較型|疑問→解決型|願望→商品型|具体場面型","context_note":""}}
 ]}}
 対象枠ごとにA、B、Cを1件ずつ、合計「対象枠数×3件」を返す。
 """)
@@ -315,6 +324,7 @@ JSONのみ: {{"candidates":[
     by_key = {str(x.get("candidate_id", "")): x for x in candidates}
     if set(by_key) != expected or len(candidates) != len(expected):
         raise RuntimeError("3案生成の候補IDが不足または重複しています。")
+    allowed_structures = {"直接型", "発見型", "用途型", "比較型", "疑問→解決型", "願望→商品型", "具体場面型"}
     for candidate_id, row in by_key.items():
         post_id, variant = candidate_id.rsplit("-", 1)
         if row.get("post_id") != post_id or row.get("variant") != variant:
@@ -325,11 +335,25 @@ JSONのみ: {{"candidates":[
                 raise RuntimeError(f"商品候補の商品コードが不正です: {candidate_id}")
             if not str(row.get("parent_text", "")).strip() or not str(row.get("child_text_base", "")).strip():
                 raise RuntimeError(f"商品候補の本文が空です: {candidate_id}")
+            for axis in ("problem_axis", "benefit_axis", "sales_structure"):
+                if not str(row.get(axis, "")).strip():
+                    raise RuntimeError(f"商品候補の{axis}が空です: {candidate_id}")
+            if row.get("sales_structure") not in allowed_structures:
+                raise RuntimeError(f"商品候補のsales_structureが不正です: {candidate_id}")
         else:
             if row.get("type") != "empathy":
                 raise RuntimeError(f"共感候補のtypeが不正です: {candidate_id}")
             if not str(row.get("parent_text", "")).strip():
                 raise RuntimeError(f"共感候補の本文が空です: {candidate_id}")
+    # 同じ商品枠のA/B/Cが同じ訴求仮説へ収束するのを機械的に防ぐ。
+    for post_id in ("P1", "P2"):
+        if post_id not in requested:
+            continue
+        rows = [by_key[_candidate_key(post_id, variant)] for variant in "ABC"]
+        for axis in ("problem_axis", "benefit_axis", "sales_structure"):
+            values = [str(row.get(axis, "")).strip() for row in rows]
+            if len(set(values)) != 3:
+                raise RuntimeError(f"{post_id}のA/B/Cで{axis}が重複しています: {values}")
     return by_key
 
 
@@ -345,7 +369,11 @@ def _compare_three_way_candidates(candidates, verified, recent=None, target_date
 3. 商品投稿は楽天の根拠の意味を変えず、未記載の機能や効果を加えていない
 4. 実際の生活場面として成立し、広告文・説明書・作り話のようになっていない
 5. 直近投稿と内容や着地が重なっていない
+6. 商品投稿は problem_axis と benefit_axis が具体的で、商品固有の事実から成立している
+7. 直近30日の商品戦略と同じ悩み・便益・販売構造の繰り返しを避けている
+8. A/B/Cの中では文章の巧さだけでなく、最も購買理由が明確な訴求仮説を優先する
 
+直近30日の商品戦略:{json.dumps(recent_product_strategy_entries(days=30, limit=30), ensure_ascii=False)}
 商品根拠:{json.dumps(verified, ensure_ascii=False)}
 対象日:{target_date.isoformat() if target_date else "未指定"}
 直近投稿:{json.dumps(recent or [], ensure_ascii=False)}
