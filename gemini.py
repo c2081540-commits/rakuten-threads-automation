@@ -18,7 +18,7 @@ MAX_API_ATTEMPTS = 3
 OPENAI_REQUEST_COUNT = 0
 DAILY_SLOTS = [("E1", 7), ("P1", 12), ("E2", 15), ("P2", 18), ("E3", 21)]
 
-WEAK_PARENT_ENDINGS = ("便利そう", "良さそう", "いいかも", "欲しい", "便利かも", "使えそう", "使いやすそう")
+WEAK_PARENT_ENDINGS = ("便利そう", "良さそう", "いいかも", "便利かも", "使えそう", "使いやすそう")
 WEAK_PARENT_PHRASES = ("ちょっと掛けたいもの", "ちょっと置きたいもの", "あると便利そう", "あると良さそう")
 PRODUCT_REVIEW_PHRASES = ("確認したい", "チェックしたい", "判断しやすい", "購入判断", "購入前に")
 EMPATHY_PRODUCT_PITCH_PHRASES = ("便利グッズ", "収納グッズ", "小さなトレー", "があると便利", "一つでスムーズ", "ひとつでスムーズ")
@@ -84,8 +84,15 @@ def _select_grounded_products(items, target_date=None):
 
     def build(attempt, last_error):
         retry = "" if last_error is None else f"\n前回の不合格理由:{last_error}"
+        emotion_rules = _load_prompt("emotion_first_product.txt")
         return _json_response(f"""
+{emotion_rules}
+
 候補からThreadsで紹介する用途の異なる商品を2件選ぶ。候補外・同一商品の重複は禁止。
+最優先は、商品を見た一般ユーザーから自然で具体的な感情反応が生まれること。
+「便利だから」だけでは弱い。驚き、発見、理想、これでいい、助かる、面倒からの解放、意外性など、
+親投稿に短く強い第一反応を作れる商品を選ぶ。強い感情フックを無理なく作れない商品は落とす。
+未使用なのに「使った」「戻れない」「愛用」などの体験を前提にしない。
 対象日:{target_date.isoformat() if target_date else "未指定"}
 候補:{json.dumps(candidates, ensure_ascii=False)}
 {retry}
@@ -286,7 +293,10 @@ def _generate_three_way_candidates(verified, recent=None, events=None, target_da
         "P1": verified[0]["selected_item_code"],
         "P2": verified[1]["selected_item_code"],
     }
+    emotion_rules = _load_prompt("emotion_first_product.txt")
     result = _json_response(f"""
+{emotion_rules}
+
 生活系Threadsの完成原稿候補を作る。対象日と直近投稿を踏まえ、指定された各枠につきA・B・Cの3案を作る。
 3案は同じ初稿の言い換えではなく、場面・切り口・文章の運びをそれぞれ独立して考える。
 
@@ -305,14 +315,18 @@ def _generate_three_way_candidates(verified, recent=None, events=None, target_da
 
 商品投稿:
 - 指定商品のfactsだけを根拠にする。根拠にない機能・素材・効果を作らない。
-- 親文は自然な使用場面、困り事、使うと何がどう楽になるかを書く。
-- 補足文は親文と重ならない事実を1〜2点に絞る。宣伝文句や仕様を羅列しない。
+- 最上位ルールは「感情先行」。親文は商品を見た人が最初に口にしそうな自然な反応から始める。
+- 親文で仕様を説明し切らない。感情・驚き・発見・欲望・解放感など＋その反応が生まれた最低限の理由までに絞る。
+- 返信文で初めて、その感情の理由になる具体的な機能・使い方・仕様を1〜2点示す。
+- 「悩み→解決」を毎回強制しない。悩みが弱い商品に人工的な困り事を作らない。
+- 未使用商品の架空体験は禁止。「使った」「愛用」「戻れない」「買ってよかった」は書かない。
+- 商品候補には emotional_reaction（第一感情）、hook_type（感情フックの型）、purchase_trigger（欲しくなる理由）を必ず付ける。
+- problem_axis / benefit_axis / sales_structure は分析用の補助メタデータ。空でもよく、A/B/Cで無理に変えなくてよい。
+- 同じ商品枠のA/B/Cは emotional_reaction、hook_type、purchase_trigger をそれぞれ別の仮説にする。単なる言い換えは禁止。
+- A/B/Cは、強い感想型・比較/乗り換え型・具体場面/欲望型など、商品に自然に合う異なる反応を競わせる。合わない型を無理に使わない。
+- 直近30日の感情反応・フック型・購買トリガーと同じ組合せを避ける。
+- 「便利そう」「良さそう」で逃げず、何に反応したのかが一読で分かる言葉にする。
 - 「幅広」を「幅を広げられる」、「容積を抑える」を「荷物が減る」のように意味を変えない。
-- 商品候補には problem_axis（解決する具体的な悩み）、benefit_axis（得られる具体的な利便性）、sales_structure（販売導線の型）を必ず付ける。
-- sales_structure は 直接型|発見型|用途型|比較型|疑問→解決型|願望→商品型|具体場面型 のいずれか。
-- 同じ商品枠のA/B/Cは、単なる言い換えを禁止する。problem_axis、benefit_axis、sales_structureをそれぞれ別にする。
-- Aは最も強い実用便益を中心にする。BはAとは別の生活場面・悩みを中心にする。CはA/Bとは別の機能・便益と販売構造を使う。
-- 直近30日の戦略履歴と同じ problem_axis / benefit_axis / sales_structure の組合せを避ける。完全一致する軸が多い案より、新しい切り口を優先する。
 
 直近30日の商品戦略履歴:{json.dumps(recent_product_strategy_entries(days=30, limit=30), ensure_ascii=False)}
 実績フィードバック:{json.dumps(product_performance_feedback(days=60, min_samples=3), ensure_ascii=False)}
@@ -323,7 +337,7 @@ def _generate_three_way_candidates(verified, recent=None, events=None, target_da
 
 JSONのみ: {{"candidates":[
 {{"candidate_id":"E1-A","post_id":"E1","variant":"A","type":"empathy","parent_text":"完成文","theme":"テーマ","theme_group":"分類","tone":"neutral|positive|negative","context_note":""}},
-{{"candidate_id":"P1-A","post_id":"P1","variant":"A","type":"product","selected_item_code":"指定コード","parent_text":"完成文","child_text_base":"完成補足文","theme":"テーマ","product_group":"用途","problem_axis":"具体的な悩み","benefit_axis":"具体的な利便性","sales_structure":"直接型|発見型|用途型|比較型|疑問→解決型|願望→商品型|具体場面型","context_note":""}}
+{{"candidate_id":"P1-A","post_id":"P1","variant":"A","type":"product","selected_item_code":"指定コード","parent_text":"感情フック中心の完成文","child_text_base":"理由と具体仕様の補足文","theme":"テーマ","product_group":"用途","emotional_reaction":"自然な第一感情","hook_type":"発見|驚き|理想|比較|解放|これでいい|意外性|欲望|その他","purchase_trigger":"欲しくなる具体的理由","problem_axis":"任意","benefit_axis":"任意","sales_structure":"任意","context_note":""}}
 ]}}
 対象枠ごとにA、B、Cを1件ずつ、合計「対象枠数×3件」を返す。
 """)
@@ -343,10 +357,10 @@ JSONのみ: {{"candidates":[
                 raise RuntimeError(f"商品候補の商品コードが不正です: {candidate_id}")
             if not str(row.get("parent_text", "")).strip() or not str(row.get("child_text_base", "")).strip():
                 raise RuntimeError(f"商品候補の本文が空です: {candidate_id}")
-            for axis in ("problem_axis", "benefit_axis", "sales_structure"):
+            for axis in ("emotional_reaction", "hook_type", "purchase_trigger"):
                 if not str(row.get(axis, "")).strip():
                     raise RuntimeError(f"商品候補の{axis}が空です: {candidate_id}")
-            if row.get("sales_structure") not in allowed_structures:
+            if row.get("sales_structure") and row.get("sales_structure") not in allowed_structures:
                 raise RuntimeError(f"商品候補のsales_structureが不正です: {candidate_id}")
         else:
             if row.get("type") != "empathy":
@@ -358,7 +372,7 @@ JSONのみ: {{"candidates":[
         if post_id not in requested:
             continue
         rows = [by_key[_candidate_key(post_id, variant)] for variant in "ABC"]
-        for axis in ("problem_axis", "benefit_axis", "sales_structure"):
+        for axis in ("emotional_reaction", "hook_type", "purchase_trigger"):
             values = [str(row.get(axis, "")).strip() for row in rows]
             if len(set(values)) != 3:
                 raise RuntimeError(f"{post_id}のA/B/Cで{axis}が重複しています: {values}")
@@ -368,7 +382,10 @@ JSONのみ: {{"candidates":[
 def _compare_three_way_candidates(candidates, verified, recent=None, target_date=None):
     """Rank complete drafts. The comparison model may select, but never rewrite."""
     comparison_input = [candidates[key] for key in sorted(candidates)]
+    emotion_rules = _load_prompt("emotion_first_product.txt")
     result = _json_response(f"""
+{emotion_rules}
+
 同じ投稿枠のA・B・Cを横並びで比較し、投稿に最も適した1案を選ぶ。文章の修正・合成・新規作成は禁止。
 
 評価基準:
@@ -377,15 +394,18 @@ def _compare_three_way_candidates(candidates, verified, recent=None, target_date
 3. 商品投稿は楽天の根拠の意味を変えず、未記載の機能や効果を加えていない
 4. 実際の生活場面として成立し、広告文・説明書・作り話のようになっていない
 5. 直近投稿と内容や着地が重なっていない
-6. 商品投稿は problem_axis と benefit_axis が具体的で、商品固有の事実から成立している
-7. 直近30日の商品戦略と同じ悩み・便益・販売構造の繰り返しを避けている
-8. A/B/Cの中では文章の巧さだけでなく、最も購買理由が明確な訴求仮説を優先する
+6. 商品投稿は、商品を見た一般ユーザーの第一反応として自然な感情が出ている
+7. 親文が説明文ではなく、感情＋最低限の理由で「何それ」「それ欲しい」と続きを見たくなる
+8. child_text_base は親の感情を裏付ける具体的な商品事実を増やし、親と役割分担できている
+9. emotional_reaction / hook_type / purchase_trigger が商品固有の事実から自然に成立している
+10. 直近30日の感情反応・フック型・購買トリガーの繰り返しを避けている
+11. A/B/Cでは、説明が最も整った案ではなく、感情が自然で強く、商品をもっと見たくなる案を優先する
 
 直近30日の商品戦略:{json.dumps(recent_product_strategy_entries(days=30, limit=30), ensure_ascii=False)}
 実績フィードバック:{json.dumps(product_performance_feedback(days=60, min_samples=3), ensure_ascii=False)}
 実績の扱い:
 - ready=false なら実績を選考理由に使わない。
-- ready=true でも実績は補助評価に限定する。商品根拠、文章の自然さ、購買理由の明確さ、重複回避を先に評価する。
+- ready=true でも実績は補助評価に限定する。商品根拠、感情反応の自然さと強さ、親と返信の役割分担、重複回避を先に評価する。
 - 上記が同程度の候補同士でのみ、十分なサンプルがある高実績傾向を優先材料にする。
 商品根拠:{json.dumps(verified, ensure_ascii=False)}
 対象日:{target_date.isoformat() if target_date else "未指定"}
@@ -482,17 +502,17 @@ def _validate_parent(parent, recent_posts=None, product=False):
     if any(x in parent for x in ["http://", "https://", "【PR】", "レビュー", "価格:"]):
         raise RuntimeError("親投稿に禁止要素があります。")
     if product:
-        if len(compact) < 45:
-            raise RuntimeError("商品親投稿が短すぎて魅力・使用場面を伝えられていません。")
+        if len(compact) < 18:
+            raise RuntimeError("商品親投稿が短すぎて感情フックとして成立していません。")
         if any(x in compact for x in WEAK_PARENT_PHRASES):
             raise RuntimeError("商品親投稿が曖昧な定型表現に寄りすぎています。")
         if any(x in compact for x in WEAK_PARENT_ENDINGS):
             raise RuntimeError("商品親投稿に曖昧な感想表現があります。具体的な生活上の変化へ書き換えてください。")
         if any(x in compact for x in PRODUCT_REVIEW_PHRASES):
             raise RuntimeError("商品親投稿が購入ガイド・比較記事調です。")
-        # 商品投稿は最低限、場面・問題・変化を説明できる情報量を要求する。
-        if compact.count("、") + compact.count("。") < 2 and len(compact) < 65:
-            raise RuntimeError("商品親投稿の具体性が不足しています。")
+        # 感情先行型では親投稿を短く保つ。具体仕様は返信側で補う。
+        if len(compact) > 110:
+            raise RuntimeError("商品親投稿が説明過多です。感情フックと最低限の理由に絞ってください。")
     normalized = _normalize_for_compare(parent)
     for old in recent_posts or []:
         if normalized == _normalize_for_compare(old):
