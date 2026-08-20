@@ -1,19 +1,16 @@
 name: Rakuten Candidate Refresh
 
 on:
-  schedule:
-    # GitHub Actions cron is UTC. 21:00 UTC = 06:00 JST.
-    - cron: '0 21 * * *'
   workflow_dispatch:
     inputs:
       target_count:
         description: 'latest.jsonに保存する候補数'
-        required: true
+        required: false
         default: '80'
         type: string
       minimum_count:
         description: 'これ未満なら更新せず失敗'
-        required: true
+        required: false
         default: '50'
         type: string
 
