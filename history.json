@@ -81,7 +81,18 @@
       "review_count": 897,
       "posted_at": "2026-08-10T17:07:23.295700+09:00",
       "thread_id": "18109174325095196",
-      "reply_id": "18182217934406872"
+      "reply_id": "18182217934406872",
+      "insights": {
+        "collected_at": "2026-08-20T13:25:11+09:00",
+        "metrics": {
+          "views": 7,
+          "likes": 0,
+          "replies": 1,
+          "reposts": 0,
+          "quotes": 0,
+          "shares": 0
+        }
+      }
     },
     {
       "post_id": "P1",
@@ -112,7 +123,18 @@
       "review_count": 858,
       "posted_at": "2026-08-11T12:01:16.112005+09:00",
       "thread_id": "17893190247604872",
-      "reply_id": "17886631083610698"
+      "reply_id": "17886631083610698",
+      "insights": {
+        "collected_at": "2026-08-20T13:25:11+09:00",
+        "metrics": {
+          "views": 7,
+          "likes": 0,
+          "replies": 1,
+          "reposts": 0,
+          "quotes": 0,
+          "shares": 0
+        }
+      }
     },
     {
       "post_id": "P2",
@@ -143,7 +165,18 @@
       "review_count": 671,
       "posted_at": "2026-08-11T18:01:28.441623+09:00",
       "thread_id": "17901872490540278",
-      "reply_id": "18074150333437108"
+      "reply_id": "18074150333437108",
+      "insights": {
+        "collected_at": "2026-08-20T13:25:11+09:00",
+        "metrics": {
+          "views": 23,
+          "likes": 0,
+          "replies": 1,
+          "reposts": 0,
+          "quotes": 0,
+          "shares": 0
+        }
+      }
     },
     {
       "post_id": "P3",
@@ -174,7 +207,18 @@
       "review_count": 673,
       "posted_at": "2026-08-12T12:01:33.666920+09:00",
       "thread_id": "18110691197008255",
-      "reply_id": "18614781730047553"
+      "reply_id": "18614781730047553",
+      "insights": {
+        "collected_at": "2026-08-20T13:25:11+09:00",
+        "metrics": {
+          "views": 11,
+          "likes": 0,
+          "replies": 1,
+          "reposts": 0,
+          "quotes": 0,
+          "shares": 0
+        }
+      }
     },
     {
       "post_id": "P4",
@@ -205,7 +249,18 @@
       "review_count": 1284,
       "posted_at": "2026-08-12T18:01:20.037374+09:00",
       "thread_id": "17873147226652011",
-      "reply_id": "17899130388356377"
+      "reply_id": "17899130388356377",
+      "insights": {
+        "collected_at": "2026-08-20T13:25:11+09:00",
+        "metrics": {
+          "views": 54,
+          "likes": 0,
+          "replies": 1,
+          "reposts": 0,
+          "quotes": 0,
+          "shares": 0
+        }
+      }
     },
     {
       "post_id": "W20260813-02",
@@ -236,7 +291,18 @@
       "review_count": 413,
       "posted_at": "2026-08-13T12:11:33.129172+09:00",
       "thread_id": "18146883658534774",
-      "reply_id": "18118501351880272"
+      "reply_id": "18118501351880272",
+      "insights": {
+        "collected_at": "2026-08-20T13:25:11+09:00",
+        "metrics": {
+          "views": 46,
+          "likes": 0,
+          "replies": 1,
+          "reposts": 0,
+          "quotes": 0,
+          "shares": 0
+        }
+      }
     },
     {
       "post_id": "W20260813-04",
@@ -267,7 +333,18 @@
       "review_count": 632,
       "posted_at": "2026-08-13T18:01:24.737316+09:00",
       "thread_id": "18061492928782829",
-      "reply_id": "18112030834999337"
+      "reply_id": "18112030834999337",
+      "insights": {
+        "collected_at": "2026-08-20T13:25:11+09:00",
+        "metrics": {
+          "views": 91,
+          "likes": 1,
+          "replies": 1,
+          "reposts": 0,
+          "quotes": 0,
+          "shares": 0
+        }
+      }
     },
     {
       "post_id": "W20260814-02",
@@ -298,7 +375,18 @@
       "review_count": 292,
       "posted_at": "2026-08-14T12:01:23.642229+09:00",
       "thread_id": "18083696975256887",
-      "reply_id": "17915670663430789"
+      "reply_id": "17915670663430789",
+      "insights": {
+        "collected_at": "2026-08-20T13:25:11+09:00",
+        "metrics": {
+          "views": 2,
+          "likes": 0,
+          "replies": 1,
+          "reposts": 0,
+          "quotes": 0,
+          "shares": 0
+        }
+      }
     },
     {
       "post_id": "W20260814-04",
@@ -329,7 +417,18 @@
       "review_count": 940,
       "posted_at": "2026-08-14T18:01:26.512629+09:00",
       "thread_id": "18089669531403776",
-      "reply_id": "18164756143458268"
+      "reply_id": "18164756143458268",
+      "insights": {
+        "collected_at": "2026-08-20T13:25:11+09:00",
+        "metrics": {
+          "views": 15,
+          "likes": 0,
+          "replies": 1,
+          "reposts": 0,
+          "quotes": 0,
+          "shares": 0
+        }
+      }
     },
     {
       "post_id": "W20260815-02",
@@ -360,7 +459,18 @@
       "review_count": 1481,
       "posted_at": "2026-08-15T12:01:23.088110+09:00",
       "thread_id": "18005196590968908",
-      "reply_id": "17885774850655330"
+      "reply_id": "17885774850655330",
+      "insights": {
+        "collected_at": "2026-08-20T13:25:11+09:00",
+        "metrics": {
+          "views": 6,
+          "likes": 0,
+          "replies": 1,
+          "reposts": 0,
+          "quotes": 0,
+          "shares": 0
+        }
+      }
     },
     {
       "post_id": "W20260815-04",
@@ -391,7 +501,18 @@
       "review_count": 684,
       "posted_at": "2026-08-15T18:03:00.556835+09:00",
       "thread_id": "18070821851708805",
-      "reply_id": "18070957790453560"
+      "reply_id": "18070957790453560",
+      "insights": {
+        "collected_at": "2026-08-20T13:25:11+09:00",
+        "metrics": {
+          "views": 13,
+          "likes": 0,
+          "replies": 1,
+          "reposts": 0,
+          "quotes": 0,
+          "shares": 0
+        }
+      }
     },
     {
       "post_id": "W20260816-02",
@@ -422,7 +543,18 @@
       "review_count": 126,
       "posted_at": "2026-08-16T12:01:48.209448+09:00",
       "thread_id": "18112853483000514",
-      "reply_id": "18112089284084187"
+      "reply_id": "18112089284084187",
+      "insights": {
+        "collected_at": "2026-08-20T13:25:11+09:00",
+        "metrics": {
+          "views": 2,
+          "likes": 0,
+          "replies": 1,
+          "reposts": 0,
+          "quotes": 0,
+          "shares": 0
+        }
+      }
     },
     {
       "post_id": "W20260816-04",
@@ -453,7 +585,18 @@
       "review_count": 1575,
       "posted_at": "2026-08-16T18:01:15.398459+09:00",
       "thread_id": "17973538154915667",
-      "reply_id": "18107257072869325"
+      "reply_id": "18107257072869325",
+      "insights": {
+        "collected_at": "2026-08-20T13:25:11+09:00",
+        "metrics": {
+          "views": 9,
+          "likes": 0,
+          "replies": 1,
+          "reposts": 0,
+          "quotes": 0,
+          "shares": 0
+        }
+      }
     },
     {
       "post_id": "W20260817-02",
@@ -484,7 +627,18 @@
       "review_count": 162,
       "posted_at": "2026-08-17T12:01:27.463296+09:00",
       "thread_id": "18122746088493972",
-      "reply_id": "17899568238353876"
+      "reply_id": "17899568238353876",
+      "insights": {
+        "collected_at": "2026-08-20T13:25:11+09:00",
+        "metrics": {
+          "views": 20,
+          "likes": 0,
+          "replies": 1,
+          "reposts": 0,
+          "quotes": 0,
+          "shares": 0
+        }
+      }
     },
     {
       "post_id": "W20260817-04",
@@ -515,7 +669,18 @@
       "review_count": 2707,
       "posted_at": "2026-08-17T18:01:19.406515+09:00",
       "thread_id": "17908660071282036",
-      "reply_id": "17858924184694664"
+      "reply_id": "17858924184694664",
+      "insights": {
+        "collected_at": "2026-08-20T13:25:11+09:00",
+        "metrics": {
+          "views": 7,
+          "likes": 0,
+          "replies": 1,
+          "reposts": 0,
+          "quotes": 0,
+          "shares": 0
+        }
+      }
     },
     {
       "post_id": "W20260818-02",
@@ -546,7 +711,18 @@
       "review_count": 1898,
       "posted_at": "2026-08-18T12:01:27.365422+09:00",
       "thread_id": "18130823527629241",
-      "reply_id": "18127215073680719"
+      "reply_id": "18127215073680719",
+      "insights": {
+        "collected_at": "2026-08-20T13:25:11+09:00",
+        "metrics": {
+          "views": 99,
+          "likes": 0,
+          "replies": 1,
+          "reposts": 0,
+          "quotes": 0,
+          "shares": 0
+        }
+      }
     },
     {
       "post_id": "W20260818-04",
@@ -564,7 +740,18 @@
       "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00qn4on.z7eis9a7.g00qn4on.z7eit285/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fyamayuu%2Fyj-1739%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fyamayuu%2Fi%2F10021086%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f",
       "posted_at": "2026-08-18T18:01:18.961107+09:00",
       "thread_id": "18088402277233687",
-      "reply_id": "18472035043129108"
+      "reply_id": "18472035043129108",
+      "insights": {
+        "collected_at": "2026-08-20T13:25:11+09:00",
+        "metrics": {
+          "views": 15,
+          "likes": 0,
+          "replies": 1,
+          "reposts": 0,
+          "quotes": 0,
+          "shares": 0
+        }
+      }
     },
     {
       "post_id": "W20260819-02",
@@ -582,7 +769,18 @@
       "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00qtg2n.z7eis2dc.g00qtg2n.z7eitd7a/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fshopmarna%2Fw669%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fshopmarna%2Fi%2F10006751%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f",
       "posted_at": "2026-08-19T12:01:15.500364+09:00",
       "thread_id": "17989652570840761",
-      "reply_id": "18110504336084796"
+      "reply_id": "18110504336084796",
+      "insights": {
+        "collected_at": "2026-08-20T13:25:11+09:00",
+        "metrics": {
+          "views": 22,
+          "likes": 0,
+          "replies": 1,
+          "reposts": 0,
+          "quotes": 0,
+          "shares": 0
+        }
+      }
     },
     {
       "post_id": "W20260819-04",
@@ -600,7 +798,18 @@
       "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00rlifn.z7eise71.g00rlifn.z7eitafa/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fle-cure%2Fim-1007123%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fle-cure%2Fi%2F10002233%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f",
       "posted_at": "2026-08-19T18:05:23.799866+09:00",
       "thread_id": "18069718835737681",
-      "reply_id": "17938146621093443"
+      "reply_id": "17938146621093443",
+      "insights": {
+        "collected_at": "2026-08-20T13:25:11+09:00",
+        "metrics": {
+          "views": 29,
+          "likes": 0,
+          "replies": 1,
+          "reposts": 0,
+          "quotes": 0,
+          "shares": 0
+        }
+      }
     },
     {
       "post_id": "W20260820-02",
@@ -618,7 +827,18 @@
       "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00ssg5n.z7eis545.g00ssg5n.z7eit1d3/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fshimoyama-onlineshop%2F2312aux022%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fshimoyama-onlineshop%2Fi%2F10002498%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f",
       "posted_at": "2026-08-20T12:01:24.490799+09:00",
       "thread_id": "17903064894331592",
-      "reply_id": "17923260015410290"
+      "reply_id": "17923260015410290",
+      "insights": {
+        "collected_at": "2026-08-20T13:25:11+09:00",
+        "metrics": {
+          "views": 6,
+          "likes": 0,
+          "replies": 1,
+          "reposts": 0,
+          "quotes": 0,
+          "shares": 0
+        }
+      }
     }
   ],
   "empathy_history": [
@@ -637,7 +857,18 @@
       "scheduled_hour": 7,
       "status": "scheduled",
       "posted_at": "2026-08-10T10:34:48.686283+09:00",
-      "thread_id": "18067797533484905"
+      "thread_id": "18067797533484905",
+      "insights": {
+        "collected_at": "2026-08-20T13:25:11+09:00",
+        "metrics": {
+          "views": 68,
+          "likes": 0,
+          "replies": 0,
+          "reposts": 0,
+          "quotes": 0,
+          "shares": 0
+        }
+      }
     },
     {
       "post_id": "E2",
@@ -654,7 +885,18 @@
       "scheduled_hour": 15,
       "status": "scheduled",
       "posted_at": "2026-08-10T15:00:54.045813+09:00",
-      "thread_id": "18006806231953362"
+      "thread_id": "18006806231953362",
+      "insights": {
+        "collected_at": "2026-08-20T13:25:11+09:00",
+        "metrics": {
+          "views": 290,
+          "likes": 2,
+          "replies": 0,
+          "reposts": 0,
+          "quotes": 0,
+          "shares": 0
+        }
+      }
     },
     {
       "post_id": "TODAY-20260810-21",
@@ -671,7 +913,18 @@
       "scheduled_hour": 21,
       "status": "published",
       "posted_at": "2026-08-10T21:00:46.793919+09:00",
-      "thread_id": "18137886160589259"
+      "thread_id": "18137886160589259",
+      "insights": {
+        "collected_at": "2026-08-20T13:25:11+09:00",
+        "metrics": {
+          "views": 137,
+          "likes": 0,
+          "replies": 0,
+          "reposts": 0,
+          "quotes": 0,
+          "shares": 0
+        }
+      }
     },
     {
       "post_id": "E1",
@@ -688,7 +941,18 @@
       "scheduled_hour": 7,
       "status": "published",
       "posted_at": "2026-08-11T07:00:50.328242+09:00",
-      "thread_id": "17877639411622585"
+      "thread_id": "17877639411622585",
+      "insights": {
+        "collected_at": "2026-08-20T13:25:11+09:00",
+        "metrics": {
+          "views": 354,
+          "likes": 1,
+          "replies": 0,
+          "reposts": 0,
+          "quotes": 0,
+          "shares": 0
+        }
+      }
     },
     {
       "post_id": "E2",
@@ -705,7 +969,18 @@
       "scheduled_hour": 15,
       "status": "published",
       "posted_at": "2026-08-11T15:00:49.879350+09:00",
-      "thread_id": "18101028490961702"
+      "thread_id": "18101028490961702",
+      "insights": {
+        "collected_at": "2026-08-20T13:25:11+09:00",
+        "metrics": {
+          "views": 160,
+          "likes": 0,
+          "replies": 0,
+          "reposts": 0,
+          "quotes": 0,
+          "shares": 0
+        }
+      }
     },
     {
       "post_id": "E3",
@@ -722,7 +997,18 @@
       "scheduled_hour": 21,
       "status": "published",
       "posted_at": "2026-08-11T21:00:55.454654+09:00",
-      "thread_id": "18083858378267681"
+      "thread_id": "18083858378267681",
+      "insights": {
+        "collected_at": "2026-08-20T13:25:11+09:00",
+        "metrics": {
+          "views": 146,
+          "likes": 0,
+          "replies": 0,
+          "reposts": 0,
+          "quotes": 0,
+          "shares": 0
+        }
+      }
     },
     {
       "post_id": "E4",
@@ -739,7 +1025,18 @@
       "scheduled_hour": 7,
       "status": "published",
       "posted_at": "2026-08-12T07:00:54.076313+09:00",
-      "thread_id": "18104376692604816"
+      "thread_id": "18104376692604816",
+      "insights": {
+        "collected_at": "2026-08-20T13:25:11+09:00",
+        "metrics": {
+          "views": 511,
+          "likes": 1,
+          "replies": 0,
+          "reposts": 0,
+          "quotes": 0,
+          "shares": 0
+        }
+      }
     },
     {
       "post_id": "E5",
@@ -756,7 +1053,18 @@
       "scheduled_hour": 15,
       "status": "published",
       "posted_at": "2026-08-12T15:00:39.783718+09:00",
-      "thread_id": "17980018578074320"
+      "thread_id": "17980018578074320",
+      "insights": {
+        "collected_at": "2026-08-20T13:25:11+09:00",
+        "metrics": {
+          "views": 163,
+          "likes": 0,
+          "replies": 0,
+          "reposts": 0,
+          "quotes": 0,
+          "shares": 0
+        }
+      }
     },
     {
       "post_id": "E6",
@@ -773,7 +1081,18 @@
       "scheduled_hour": 21,
       "status": "published",
       "posted_at": "2026-08-12T21:00:43.971676+09:00",
-      "thread_id": "18110242327935896"
+      "thread_id": "18110242327935896",
+      "insights": {
+        "collected_at": "2026-08-20T13:25:11+09:00",
+        "metrics": {
+          "views": 82,
+          "likes": 0,
+          "replies": 0,
+          "reposts": 0,
+          "quotes": 0,
+          "shares": 0
+        }
+      }
     },
     {
       "post_id": "W20260813-01",
@@ -790,7 +1109,18 @@
       "tone": "personal",
       "context_note": "seasonal",
       "posted_at": "2026-08-13T07:00:56.613433+09:00",
-      "thread_id": "18162482194415627"
+      "thread_id": "18162482194415627",
+      "insights": {
+        "collected_at": "2026-08-20T13:25:11+09:00",
+        "metrics": {
+          "views": 599,
+          "likes": 0,
+          "replies": 0,
+          "reposts": 0,
+          "quotes": 0,
+          "shares": 0
+        }
+      }
     },
     {
       "post_id": "W20260813-03",
@@ -807,7 +1137,18 @@
       "tone": "personal",
       "context_note": "seasonal",
       "posted_at": "2026-08-13T15:00:49.150558+09:00",
-      "thread_id": "17996142005808507"
+      "thread_id": "17996142005808507",
+      "insights": {
+        "collected_at": "2026-08-20T13:25:11+09:00",
+        "metrics": {
+          "views": 168,
+          "likes": 0,
+          "replies": 0,
+          "reposts": 0,
+          "quotes": 0,
+          "shares": 0
+        }
+      }
     },
     {
       "post_id": "W20260813-05",
@@ -824,7 +1165,18 @@
       "tone": "personal",
       "context_note": "seasonal",
       "posted_at": "2026-08-13T21:00:54.907178+09:00",
-      "thread_id": "18363705181241999"
+      "thread_id": "18363705181241999",
+      "insights": {
+        "collected_at": "2026-08-20T13:25:11+09:00",
+        "metrics": {
+          "views": 176,
+          "likes": 0,
+          "replies": 0,
+          "reposts": 0,
+          "quotes": 0,
+          "shares": 0
+        }
+      }
     },
     {
       "post_id": "W20260814-01",
@@ -841,7 +1193,18 @@
       "tone": "personal",
       "context_note": "seasonal",
       "posted_at": "2026-08-14T07:01:01.197468+09:00",
-      "thread_id": "18032148398841597"
+      "thread_id": "18032148398841597",
+      "insights": {
+        "collected_at": "2026-08-20T13:25:11+09:00",
+        "metrics": {
+          "views": 191,
+          "likes": 0,
+          "replies": 0,
+          "reposts": 0,
+          "quotes": 0,
+          "shares": 0
+        }
+      }
     },
     {
       "post_id": "W20260814-03",
@@ -858,7 +1221,18 @@
       "tone": "personal",
       "context_note": "seasonal",
       "posted_at": "2026-08-14T15:00:52.589657+09:00",
-      "thread_id": "18275535856293049"
+      "thread_id": "18275535856293049",
+      "insights": {
+        "collected_at": "2026-08-20T13:25:11+09:00",
+        "metrics": {
+          "views": 242,
+          "likes": 0,
+          "replies": 0,
+          "reposts": 0,
+          "quotes": 0,
+          "shares": 0
+        }
+      }
     },
     {
       "post_id": "W20260814-05",
@@ -875,7 +1249,18 @@
       "tone": "personal",
       "context_note": "seasonal",
       "posted_at": "2026-08-14T21:00:43.791914+09:00",
-      "thread_id": "18101615876261159"
+      "thread_id": "18101615876261159",
+      "insights": {
+        "collected_at": "2026-08-20T13:25:11+09:00",
+        "metrics": {
+          "views": 63,
+          "likes": 0,
+          "replies": 0,
+          "reposts": 0,
+          "quotes": 0,
+          "shares": 0
+        }
+      }
     },
     {
       "post_id": "W20260815-01",
@@ -892,7 +1277,18 @@
       "tone": "personal",
       "context_note": "seasonal",
       "posted_at": "2026-08-15T07:00:54.481636+09:00",
-      "thread_id": "17988808719042357"
+      "thread_id": "17988808719042357",
+      "insights": {
+        "collected_at": "2026-08-20T13:25:11+09:00",
+        "metrics": {
+          "views": 265,
+          "likes": 1,
+          "replies": 0,
+          "reposts": 0,
+          "quotes": 0,
+          "shares": 0
+        }
+      }
     },
     {
       "post_id": "W20260815-03",
@@ -909,7 +1305,18 @@
       "tone": "personal",
       "context_note": "seasonal",
       "posted_at": "2026-08-15T15:00:49.416004+09:00",
-      "thread_id": "17959971938983090"
+      "thread_id": "17959971938983090",
+      "insights": {
+        "collected_at": "2026-08-20T13:25:11+09:00",
+        "metrics": {
+          "views": 203,
+          "likes": 0,
+          "replies": 0,
+          "reposts": 0,
+          "quotes": 0,
+          "shares": 0
+        }
+      }
     },
     {
       "post_id": "W20260815-05",
@@ -926,7 +1333,18 @@
       "tone": "personal",
       "context_note": "seasonal",
       "posted_at": "2026-08-15T21:00:44.655206+09:00",
-      "thread_id": "18452478550137500"
+      "thread_id": "18452478550137500",
+      "insights": {
+        "collected_at": "2026-08-20T13:25:11+09:00",
+        "metrics": {
+          "views": 309,
+          "likes": 1,
+          "replies": 0,
+          "reposts": 0,
+          "quotes": 0,
+          "shares": 0
+        }
+      }
     },
     {
       "post_id": "W20260816-01",
@@ -943,7 +1361,18 @@
       "tone": "personal",
       "context_note": "seasonal",
       "posted_at": "2026-08-16T07:00:52.235150+09:00",
-      "thread_id": "18076081877348475"
+      "thread_id": "18076081877348475",
+      "insights": {
+        "collected_at": "2026-08-20T13:25:11+09:00",
+        "metrics": {
+          "views": 2,
+          "likes": 0,
+          "replies": 0,
+          "reposts": 0,
+          "quotes": 0,
+          "shares": 0
+        }
+      }
     },
     {
       "post_id": "W20260816-03",
@@ -960,7 +1389,18 @@
       "tone": "personal",
       "context_note": "seasonal",
       "posted_at": "2026-08-16T15:00:46.848380+09:00",
-      "thread_id": "18089450747149045"
+      "thread_id": "18089450747149045",
+      "insights": {
+        "collected_at": "2026-08-20T13:25:11+09:00",
+        "metrics": {
+          "views": 67,
+          "likes": 0,
+          "replies": 0,
+          "reposts": 0,
+          "quotes": 0,
+          "shares": 0
+        }
+      }
     },
     {
       "post_id": "W20260816-05",
@@ -977,7 +1417,18 @@
       "tone": "personal",
       "context_note": "seasonal",
       "posted_at": "2026-08-16T21:00:46.451527+09:00",
-      "thread_id": "17986021026023533"
+      "thread_id": "17986021026023533",
+      "insights": {
+        "collected_at": "2026-08-20T13:25:11+09:00",
+        "metrics": {
+          "views": 209,
+          "likes": 1,
+          "replies": 0,
+          "reposts": 0,
+          "quotes": 0,
+          "shares": 0
+        }
+      }
     },
     {
       "post_id": "W20260817-01",
@@ -994,7 +1445,18 @@
       "tone": "personal",
       "context_note": "seasonal",
       "posted_at": "2026-08-17T07:01:06.906488+09:00",
-      "thread_id": "18425089033199059"
+      "thread_id": "18425089033199059",
+      "insights": {
+        "collected_at": "2026-08-20T13:25:11+09:00",
+        "metrics": {
+          "views": 3,
+          "likes": 0,
+          "replies": 0,
+          "reposts": 0,
+          "quotes": 0,
+          "shares": 0
+        }
+      }
     },
     {
       "post_id": "W20260817-03",
@@ -1011,7 +1473,18 @@
       "tone": "personal",
       "context_note": "seasonal",
       "posted_at": "2026-08-17T15:00:46.057651+09:00",
-      "thread_id": "17882395194616253"
+      "thread_id": "17882395194616253",
+      "insights": {
+        "collected_at": "2026-08-20T13:25:11+09:00",
+        "metrics": {
+          "views": 0,
+          "likes": 0,
+          "replies": 0,
+          "reposts": 0,
+          "quotes": 0,
+          "shares": 0
+        }
+      }
     },
     {
       "post_id": "W20260817-05",
@@ -1028,7 +1501,18 @@
       "tone": "personal",
       "context_note": "seasonal",
       "posted_at": "2026-08-17T21:00:43.870848+09:00",
-      "thread_id": "18139285288578885"
+      "thread_id": "18139285288578885",
+      "insights": {
+        "collected_at": "2026-08-20T13:25:11+09:00",
+        "metrics": {
+          "views": 47,
+          "likes": 0,
+          "replies": 0,
+          "reposts": 0,
+          "quotes": 0,
+          "shares": 0
+        }
+      }
     },
     {
       "post_id": "W20260818-01",
@@ -1045,7 +1529,18 @@
       "tone": "personal",
       "context_note": "seasonal",
       "posted_at": "2026-08-18T07:00:53.880140+09:00",
-      "thread_id": "18132370489629133"
+      "thread_id": "18132370489629133",
+      "insights": {
+        "collected_at": "2026-08-20T13:25:11+09:00",
+        "metrics": {
+          "views": 462,
+          "likes": 0,
+          "replies": 0,
+          "reposts": 0,
+          "quotes": 0,
+          "shares": 0
+        }
+      }
     },
     {
       "post_id": "W20260818-03",
@@ -1062,7 +1557,18 @@
       "tone": "personal",
       "context_note": "seasonal",
       "posted_at": "2026-08-18T15:00:49.128296+09:00",
-      "thread_id": "17914787427244606"
+      "thread_id": "17914787427244606",
+      "insights": {
+        "collected_at": "2026-08-20T13:25:11+09:00",
+        "metrics": {
+          "views": 68,
+          "likes": 0,
+          "replies": 0,
+          "reposts": 0,
+          "quotes": 0,
+          "shares": 0
+        }
+      }
     },
     {
       "post_id": "W20260818-05",
@@ -1071,7 +1577,18 @@
       "type": "empathy",
       "parent_text": "仕事の日、お風呂に入るまでは面倒なのに、入った後は早く入ればよかったと思う。\n\n毎回同じことを思ってる。",
       "posted_at": "2026-08-18T21:00:51.765023+09:00",
-      "thread_id": "18106383850894531"
+      "thread_id": "18106383850894531",
+      "insights": {
+        "collected_at": "2026-08-20T13:25:11+09:00",
+        "metrics": {
+          "views": 110,
+          "likes": 0,
+          "replies": 0,
+          "reposts": 0,
+          "quotes": 0,
+          "shares": 0
+        }
+      }
     },
     {
       "post_id": "W20260819-01",
@@ -1080,7 +1597,18 @@
       "type": "empathy",
       "parent_text": "まだ水曜なのに、気持ちはもう金曜くらい疲れてる。\n\n連休明けの一週間、体感だけやたら長い。",
       "posted_at": "2026-08-19T07:00:48.937982+09:00",
-      "thread_id": "18106101203178752"
+      "thread_id": "18106101203178752",
+      "insights": {
+        "collected_at": "2026-08-20T13:25:11+09:00",
+        "metrics": {
+          "views": 0,
+          "likes": 0,
+          "replies": 0,
+          "reposts": 0,
+          "quotes": 0,
+          "shares": 0
+        }
+      }
     },
     {
       "post_id": "W20260819-03",
@@ -1089,7 +1617,18 @@
       "type": "empathy",
       "parent_text": "平日の自炊は、作る時間より洗い物を想像した瞬間にやる気がなくなる。\n\nフライパン一つで終わる料理ばかり選びたくなる。",
       "posted_at": "2026-08-19T15:00:49.080011+09:00",
-      "thread_id": "17928404397392350"
+      "thread_id": "17928404397392350",
+      "insights": {
+        "collected_at": "2026-08-20T13:25:11+09:00",
+        "metrics": {
+          "views": 284,
+          "likes": 0,
+          "replies": 0,
+          "reposts": 0,
+          "quotes": 0,
+          "shares": 0
+        }
+      }
     },
     {
       "post_id": "W20260819-05",
@@ -1098,7 +1637,18 @@
       "type": "empathy",
       "parent_text": "連休明けは、週末までがいつもより遠い。\n\nあと二日と思えば短いのに、朝のアラームはまだ二回来る。",
       "posted_at": "2026-08-19T21:00:57.625431+09:00",
-      "thread_id": "18140878570577054"
+      "thread_id": "18140878570577054",
+      "insights": {
+        "collected_at": "2026-08-20T13:25:11+09:00",
+        "metrics": {
+          "views": 365,
+          "likes": 1,
+          "replies": 0,
+          "reposts": 0,
+          "quotes": 0,
+          "shares": 0
+        }
+      }
     },
     {
       "post_id": "W20260820-01",
@@ -1107,7 +1657,18 @@
       "type": "empathy",
       "parent_text": "休み明けの一週間、木曜まで来ると少し安心する。\n\nあと二日なのに、その二日がいちばん長い。",
       "posted_at": "2026-08-20T07:00:52.939594+09:00",
-      "thread_id": "18162565171470139"
+      "thread_id": "18162565171470139",
+      "insights": {
+        "collected_at": "2026-08-20T13:25:11+09:00",
+        "metrics": {
+          "views": 0,
+          "likes": 0,
+          "replies": 0,
+          "reposts": 0,
+          "quotes": 0,
+          "shares": 0
+        }
+      }
     }
   ]
 }
