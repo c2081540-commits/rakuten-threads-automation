@@ -1,13 +1,6 @@
 {
   "posts": [
     {
-      "post_id": "W20260821-03",
-      "scheduled_at": "2026-08-21T15:00+09:00",
-      "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "スーパーに寄ると、買う予定じゃなかったアイスだけは妙にすぐ決まる。\n\n夕飯のおかずはずっと迷ってるのに。"
-    },
-    {
       "post_id": "W20260821-04",
       "scheduled_at": "2026-08-21T18:00+09:00",
       "status": "scheduled",
