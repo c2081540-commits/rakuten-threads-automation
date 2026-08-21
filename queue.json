@@ -1,21 +1,6 @@
 {
   "posts": [
     {
-      "post_id": "W20260821-02",
-      "scheduled_at": "2026-08-21T12:00+09:00",
-      "status": "scheduled",
-      "type": "product",
-      "parent_text": "え、ヘアアイロンって熱いまましまえるポーチあるんだ。\n\n出かける前の「冷めるまで待つ」がなくなるの、かなり大きい。",
-      "selected_item_code": "angers:10065234",
-      "child_text_base": "内側は耐熱温度300℃の生地。吊り下げて置けるので、洗面所でも旅行先でも収納場所を作れます。",
-      "image_urls": [
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/angers/cabinet/item_main0077/158748.jpg",
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/angers/cabinet/item_main0077/158748-m02.jpg",
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/angers/cabinet/item_main0077/158748-m03.jpg"
-      ],
-      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00pksvn.z7eisa26.g00pksvn.z7eitb13/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fangers%2F158748%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fangers%2Fi%2F10065234%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f"
-    },
-    {
       "post_id": "W20260821-03",
       "scheduled_at": "2026-08-21T15:00+09:00",
       "status": "scheduled",
