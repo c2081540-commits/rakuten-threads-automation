@@ -1,13 +1,6 @@
 {
   "posts": [
     {
-      "post_id": "W20260821-05",
-      "scheduled_at": "2026-08-21T21:00+09:00",
-      "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "金曜の夜、何かしようと思ってたのにソファに座ったら終わった。\n\nまあ今週はもうこれでいい。"
-    },
-    {
       "post_id": "W20260822-01",
       "scheduled_at": "2026-08-22T07:00+09:00",
       "status": "scheduled",
