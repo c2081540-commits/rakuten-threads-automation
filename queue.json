@@ -1,21 +1,6 @@
 {
   "posts": [
     {
-      "post_id": "W20260822-02",
-      "scheduled_at": "2026-08-22T12:00+09:00",
-      "status": "scheduled",
-      "type": "product",
-      "parent_text": "これくらい小さいジュエリーケース、むしろ欲しかった。\n\n旅行でピアス2つ持っていくだけなのに、大きいケースはいらないんよ。",
-      "selected_item_code": "jw-copal:10002659",
-      "child_text_base": "約8.7×5.8×3.5cmの携帯用ケース。リングやピアスなど、小さいアクセサリーをまとめて持ち歩けます。",
-      "image_urls": [
-        "https://thumbnail.image.rakuten.co.jp/@0_gold/jw-copal/komono/jewerlycase/mine1-3.jpg",
-        "https://thumbnail.image.rakuten.co.jp/@0_gold/jw-copal/komono/jewerlycase/new-1.jpg",
-        "https://thumbnail.image.rakuten.co.jp/@0_gold/jw-copal/komono/jewerlycase/mine13.jpg"
-      ],
-      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00qgo1n.z7eis060.g00qgo1n.z7eit2b3/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fjw-copal%2Fmine-c%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fjw-copal%2Fi%2F10002659%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f"
-    },
-    {
       "post_id": "W20260822-03",
       "scheduled_at": "2026-08-22T15:00+09:00",
       "status": "scheduled",
