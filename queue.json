@@ -1,13 +1,6 @@
 {
   "posts": [
     {
-      "post_id": "W20260822-03",
-      "scheduled_at": "2026-08-22T15:00+09:00",
-      "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "出かける前は服がないと思うのに、帰ってくると洗濯物だけは山ほどある。\n\nこの矛盾だけずっと解決しない。"
-    },
-    {
       "post_id": "W20260822-04",
       "scheduled_at": "2026-08-22T18:00+09:00",
       "status": "scheduled",
