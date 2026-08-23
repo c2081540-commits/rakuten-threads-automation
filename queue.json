@@ -1,21 +1,6 @@
 {
   "posts": [
     {
-      "post_id": "W20260823-02",
-      "scheduled_at": "2026-08-23T12:00+09:00",
-      "status": "scheduled",
-      "type": "product",
-      "parent_text": "スティック掃除機、壁に立てかけて倒れるまでがセットだと思ってた。\n\n穴を開けずに定位置を作れるなら、最初からこれでいい。",
-      "selected_item_code": "roomy:10015687",
-      "child_text_base": "床置き型のスティッククリーナースタンド。壁への穴あけ不要で、掃除機を立てて収納できます。",
-      "image_urls": [
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/roomy/cabinet/500cart_all/500cart_11g/p5-8/ymz1084-sz000-0_gt01.jpg",
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/roomy/cabinet/500cart_all/500cart_ca2_7/ymz1084-sz000-0_sz01.jpg",
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/roomy/cabinet/500cart_all/500cart_ca2_7/ymz1084-sz000-0_sz02.jpg"
-      ],
-      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00qb0ln.z7eis6c8.g00qb0ln.z7eit2ac/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Froomy%2Fymz17feb24h65%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Froomy%2Fi%2F10015687%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f"
-    },
-    {
       "post_id": "W20260823-03",
       "scheduled_at": "2026-08-23T15:00+09:00",
       "status": "scheduled",
