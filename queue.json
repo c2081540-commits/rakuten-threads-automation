@@ -21,850 +21,934 @@
       "parent_text": "日曜の夜だけ、急に部屋の細かいところが気になる。\n\n今やらなくていい掃除を始めるくらいなら、早く寝ればいいのに。"
     },
     {
-      "post_id": "W20260824-01",
+      "post_id": "INT-20260824-07",
       "scheduled_at": "2026-08-24T07:00+09:00",
       "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "朝ちゃんと日焼け止めを塗ったのに、駅まで歩いただけでもう全部流れた気がする。\n\n残暑、まだ普通に夏。"
+      "type": "interior_engagement",
+      "content_format": "interior_engagement",
+      "parent_text": "朝の妄想タイム。リビングにポップなカラーのチェアを一点置くなら、A: ビビッドな差し色でアクセント派、B: くすみカラーでやわらか派、どっちが気分？",
+      "hook_type": "comparison|question|preference"
     },
     {
-      "post_id": "W20260824-02",
+      "post_id": "INT-20260824-12",
       "scheduled_at": "2026-08-24T12:00+09:00",
       "status": "scheduled",
       "type": "product",
-      "parent_text": "毛玉で着るのやめてた服、取るだけでまだいけるなら捨てるの早かったかも。\n\nこういうのは一回きれいになるところ見たら止まらなそう。",
-      "selected_item_code": "catmart:10000129",
-      "child_text_base": "USB-C充電式の電動毛玉取り。6枚刃で、衣類に合わせて3段階の速度を切り替えられます。",
+      "content_format": "product",
+      "parent_text": "楽天で見かけて思わず動画スクロール止まったチェア。肘付きのコロンとしたフォルムが、カフェ風ダイニングにすごく映えそうだな〜って想像してた。",
+      "hook_type": "discovery|room_imagination|price_hook",
+      "selected_item_code": "t-interior:10000250",
+      "item_code": "t-interior:10000250",
+      "item_name": "[マラソン限定]10%OFFクーポン8/24 20時～ smoo bloom ダイニングチェア 座面と脚を自由に選べる チェア 椅子 おしゃれ Y2K 韓国インテリア カラフル ポップ レトロ ミッドセンチュリー 肘付き イス デスクチェア コーデュロイ Branchpoint",
+      "child_text_base": "価格は7,980円。サイズは約幅56×奥行55×高さ70.5cmで、座面高さは44.5cmと記載あり。",
+      "image_url": "https://thumbnail.image.rakuten.co.jp/@0_mall/t-interior/cabinet/item/usual/abf17cd.jpg",
       "image_urls": [
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/catmart/cabinet/09284353/12112655/12399820/imgrc0119294861.jpg"
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/t-interior/cabinet/item/usual/abf17cd.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/t-interior/cabinet/item/images2/abf17cd_1.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/t-interior/cabinet/item/images2/imgrc0332608641.jpg"
       ],
-      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00tylun.z7eis4d0.g00tylun.z7eit2a3/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fcatmart%2Fsd-2512ss1%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fcatmart%2Fi%2F10000129%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f"
+      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00u9h5n.z7eisff5.g00u9h5n.z7eit776/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Ft-interior%2Fabf17cd%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Ft-interior%2Fi%2F10000250%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f",
+      "price": 7980,
+      "rating": 4.8,
+      "review_count": 166,
+      "furniture_category": "sofa_chair",
+      "furniture_category_label": "ソファ・チェア"
     },
     {
-      "post_id": "W20260824-03",
+      "post_id": "INT-20260824-15",
       "scheduled_at": "2026-08-24T15:00+09:00",
       "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "お昼を食べた直後はもう何もいらないと思う。\n\n15時になると普通に甘いものを探してる。"
+      "type": "room_idea",
+      "content_format": "room_idea",
+      "parent_text": "窓辺の読書コーナーを作るとき、背もたれ低めのチェア＋高さのある観葉植物を組み合わせると圧迫感が出にくくておすすめ。ライトは暖色のフロアランプで柔らかくまとめると午後のまどろみ感が出るよ。",
+      "hook_type": "room_idea|layout|color|styling"
     },
     {
-      "post_id": "W20260824-04",
+      "post_id": "INT-20260824-18",
       "scheduled_at": "2026-08-24T18:00+09:00",
       "status": "scheduled",
       "type": "product",
-      "parent_text": "バッグを替えるたびに中身を全部引っ越しさせてたの、これにまとめれば終わるじゃん。\n\nバッグだけ替えたい日にちょうどいい。",
-      "selected_item_code": "annekor:10000006",
-      "child_text_base": "小物をまとめられるフェルト製バッグインバッグ。約120gで、底板と複数ポケット付きです。",
+      "content_format": "product",
+      "parent_text": "くすみピンクのベロア×ゴールド脚、写真で見るだけで気分が上がるデスクチェア。メイクスペースに置いたらフォトジェニックになりそうだなって妄想。",
+      "hook_type": "room_imagination|seasonal",
+      "selected_item_code": "sakoda-online:10038137",
+      "item_code": "sakoda-online:10038137",
+      "item_name": "【最大3,000円OFFクーポン※25日迄】デスクチェア パソコンチェア おしゃれ チェア オフィスチェア PCチェア 椅子 ベロア くすみカラー デスクチェアー 白 ホワイト ピンク グレー 韓国 インテリア 金脚 ゴールド 学習 椅子 北欧 ベロア 疲れにくい 子供 ASHEL clam",
+      "child_text_base": "幅50×奥行59×高さ80〜88cm、座面高は41〜49cmで昇降可能。価格は13,800円。",
+      "image_url": "https://thumbnail.image.rakuten.co.jp/@0_mall/sakoda-online/cabinet/1st_img/chair5.jpg",
       "image_urls": [
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/annekor/cabinet/2021/ads_003/imgrc0093702138.jpg"
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/sakoda-online/cabinet/1st_img/chair5.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/sakoda-online/cabinet/item_images3/chair5_1.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/sakoda-online/cabinet/item_images3/chair5_2.jpg"
       ],
-      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00u3dyn.z7eise31.g00u3dyn.z7eit40b/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fannekor%2Fads_003%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fannekor%2Fi%2F10000006%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f"
+      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00szisn.z7eisa24.g00szisn.z7eitdc3/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fsakoda-online%2Fchair5%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fsakoda-online%2Fi%2F10038137%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f",
+      "price": 13800,
+      "rating": 4.65,
+      "review_count": 218,
+      "furniture_category": "sofa_chair",
+      "furniture_category_label": "ソファ・チェア"
     },
     {
-      "post_id": "W20260824-05",
+      "post_id": "INT-20260824-21",
       "scheduled_at": "2026-08-24T21:00+09:00",
       "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "帰宅してバッグを床に置いた瞬間、今日使った物を元に戻す気力まで一緒に落ちる。"
+      "type": "product",
+      "content_format": "product",
+      "parent_text": "ナチュラルな木の質感が落ち着く学習チェア。夜に見返すと、子ども部屋だけじゃなく大人のワークスペースにも馴染みそうと思った。",
+      "hook_type": "room_imagination|comparison",
+      "selected_item_code": "denzo:10003322",
+      "item_code": "denzo:10003322",
+      "item_name": "【期間限定2100円引き】 【レビュー★4.6以上】 学習椅子 子供 キッズチェア ハイチェア 木製 学習チェア ダイニングチェア リビング学習 椅子 シンプル 北欧 天然木 無垢 足置き 高さ調整 集中力 女の子 男の子 完成品 FIORE ISSEIKI",
+      "child_text_base": "完成品で届くタイプ。素材はアルダー無垢材／ラバー無垢材で、幅45×奥行52×高さ74cmのサイズ表記、価格は18,990円。",
+      "image_url": "https://thumbnail.image.rakuten.co.jp/@0_mall/denzo/cabinet/square/101/101-034/101-03409.jpg",
+      "image_urls": [
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/denzo/cabinet/square/101/101-034/101-03409.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/denzo/cabinet/square/101/101-034/101-03409_1.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/denzo/cabinet/square/101/101-034/101-03409_2.jpg"
+      ],
+      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00rdeon.z7eis455.g00rdeon.z7eitd4e/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fdenzo%2Ffiore-deskchair%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fdenzo%2Fi%2F10003322%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f",
+      "price": 18990,
+      "rating": 4.61,
+      "review_count": 1816,
+      "furniture_category": "sofa_chair",
+      "furniture_category_label": "ソファ・チェア"
     },
     {
-      "post_id": "W20260825-01",
+      "post_id": "INT-20260825-07",
       "scheduled_at": "2026-08-25T07:00+09:00",
       "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "給料日って、入った金額を見る時間より引かれる予定を確認する時間の方が長い。\n\n一瞬だけ金持ちだった。"
+      "type": "interior_engagement",
+      "content_format": "interior_engagement",
+      "parent_text": "朝の妄想タイム。リビングにポップなチェアを一点置くなら、A: ビビッドな差し色でアクセント派、B: くすみカラーでやわらか派、どっちが気分？",
+      "hook_type": "comparison|question|preference"
     },
     {
-      "post_id": "W20260825-02",
+      "post_id": "INT-20260825-12",
       "scheduled_at": "2026-08-25T12:00+09:00",
       "status": "scheduled",
       "type": "product",
-      "parent_text": "旅行って行きより帰りの方が荷物増えてない？\n\n服だけファスナーで圧縮できるなら、お土産の場所を先に空けとける。",
-      "selected_item_code": "stela1:10000006",
-      "child_text_base": "ファスナーで圧縮する両面収納タイプのトラベルポーチ。S・M・Lがあり、衣類を分けながら収納できます。",
+      "content_format": "product",
+      "parent_text": "楽天で見かけて思わずスクロール止まったチェア。くすみピンクのベロア×ゴールド脚って、メイクスペースで写真映えしそうだな〜って想像したよ。",
+      "hook_type": "discovery|room_imagination|price_hook",
+      "selected_item_code": "sakoda-online:10038204",
+      "item_code": "sakoda-online:10038204",
+      "item_name": "【最大3,000円OFFクーポン※25日迄】ASHEL デスクチェア かわいい おしゃれ 疲れない ベロア キャスター 回転 昇降 チェア 韓国風 疲れにくい 子供 ホワイト グレー オフィスチェア 韓国 インテリア 学習 椅子 イス 金脚 ゴールド くすみカラー brilliant shiny",
+      "child_text_base": "価格は10,990円で、座面高は40.5〜48cmに調整可能。組み立ては座面と脚を付ける簡単な仕様になっているとのこと。",
+      "image_url": "https://thumbnail.image.rakuten.co.jp/@0_mall/sakoda-online/cabinet/1st_img/chair12.jpg",
       "image_urls": [
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/stela1/cabinet/11574206/rakuten_travel_main.jpg"
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/sakoda-online/cabinet/1st_img/chair12.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/sakoda-online/cabinet/ranking/chair12_ran.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/sakoda-online/cabinet/item_images3/chair12_1.jpg"
       ],
-      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00ucq7n.z7eis372.g00ucq7n.z7eit3a7/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fstela1%2F10000006%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fstela1%2Fi%2F10000006%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f"
+      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00szisn.z7eisa24.g00szisn.z7eitdc3/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fsakoda-online%2Fchair12%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fsakoda-online%2Fi%2F10038204%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f",
+      "price": 10990,
+      "rating": 4.59,
+      "review_count": 172,
+      "furniture_category": "sofa_chair",
+      "furniture_category_label": "ソファ・チェア"
     },
     {
-      "post_id": "W20260825-03",
+      "post_id": "INT-20260825-15",
       "scheduled_at": "2026-08-25T15:00+09:00",
       "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "コンビニで飲み物だけ買うつもりだったのに、レジに着く頃には何か食べる物も持ってる。\n\nあの数十秒で予定が変わる。"
+      "type": "room_idea",
+      "content_format": "room_idea",
+      "parent_text": "窓辺の読書コーナー作り。背もたれ低めのチェアに高さのある観葉植物を合わせると視線が抜けて狭さを感じにくくなるよ。ランプは暖色でまとめると午後のまどろみ感が出る。",
+      "hook_type": "room_idea|layout|color|styling"
     },
     {
-      "post_id": "W20260825-04",
+      "post_id": "INT-20260825-18",
       "scheduled_at": "2026-08-25T18:00+09:00",
       "status": "scheduled",
       "type": "product",
-      "parent_text": "ホテルの洗面台、物を全部並べるから一瞬で自宅みたいになる。\n\nポーチごと吊るして、そこから使うのが一番ラクそう。",
-      "selected_item_code": "luckyhill:10000112",
-      "child_text_base": "フックで吊り下げて開いたまま使えるトラベルポーチ。コスメや洗面用品をまとめて持ち運べます。",
+      "content_format": "product",
+      "parent_text": "コンパクトなサイドテーブル、ソファ横に置くとコーヒーと本をちょい置きするのにちょうどよさそう。丸型のフォルムがリビングの抜けを邪魔しなさそうなのが好き。",
+      "hook_type": "room_imagination|price_hook|comparison",
+      "selected_item_code": "smile88:10067304",
+      "item_code": "smile88:10067304",
+      "item_name": "【楽天1位】サイドテーブル サイドラック ナイトテーブル ミニテーブル ソファ ベッド リビング 寝室 丸 おしゃれ 木目調 幅36cm×45cm インテリア 花台 スタンド 北欧 韓国 コーヒーテーブル カフェ アンティーク ヴィンテージ ■[送料無料]",
+      "child_text_base": "お値段は3,520円で、上下2段式。天板直径は約33cm、全高は約45cmというサイズ感だよ。",
+      "image_url": "https://thumbnail.image.rakuten.co.jp/@0_mall/smile88/cabinet/master/1st2/a07291.jpg",
       "image_urls": [
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/luckyhill/cabinet/nz-42tc5.jpg"
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/smile88/cabinet/master/1st2/a07291.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/smile88/cabinet/master/2nd/01.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/smile88/cabinet/rn/a07291-awd.jpg"
       ],
-      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00u05cn.z7eis444.g00u05cn.z7eit302/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fluckyhill%2Fnz-42tc%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fluckyhill%2Fi%2F10000112%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f"
+      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00q6pen.z7eise27.g00q6pen.z7eit804/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fsmile88%2Fa07291%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fsmile88%2Fi%2F10067304%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f",
+      "price": 3520,
+      "rating": 4.61,
+      "review_count": 31,
+      "furniture_category": "table_desk",
+      "furniture_category_label": "テーブル・デスク"
     },
     {
-      "post_id": "W20260825-05",
+      "post_id": "INT-20260825-21",
       "scheduled_at": "2026-08-25T21:00+09:00",
       "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "お風呂に入るまでは頑張れる。\n\n出たあと髪を乾かす工程だけ、毎日別料金にしてほしいくらい面倒。"
+      "type": "product",
+      "content_format": "product",
+      "parent_text": "ベロア調の丸スツールって、夜に寝室の照明を落としたときにゴールド脚がほのかに光って素敵になりそうって想像しちゃう。座面がフラットだからランプや本を置いても絵になりそう。",
+      "hook_type": "room_imagination|nighttime|price_hook",
+      "selected_item_code": "lifestyle-funfun:10032912",
+      "item_code": "lifestyle-funfun:10032912",
+      "item_name": "スツール おしゃれ くすみカラー 北欧 ベロア調 イス 椅子 いす 丸椅子 丸型 円柱 玄関イス 玄関スツール エレガント ドレッサー メイク かわいい コンパクト ピンク ベージュ 姫系 韓国インテリア アンティーク サロン ネイル エステ エタナ",
+      "child_text_base": "価格は6,180円で、座面高さは約42cm。重さは約3kgで持ち運びしやすく、完成品で届くタイプだよ。",
+      "image_url": "https://thumbnail.image.rakuten.co.jp/@0_gold/lifestyle-funfun/search/pro-chr-0073.jpg",
+      "image_urls": [
+        "https://thumbnail.image.rakuten.co.jp/@0_gold/lifestyle-funfun/search/pro-chr-0073.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/lifestyle-funfun/cabinet/original/propa/pro-chr-0073_1.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/lifestyle-funfun/cabinet/original/propa/pro-chr-0073_2.jpg"
+      ],
+      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00qufen.z7eis755.g00qufen.z7eit283/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Flifestyle-funfun%2Fpro-chr-0073%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Flifestyle-funfun%2Fi%2F10032912%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f",
+      "price": 6180,
+      "rating": 4.51,
+      "review_count": 51,
+      "furniture_category": "table_desk",
+      "furniture_category_label": "テーブル・デスク"
     },
     {
-      "post_id": "W20260826-01",
+      "post_id": "INT-20260826-07",
       "scheduled_at": "2026-08-26T07:00+09:00",
       "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "朝、昨日より5分早く起きただけで今日は余裕あると思う。\n\nその5分、だいたいスマホで消える。"
+      "type": "interior_engagement",
+      "content_format": "interior_engagement",
+      "parent_text": "朝の妄想タイム。リビングにポップなチェアを一点置くなら、A: ビビッドな差し色でアクセント派、B: くすみカラーでやわらか派、どっちが気分？",
+      "hook_type": "comparison|question|preference"
     },
     {
-      "post_id": "W20260826-02",
+      "post_id": "INT-20260826-12",
       "scheduled_at": "2026-08-26T12:00+09:00",
       "status": "scheduled",
       "type": "product",
-      "parent_text": "寝る時くらい、視界を強制終了させたい。\n\nスマホを置けないなら先に目を隠す、くらいでちょうどいいかも。",
-      "selected_item_code": "yukinosizuku:10010750",
-      "child_text_base": "シルク100％生地のアイマスク。ベルトは長さを調整でき、頭まわりに合わせて装着できます。",
+      "content_format": "product",
+      "parent_text": "スクロールして見つけたテラゾー柄のサイドテーブル。彫刻みたいな波状の脚がひとつあるだけで、部屋の雰囲気がぐっと現代アート寄りになりそうだなって思ったよ。",
+      "hook_type": "discovery|room_imagination|price_hook",
+      "selected_item_code": "marusiyou:10004791",
+      "item_code": "marusiyou:10004791",
+      "item_name": "テラゾー柄 サイドテーブル ディスプレイシェルフ ミニテーブル ベッドサイドテーブル ウェーブ モダン マントルピース 暖炉 うねうね 花台 小物置き 大理石風 おしゃれ 韓国 インテリア 海外風 無機質 モノトーン 白[ld]",
+      "child_text_base": "ホワイトとグレーの2色展開で、ウェーブタイプは約幅40×奥行40×高さ48cm。価格は4,830円で大理石風のマットな質感がポイント。",
+      "image_url": "https://thumbnail.image.rakuten.co.jp/@0_mall/marusiyou/cabinet/img_13/az-mar-n_1.jpg",
       "image_urls": [
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/yukinosizuku/cabinet/10659028/imgrc0111952597.jpg"
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/marusiyou/cabinet/img_13/az-mar-n_1.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/marusiyou/cabinet/img_13/az-mar-n_2.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/marusiyou/cabinet/img_13/az-mar-n_3.jpg"
       ],
-      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00tjb1n.z7eis6c0.g00tjb1n.z7eit537/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fyukinosizuku%2Fn-eyemask-1%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fyukinosizuku%2Fi%2F10010750%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f"
+      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00qxckn.z7eis7ff.g00qxckn.z7eite93/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fmarusiyou%2Faz-mar%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fmarusiyou%2Fi%2F10004791%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f",
+      "price": 4830,
+      "rating": 4.42,
+      "review_count": 31,
+      "furniture_category": "table_desk",
+      "furniture_category_label": "テーブル・デスク"
     },
     {
-      "post_id": "W20260826-03",
+      "post_id": "INT-20260826-15",
       "scheduled_at": "2026-08-26T15:00+09:00",
       "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "デスクの上を片づけると仕事できそうな気がする。\n\n片づけたことで満足して、始めるのは少し遅れる。"
+      "type": "room_idea",
+      "content_format": "room_idea",
+      "parent_text": "窓辺の読書コーナーを作るとき、背もたれ低めのチェア＋高さのある観葉植物を組み合わせると圧迫感が出にくいよ。ライトは暖色のフロアランプで柔らかくまとめると午後のまどろみ感が出る。",
+      "hook_type": "room_idea|layout|color|styling"
     },
     {
-      "post_id": "W20260826-04",
+      "post_id": "INT-20260826-18",
       "scheduled_at": "2026-08-26T18:00+09:00",
       "status": "scheduled",
       "type": "product",
-      "parent_text": "ポーチの中でまた物を探すなら、もうポーチを3つに分けた方が早くない？\n\nしかも中身が見える。これでいい。",
-      "selected_item_code": "liviewstore:10003507",
-      "child_text_base": "L・M・Sのメッシュポーチ3点セット。合計約40gで、中身を見ながら用途別に仕分けできます。",
+      "content_format": "product",
+      "parent_text": "お手頃で色バリエが豊富な折りたたみテーブルを見かけて、ワンルームでの模様替えに便利だろうなーって想像してた。使わないときに畳めるのがやっぱり気楽でいいよね。",
+      "hook_type": "discovery|layout",
+      "selected_item_code": "gekiyasukaguya:10002087",
+      "item_code": "gekiyasukaguya:10002087",
+      "item_name": "テーブル 折りたたみ 幅75cm 幅90cm 鏡面 メラミン 完成品 センターテーブル おしゃれ キッズ 子供 折り畳み ローテーブル 机 座卓 ロー 軽量 軽い ミニ コンパクト 白 ホワイト ブラック くすみカラー 無地 大理石調 木目調 S/L 全12色",
+      "child_text_base": "サイズは75×50cmと90×60cmがあって、耐荷重は約20kg。鏡面や大理石調など全12色のラインナップがあるよ。価格は3,680円から。",
+      "image_url": "https://thumbnail.image.rakuten.co.jp/@0_mall/gekiyasukaguya/cabinet/living3/z070403x1401.jpg",
       "image_urls": [
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/liviewstore/cabinet/zk/010-019/zk-select017n.jpg"
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/gekiyasukaguya/cabinet/living3/z070403x1401.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/gekiyasukaguya/cabinet/500images32/b250303nm1402.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/gekiyasukaguya/cabinet/500images32/b250303nm1403.jpg"
       ],
-      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00u4sbn.z7eis470.g00u4sbn.z7eit825/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fliviewstore%2Fzk-select017%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fliviewstore%2Fi%2F10003507%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f"
+      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00pxm3n.z7eis974.g00pxm3n.z7eit34f/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fgekiyasukaguya%2Fb66589%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fgekiyasukaguya%2Fi%2F10002087%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f",
+      "price": 3680,
+      "rating": 4.39,
+      "review_count": 4524,
+      "furniture_category": "table_desk",
+      "furniture_category_label": "テーブル・デスク"
     },
     {
-      "post_id": "W20260826-05",
+      "post_id": "INT-20260826-21",
       "scheduled_at": "2026-08-26T21:00+09:00",
       "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "寝る前に一回だけSNSを見るつもりで開く。\n\n『一回』に終わりがないことは毎晩知ってる。"
+      "type": "product",
+      "content_format": "product",
+      "parent_text": "夜の照明探しで目が留まったテーブルランプ。ファブリックシェード×ガラス×真鍮の組み合わせって、夜の雰囲気をぐっと格上げしそうでしんみり見入っちゃった。",
+      "hook_type": "room_imagination|discovery",
+      "selected_item_code": "japanbridge:10004921",
+      "item_code": "japanbridge:10004921",
+      "item_name": "テーブルライト テーブルランプ Lorencio ロレンシオ スタンドライト スタンド照明 モダン アンティーク レトロ ホテルライク 寝室 客室 リビング 間接照明 ファブリック シェード ガラス スチール 真鍮 おしゃれ ライト 照明 LT-4149-51 INTERFORM インターフォルム",
+      "child_text_base": "口金はE26で最大60Wまで対応、全体サイズはΦ250×H345mm。重さは約1.0〜1.1kgで、灯具部分にロータリースイッチが付いているよ。",
+      "image_url": "https://thumbnail.image.rakuten.co.jp/@0_mall/japanbridge/cabinet/interform/n-lt4149-m1-1.jpg",
+      "image_urls": [
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/japanbridge/cabinet/interform/n-lt4149-m1-1.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/japanbridge/cabinet/interform/n-lt4149-m1.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/japanbridge/cabinet/interform/lt4149-t2.jpg"
+      ],
+      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00qepyn.z7eis025.g00qepyn.z7eitfd2/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fjapanbridge%2F10004665%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fjapanbridge%2Fi%2F10004921%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f",
+      "price": 19250,
+      "rating": 4.92,
+      "review_count": 50,
+      "furniture_category": "lighting",
+      "furniture_category_label": "照明"
     },
     {
-      "post_id": "W20260827-01",
+      "post_id": "INT-20260827-07",
       "scheduled_at": "2026-08-27T07:00+09:00",
       "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "冷たい飲み物ばかり選んでたのに、朝だけ少し温かいものが欲しくなる日が出てきた。\n\n夏の終わりってこういうところから来る。"
+      "type": "interior_engagement",
+      "content_format": "interior_engagement",
+      "parent_text": "朝の妄想タイム。リビングにワンポイントでチェアを置くなら、A: ビビッドな差し色で元気にする派、B: くすみカラーでやわらかくまとめる派、どっちが気分？",
+      "hook_type": "comparison|question|preference"
     },
     {
-      "post_id": "W20260827-02",
+      "post_id": "INT-20260827-12",
       "scheduled_at": "2026-08-27T12:00+09:00",
       "status": "scheduled",
       "type": "product",
-      "parent_text": "包丁とまな板を出すほどじゃない時、キッチンバサミが強すぎる。\n\n肉も野菜もそのまま切れるなら、もう下ごしらえの主役でいい。",
-      "selected_item_code": "k-kitchen:10081138",
-      "child_text_base": "貝印のカーブ刃キッチンバサミ。食材を切り分けやすい形で、食洗機にも対応しています。",
+      "content_format": "product",
+      "parent_text": "スクロール中に見つけた小さなフロアランプ。つぼみみたいなフォルムがベッドサイドにちょこんとあるだけで写真映えしそうだな〜って思ってた。",
+      "hook_type": "room_imagination|price_hook",
+      "selected_item_code": "wanon:10000177",
+      "item_code": "wanon:10000177",
+      "item_name": "つぼみ SS アジアン フロアランプ フロアライト 間接照明 おしゃれ かわいい ランプ ベッドサイド 寝室 テーブルランプ 照明器具 照明 ライト アジアン雑貨 シノワズリ シノワ アジア 和 和モダン モダン チューリップ ベッド サイド インテリア ルームライト ナイトライト",
+      "child_text_base": "布のシェードと天然木のスタンドで、サイズは約幅15×奥15×高さ24cm。お値段が4,400円ってところにちょっと驚いたよ。",
+      "image_url": "https://thumbnail.image.rakuten.co.jp/@0_mall/wanon/cabinet/nonaw01/imgrc0116316400.jpg",
       "image_urls": [
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/k-kitchen/cabinet/tasya93/9181196.jpg"
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/wanon/cabinet/nonaw01/imgrc0116316400.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/wanon/cabinet/img-up_1_1540/2690_k1_828074_1.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/wanon/cabinet/img-up_1_1540/2690_k2_828074_3.jpg"
       ],
-      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00qzr8n.z7eisc64.g00qzr8n.z7eitb88/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fk-kitchen%2F9181196%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fk-kitchen%2Fi%2F10081138%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f"
+      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00pyoon.z7eisb72.g00pyoon.z7eit646/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fwanon%2F780087%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fwanon%2Fi%2F10000177%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f",
+      "price": 4400,
+      "rating": 4.75,
+      "review_count": 157,
+      "furniture_category": "lighting",
+      "furniture_category_label": "照明"
     },
     {
-      "post_id": "W20260827-03",
+      "post_id": "INT-20260827-15",
       "scheduled_at": "2026-08-27T15:00+09:00",
       "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "買い物メモを作った日は安心して、メモにない物まで買う。\n\n忘れ物は減るけど出費はあまり減らない。"
+      "type": "room_idea",
+      "content_format": "room_idea",
+      "parent_text": "午後の窓辺を心地よくするコツ：背の低いチェアを置いて、後ろに高さのある観葉植物を一つ。視線が抜けて狭さが気にならないし、ランプの光を当てると奥行きが出るよ。",
+      "hook_type": "room_idea|layout|styling"
     },
     {
-      "post_id": "W20260827-04",
+      "post_id": "INT-20260827-18",
       "scheduled_at": "2026-08-27T18:00+09:00",
       "status": "scheduled",
       "type": "product",
-      "parent_text": "胡椒を挽くためだけに両手を空けるの、考えたら地味に面倒だった。\n\nボタンひとつで片手で挽けるなら、料理中はこっちがいい。",
-      "selected_item_code": "n-raffine:10010706",
-      "child_text_base": "上部のボタンで電動挽きできる充電式ミル。約4×4×14cmのミニサイズで、USB Type-C充電に対応しています。",
+      "content_format": "product",
+      "parent_text": "ダイニングの上に透明なガラスのペンダントがふわっと下がってるの、すごく好き。水面のゆらぎを切り取ったようなガラスが、食事の時間をちょっと特別にしてくれそうって想像してた。",
+      "hook_type": "room_imagination|comparison",
+      "selected_item_code": "theoval:10055970",
+      "item_code": "theoval:10055970",
+      "item_name": "[マラソン中ポイント5倍]照明 ペンダントライト 洋室・リビング・ダイニング 4.5畳以下・小型 直付・埋込タイプ 電球色(2200K) ※工事必要 フィラメント エジソン インダストリアル",
+      "child_text_base": "AQUAシリーズらしい内モール加工で“水面”の表情を表現していて、口金はE17のLED仕様。価格は7,590円だったよ。",
+      "image_url": "https://thumbnail.image.rakuten.co.jp/@0_gold/theoval/ev-th/005_new700/ode-pe-0040907.jpg",
       "image_urls": [
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/n-raffine/cabinet/07848197/nui.jpg"
+        "https://thumbnail.image.rakuten.co.jp/@0_gold/theoval/ev-th/005_new700/ode-pe-0040907.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/theoval/cabinet/item-image/ode-pe-0040907/ode-pe-0040907.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/theoval/cabinet/item-image/ode-pe-0040907/award_sq01.jpg"
       ],
-      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00py1en.z7eis874.g00py1en.z7eit731/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fn-raffine%2Frh-7941%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fn-raffine%2Fi%2F10010706%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f"
+      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00rctvn.z7eise85.g00rctvn.z7eitae0/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Ftheoval%2Fode-pe-0040907%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Ftheoval%2Fi%2F10055970%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f",
+      "price": 7590,
+      "rating": 4.7,
+      "review_count": 644,
+      "furniture_category": "lighting",
+      "furniture_category_label": "照明"
     },
     {
-      "post_id": "W20260827-05",
+      "post_id": "INT-20260827-21",
       "scheduled_at": "2026-08-27T21:00+09:00",
       "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "木曜の夜は、もう気持ちだけ金曜に片足入ってる。\n\nあと一日なら何とかなる、でだいたい何とかする。"
+      "type": "product",
+      "content_format": "product",
+      "parent_text": "夜に目がとまったフロアライト。縦長の発光面が壁に柔らかく広がるイメージで、寝る前の読書時間にぴったりだな〜って想像してたよ。",
+      "hook_type": "seasonal|room_imagination",
+      "selected_item_code": "risopale:10000010",
+      "item_code": "risopale:10000010",
+      "item_name": "フロアライト リモコン付き LED スタンドライト 間接照明 LEDライト フロアスタンド ランプ 照明スタンド 調光 調色 電球色 寝室 おしゃれ 北欧 シンプル モダン ヴィンテージ インダストリアル フロアランプ フロアスタンドライト VENTOTA Locca(ロッカ)",
+      "child_text_base": "リモコン付きで調光・調色ができ、サイズは約10×15×125cm。本体価格は10,980円とのこと。",
+      "image_url": "https://thumbnail.image.rakuten.co.jp/@0_mall/risopale/cabinet/prd-img/fll-locca/fll-locca_r.jpg",
+      "image_urls": [
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/risopale/cabinet/prd-img/fll-locca/fll-locca_r.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/risopale/cabinet/biiino/award/fll-loc7201eac56.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/risopale/cabinet/prd-img/fll-locca/fll_locca_15.jpg"
+      ],
+      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00ud5an.z7eisb29.g00ud5an.z7eit996/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Frisopale%2Ffll-locca%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Frisopale%2Fi%2F10000010%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f",
+      "price": 10980,
+      "rating": 4.66,
+      "review_count": 59,
+      "furniture_category": "lighting",
+      "furniture_category_label": "照明"
     },
     {
-      "post_id": "W20260828-01",
+      "post_id": "INT-20260828-07",
       "scheduled_at": "2026-08-28T07:00+09:00",
       "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "8月の終わり、昼は完全に夏なのに朝だけ少し空気が違う。\n\n季節の切り替え、気温より先に朝で気づく。"
+      "type": "interior_engagement",
+      "content_format": "interior_engagement",
+      "parent_text": "朝の妄想タイム。リビングにワンポイントでチェアを置くなら、A: ビビッドな差し色で元気にする派、B: くすみカラーでやわらかくまとめる派、どっちが気分？",
+      "hook_type": "comparison|question|preference"
     },
     {
-      "post_id": "W20260828-02",
+      "post_id": "INT-20260828-12",
       "scheduled_at": "2026-08-28T12:00+09:00",
       "status": "scheduled",
       "type": "product",
-      "parent_text": "冷凍ご飯って、容器まで専用にすると変わるんだ。\n\n一膳ずつ冷凍して、そのままレンジ。平日のご飯はこういうのでいい。",
-      "selected_item_code": "shopmarna:10006585",
-      "child_text_base": "一膳約180g用の冷凍ごはん容器4個セット。フタをしたまま電子レンジ加熱でき、食洗機にも対応しています。",
+      "content_format": "product",
+      "parent_text": "スクロールして見かけたラグ。くすみカラーのストライプが、ナチュラルなソファまわりにすっと馴染みそうだなって想像してたよ。",
+      "hook_type": "price_hook|room_imagination",
+      "selected_item_code": "apoloce:10000016",
+      "item_code": "apoloce:10000016",
+      "item_name": "【48h★最大10％OFFクーポン】ラグ 洗える シエロ 【最大35％OFF】 販売累計14.9万枚！ ラグマット キルトラグ 北欧 おしゃれ くすみ カーペット 95×130 130×190 190×190 190×240 190×300 1.5畳 2畳 3畳 リビング 滑り止め オールシーズン コーデュロイ",
+      "child_text_base": "お値段が約2,990円って見て二度見しちゃった。洗える仕様なのも、ラグの扱いが気になる日常には嬉しいポイントだね。",
+      "image_url": "https://thumbnail.image.rakuten.co.jp/@0_mall/apoloce/cabinet/er/sielo26n-mb.jpg",
       "image_urls": [
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/shopmarna/cabinet/item_top/x4/x140.jpg"
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/apoloce/cabinet/er/sielo26n-mb.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/apoloce/cabinet/er/sielo26n-02.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/apoloce/cabinet/er/sielo26n-03.jpg"
       ],
-      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00qtg2n.z7eis2dc.g00qtg2n.z7eitd7a/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fshopmarna%2Fx140%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fshopmarna%2Fi%2F10006585%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f"
+      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00t4iun.z7eis949.g00t4iun.z7eitf47/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fapoloce%2Fsielo-185%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fapoloce%2Fi%2F10000016%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f",
+      "price": 2990,
+      "rating": 4.75,
+      "review_count": 6546,
+      "furniture_category": "rug_curtain",
+      "furniture_category_label": "ラグ・カーテン"
     },
     {
-      "post_id": "W20260828-03",
+      "post_id": "INT-20260828-15",
       "scheduled_at": "2026-08-28T15:00+09:00",
       "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "金曜の午後、仕事が終わってないのに気持ちだけ先に週末へ行ってる。"
+      "type": "room_idea",
+      "content_format": "room_idea",
+      "parent_text": "窓辺の読書コーナー作りの話。背もたれ低めのチェアに高さのある観葉植物を後ろに置くと、視線が抜けて狭さを感じさせないよ。ランプは暖色でまとめると午後のまどろみ感が出る。",
+      "hook_type": "room_idea|layout|color|styling"
     },
     {
-      "post_id": "W20260828-04",
+      "post_id": "INT-20260828-18",
       "scheduled_at": "2026-08-28T18:00+09:00",
       "status": "scheduled",
       "type": "product",
-      "parent_text": "アイラップ、保存袋だと思ってたら湯煎もレンジもいけるの強い。\n\nしかも箱ごとケースに入る。こういう地味な便利さ好き。",
-      "selected_item_code": "shimoyama-onlineshop:10001689",
-      "child_text_base": "冷凍・解凍・湯煎・電子レンジ調理にも使える袋型ラップ。紙箱ごと入れられる専用ケースとのセットです。",
+      "content_format": "product",
+      "parent_text": "ふわふわのファー系ラグを見かけて、ソファ前に敷いたらぬくぬく感が一気に上がるな〜って想像してた。色で雰囲気がガラッと変わりそう。",
+      "hook_type": "room_imagination|price_hook",
+      "selected_item_code": "cucan:10025748",
+      "item_code": "cucan:10025748",
+      "item_name": "ラグ 洗えるラグ ルートゥファー 90×130cm 130×185cm 185×185cm 185×240cm cucan◆ 小さめ おしゃれ カーペット 韓国インテリア ラグ 洗える 2畳 ラグマット ファー エコファー 初夏 ホットカーペットカバー 3畳 北欧 ラグ ミニ 滑り止め",
+      "child_text_base": "こちらは約2,430円で手に取りやすい価格帯。エコファー素材で洗濯機で洗える仕様なのも日常使いに頼もしいね。",
+      "image_url": "https://thumbnail.image.rakuten.co.jp/@0_mall/cucan/cabinet/rtfur-130-185.jpg",
       "image_urls": [
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/shimoyama-onlineshop/cabinet/10508331/imgrc0079417947.jpg"
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/cucan/cabinet/rtfur-130-185.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/cucan/cabinet/rtfur_1.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/cucan/cabinet/rtfur_2.jpg"
       ],
-      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00ssg5n.z7eis545.g00ssg5n.z7eit1d3/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fshimoyama-onlineshop%2F2106iw001%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fshimoyama-onlineshop%2Fi%2F10001689%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f"
+      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00qa1hn.z7eis001.g00qa1hn.z7eit9a0/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fcucan%2Frtfur-130-185%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fcucan%2Fi%2F10025748%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f",
+      "price": 2430,
+      "rating": 4.61,
+      "review_count": 208,
+      "furniture_category": "rug_curtain",
+      "furniture_category_label": "ラグ・カーテン"
     },
     {
-      "post_id": "W20260828-05",
+      "post_id": "INT-20260828-21",
       "scheduled_at": "2026-08-28T21:00+09:00",
       "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "休み前の夜は何でもできそうな気がする。\n\n実際は動画を見ながら寝落ちする。"
+      "type": "product",
+      "content_format": "product",
+      "parent_text": "夜に目がとまった厚手シャギーラグ。照明を落とした寝室に敷いたら、足元のもふっとした感じがすごく癒されそうだなって想像してたよ。",
+      "hook_type": "seasonal|night",
+      "selected_item_code": "rugoo:10000352",
+      "item_code": "rugoo:10000352",
+      "item_name": "ラグ ラグマット 洗える 厚手 オールシーズン 防音カーペット シャギー グレー グリーン 滑り止め ホワイト 白 正方形 春 冬 北欧 おしゃれ 小さめ 子供 130 185 185 200 250 cm 洗濯機 カバー 子ども部屋 軽量 一人暮らし プレミアムラッテ ボリューム",
+      "child_text_base": "価格は約6,980円。毛足は約18mmで、厚みは中材ウレタン15mmのしっかり感がある仕様だよ。",
+      "image_url": "https://thumbnail.image.rakuten.co.jp/@0_mall/rugoo/cabinet/latte/33078-4.jpg",
+      "image_urls": [
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/rugoo/cabinet/latte/33078-4.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/rugoo/cabinet/latte/latte_review_130b-2.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/rugoo/cabinet/latte/latte_review_130b-1.jpg"
+      ],
+      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00s2xqn.z7eis0ca.g00s2xqn.z7eit76d/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Frugoo%2Flatte-v130%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Frugoo%2Fi%2F10000352%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f",
+      "price": 6980,
+      "rating": 4.59,
+      "review_count": 561,
+      "furniture_category": "rug_curtain",
+      "furniture_category_label": "ラグ・カーテン"
     },
     {
-      "post_id": "W20260829-01",
+      "post_id": "INT-20260829-07",
       "scheduled_at": "2026-08-29T07:00+09:00",
       "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "土曜の朝、早く起きたら得した気分になる。\n\n二度寝すると一瞬で昼。"
+      "type": "interior_engagement",
+      "content_format": "interior_engagement",
+      "parent_text": "朝の妄想タイム。リビングにワンポイントでチェアを置くなら、A: ビビッドな差し色で元気にする派、B: くすみカラーでやわらかくまとめる派、どっちが気分？",
+      "hook_type": "comparison|question|preference"
     },
     {
-      "post_id": "W20260829-02",
+      "post_id": "INT-20260829-12",
       "scheduled_at": "2026-08-29T12:00+09:00",
       "status": "scheduled",
       "type": "product",
-      "parent_text": "味噌をすくう→溶くを1本でやれるの、かなり合理的。\n\n小さい道具を何本も洗うより、こういう兼用がいい。",
-      "selected_item_code": "nonoji:10001261",
-      "child_text_base": "味噌をすくってそのまま溶くなど、1本で複数の調理に使えるワイヤー形状の食洗機対応ツールです。",
+      "content_format": "product",
+      "parent_text": "スクロールして見かけたラグ。くすみグレーのメダリオン柄が、ナチュラルなソファまわりにすっと馴染みそうだなって想像してたよ。",
+      "hook_type": "room_imagination|seasonal",
+      "selected_item_code": "cucan:10023771",
+      "item_code": "cucan:10023771",
+      "item_name": "洗える ラグ 日本製 オルタナ 130×185cm 185×185cm 185×240cm cucan オールシーズン ラグ 洗える 北欧 ラグマット おしゃれ カーペット 韓国 ラグ おしゃれ 洗濯機で洗える 床暖房 防ダニ メダリオン グレー [NS] ◆ 【累計販売数1.5万枚超】",
+      "child_text_base": "見た目は落ち着いてるのに模様で表情が出せそう。ちなみに洗濯機で洗える仕様で、床暖房やホットカーペットにも対応しているみたいだよ。",
+      "image_url": "https://thumbnail.image.rakuten.co.jp/@0_mall/cucan/cabinet/altrg-all.jpg",
       "image_urls": [
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/nonoji/cabinet/item/kitchen/wsv-m01bk_01.jpg"
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/cucan/cabinet/altrg-all.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/cucan/cabinet/altrg_45.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/cucan/cabinet/altrg_41.jpg"
       ],
-      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00t7hkn.z7eis338.g00t7hkn.z7eitc63/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fnonoji%2Fwsv-m01bk%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fnonoji%2Fi%2F10001261%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f"
+      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00qa1hn.z7eis001.g00qa1hn.z7eit9a0/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fcucan%2Faltrg-all%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fcucan%2Fi%2F10023771%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f",
+      "price": 9900,
+      "rating": 4.49,
+      "review_count": 201,
+      "furniture_category": "rug_curtain",
+      "furniture_category_label": "ラグ・カーテン"
     },
     {
-      "post_id": "W20260829-03",
+      "post_id": "INT-20260829-15",
       "scheduled_at": "2026-08-29T15:00+09:00",
       "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "買い物に出たのに、帰宅してから一番必要だった物を思い出す。"
+      "type": "room_idea",
+      "content_format": "room_idea",
+      "parent_text": "午後の窓辺を心地よくするコツ：背の低いチェアを置いて、後ろに高さのある観葉植物を一つ。視線が抜けて狭さが気にならないよ。",
+      "hook_type": "room_idea|layout|styling"
     },
     {
-      "post_id": "W20260829-04",
+      "post_id": "INT-20260829-18",
       "scheduled_at": "2026-08-29T18:00+09:00",
       "status": "scheduled",
       "type": "product",
-      "parent_text": "ヘアアイロン、冷めるまで待つ時間がいちばん邪魔。\n\n使い終わったら耐熱ポーチへ。朝はそれで終わりにしたい。",
-      "selected_item_code": "auc-risecreation:10005045",
-      "child_text_base": "内側に耐熱素材を使ったヘアアイロンポーチ。S・Mの2サイズがあり、コード用ポケットと吊り下げ用ループ付きです。",
+      "content_format": "product",
+      "parent_text": "小さめソファを探してスクロール中。幅がコンパクトで、カウチにもコーナーにも変えられるのいいなーって想像してた。",
+      "hook_type": "discovery|layout",
+      "selected_item_code": "eclat-ik:10000230",
+      "item_code": "eclat-ik:10000230",
+      "item_name": "ソファー 2人掛け コンパクト かわいい カウチソファ ソファーベッド 一人暮らし 「 マフエル 」 幅108cm 【開梱組立設置】 2人掛け ソファー ソファ カウチソファー コーナーソファー リビングソファー 韓国インテリア",
+      "child_text_base": "ソファ自体は4WAYでレイアウトを変えられるタイプらしいよ。コンパクトサイズで幅は約108cm、脚高は約14cmでお掃除ロボにも対応する設計だって。",
+      "image_url": "https://thumbnail.image.rakuten.co.jp/@0_mall/eclat-ik/cabinet/24kagu/9817503-01-b.jpg",
       "image_urls": [
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/auc-risecreation/cabinet/product/top-2/r0431_01a.jpg"
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/eclat-ik/cabinet/24kagu/9817503-01-b.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/eclat-ik/cabinet/banner/p20-lp-720.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/eclat-ik/cabinet/24kagu/9817503-02.jpg"
       ],
-      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00s0p3n.z7eisfb9.g00s0p3n.z7eit8f0/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fauc-risecreation%2Fr0431%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fauc-risecreation%2Fi%2F10005045%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f"
+      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00u2k8n.z7eisb37.g00u2k8n.z7eit6d4/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Feclat-ik%2F9849712%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Feclat-ik%2Fi%2F10000230%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f",
+      "price": 40940,
+      "rating": 4.47,
+      "review_count": 72,
+      "furniture_category": "bed_bedding",
+      "furniture_category_label": "ベッド・寝具"
     },
     {
-      "post_id": "W20260829-05",
+      "post_id": "INT-20260829-21",
       "scheduled_at": "2026-08-29T21:00+09:00",
       "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "休みの日の夕方って、何もしてなくても一日使い切った感じがする。"
+      "type": "product",
+      "content_format": "product",
+      "parent_text": "夜のくつろぎに合いそうなローめのカウチを見かけて、照明を落とした寝室でオットマンを足元に置いたら最高だろうなって想像してたよ。",
+      "hook_type": "night|wishlist",
+      "selected_item_code": "noan:10013977",
+      "item_code": "noan:10013977",
+      "item_name": "＼8/27まで2000円OFF／ ソファー 2人掛け コンパクト おしゃれ ソファ カウチソファー ローソファー フロアソファー カウチ オットマン 韓国インテリア 韓国 L字 コーナーソファ 3人掛け 二人掛け ソファーベッド オットマン付カジュアルカウチソファ",
+      "child_text_base": "オットマン付きでレイアウト自在なのがポイントみたい。価格は手頃な感じで約22990円の表示だったよ。",
+      "image_url": "https://thumbnail.image.rakuten.co.jp/@0_mall/noan/cabinet/inc/hszl-00051/12468113/hszl-00051-01.jpg",
+      "image_urls": [
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/noan/cabinet/inc/hszl-00051/12468113/hszl-00051-01.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/noan/cabinet/520/11553071/11553073/hszl-00051-02.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/noan/cabinet/inc/hszl-00051/12146123/hszl-00051-04.jpg"
+      ],
+      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00st59n.z7eisca7.g00st59n.z7eit6d0/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fnoan%2Fhszl-00051%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fnoan%2Fi%2F10013977%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f",
+      "price": 22990,
+      "rating": 4.38,
+      "review_count": 156,
+      "furniture_category": "bed_bedding",
+      "furniture_category_label": "ベッド・寝具"
     },
     {
-      "post_id": "W20260830-01",
+      "post_id": "INT-20260830-07",
       "scheduled_at": "2026-08-30T07:00+09:00",
       "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "日曜の朝はまだ余裕。\n\n『明日仕事』が本気を出すのは夕方から。"
+      "type": "interior_engagement",
+      "content_format": "interior_engagement",
+      "parent_text": "朝の妄想タイム。リビングにワンポイントでチェアを置くなら、A: ビビッドな差し色で元気にする派、B: くすみカラーでやわらかくまとめる派、どっちが気分？",
+      "hook_type": "comparison|question|preference"
     },
     {
-      "post_id": "W20260830-02",
+      "post_id": "INT-20260830-12",
       "scheduled_at": "2026-08-30T12:00+09:00",
       "status": "scheduled",
       "type": "product",
-      "parent_text": "熱いヘアアイロンの置き場所、最初からポーチにすればよかったのか。\n\n吊るせるなら洗面台も空く。",
-      "selected_item_code": "smallword:10000621",
-      "child_text_base": "内側は耐熱300℃対応。コード収納ポケットと吊り下げループが付いたヘアアイロンケースです。",
+      "content_format": "product",
+      "parent_text": "スクロール中に見つけた小さなフロアランプ。つぼみみたいなフォルムがベッドサイドにちょこんとあるだけで写真映えしそうだな〜って思ってた。",
+      "hook_type": "room_imagination|price_hook",
+      "selected_item_code": "go-shi:10004662",
+      "item_code": "go-shi:10004662",
+      "item_name": "【即納】テーブルランプ ルームライト おしゃれ 寝室 照明 スタンド 間接照明 コードレス ランプ ライト インテリア 充電式 くすみカラー 白韓国風 北欧 アンティーク ベッドライト LED ベッドサイド 枕元 スタンドライト 授乳ライト テーブルライト ギフト",
+      "child_text_base": "当店限定のくすみカラー（グレイッシュグリーン／グレージュ）があるみたい。サイズは高さ約27cmで、USB‑C充電のコードレスランプだよ。",
+      "image_url": "https://thumbnail.image.rakuten.co.jp/@0_mall/go-shi/cabinet/light/carrylump/imgrc0132987602.jpg",
       "image_urls": [
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/smallword/cabinet/10814726/10988586/imgrc0114400641.jpg"
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/go-shi/cabinet/light/carrylump/imgrc0132987602.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/go-shi/cabinet/info-day.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/go-shi/cabinet/light/carrylump/imgrc0132987608.jpg"
       ],
-      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00tqhxn.z7eisa22.g00tqhxn.z7eit7bb/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fsmallword%2Fhaai1%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fsmallword%2Fi%2F10000621%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f"
+      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00sscjn.z7eis025.g00sscjn.z7eita62/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fgo-shi%2Fd-carry-lump%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fgo-shi%2Fi%2F10004662%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f",
+      "price": 3399,
+      "rating": 4.74,
+      "review_count": 102,
+      "furniture_category": "bed_bedding",
+      "furniture_category_label": "ベッド・寝具"
     },
     {
-      "post_id": "W20260830-03",
+      "post_id": "INT-20260830-15",
       "scheduled_at": "2026-08-30T15:00+09:00",
       "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "冷蔵庫の中を整理すると、同じ調味料が二本出てくることがある。"
+      "type": "room_idea",
+      "content_format": "room_idea",
+      "parent_text": "午後の窓辺を心地よくするコツ：背の低いチェアを置いて、後ろに高さのある観葉植物を一つ。視線が抜けて狭さが気にならないし、ランプの光を当てると奥行きが出るよ。",
+      "hook_type": "room_idea|layout|color"
     },
     {
-      "post_id": "W20260830-04",
+      "post_id": "INT-20260830-18",
       "scheduled_at": "2026-08-30T18:00+09:00",
       "status": "scheduled",
       "type": "product",
-      "parent_text": "コテもブラシ型も入る長めの耐熱ポーチ、こういうの欲しかった。\n\n使ってない時まで洗面台を占領しなくていい。",
-      "selected_item_code": "roomy:10017146",
-      "child_text_base": "towerの耐熱ヘアアイロンポーチL。内側は耐熱300℃で、吊り下げ収納とコード用ポケットに対応しています。",
+      "content_format": "product",
+      "parent_text": "ふわっとした布団カバーの柄で寝室の雰囲気って一気に変わるよね。ソファや床の色に合わせて柄を選ぶの楽しいな〜って思ってた。",
+      "hook_type": "color|seasonal",
+      "selected_item_code": "support-3shop:10000068",
+      "item_code": "support-3shop:10000068",
+      "item_name": "掛け布団カバー シングル セミダブル ダブル おしゃれ かわいい チェック 花柄 かけ布団カバー 布団カバー 掛布団カバー 北欧 プリント 軽い 通年 掛カバー 掛けカバー 羽毛布団カバー ピーチスキン 150×210 170×210 190×210",
+      "child_text_base": "ピーチスキン加工でしっとり滑らかな手触り。サイズはシングル〜ダブル（150×210〜190×210）まで揃ってるよ。",
+      "image_url": "https://thumbnail.image.rakuten.co.jp/@0_mall/support-3shop/cabinet/cover/print-peachcover/sup001_main_rank.jpg",
       "image_urls": [
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/roomy/cabinet/500cart_all/500cart_11g/p5-7/ymz1b40-rz004-0_gt01.jpg"
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/support-3shop/cabinet/cover/print-peachcover/sup001_main_rank.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/support-3shop/cabinet/cover/print-peachcover/2026_sup001_01.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/support-3shop/cabinet/cover/print-peachcover/2026_sup001_02.jpg"
       ],
-      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00qb0ln.z7eis6c8.g00qb0ln.z7eit2ac/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Froomy%2Fymz24dec12h02%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Froomy%2Fi%2F10017146%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f"
+      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00tqb5n.z7eis007.g00tqb5n.z7eit86e/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fsupport-3shop%2Fga-peach-kake-sl%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fsupport-3shop%2Fi%2F10000068%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f",
+      "price": 1680,
+      "rating": 4.59,
+      "review_count": 1075,
+      "furniture_category": "bed_bedding",
+      "furniture_category_label": "ベッド・寝具"
     },
     {
-      "post_id": "W20260830-05",
+      "post_id": "INT-20260830-21",
       "scheduled_at": "2026-08-30T21:00+09:00",
       "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "明日の準備を夜にやれば楽なのは知ってる。\n\n知ってるだけで毎朝バタバタしてる。"
+      "type": "product",
+      "content_format": "product",
+      "parent_text": "ちょっとした空間を有効に使いたくて、壁に飾れる細めの棚を想像してた。小物を飾るだけで夜の雰囲気も変わりそう。",
+      "hook_type": "layout|styling",
+      "selected_item_code": "isuke-shop:10000159",
+      "item_code": "isuke-shop:10000159",
+      "item_name": "【天然木 楽天1位】ウォールシェルフ 壁掛け棚 賃貸OK 白吊具 押しピン 石膏ボード 壁 棚 穴あけ不要 工具不要 奥行15cm 飾り棚 壁面収納 洗面所 トイレ 玄関 キッチン リビング 北欧 おしゃれ ウォールラック 収納棚 木製",
+      "child_text_base": "天然木×アイアンのウォールシェルフで、賃貸でも使いやすい白い吊具（画鋲タイプ）が付属するタイプがあるみたい。奥行きは約15cm。",
+      "image_url": "https://thumbnail.image.rakuten.co.jp/@0_mall/isuke-shop/cabinet/08741736/imgrc0129345906.jpg",
+      "image_urls": [
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/isuke-shop/cabinet/08741736/imgrc0129345906.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/isuke-shop/cabinet/10000026_01.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/isuke-shop/cabinet/10000026_02.jpg"
+      ],
+      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00tnman.z7eis139.g00tnman.z7eit08c/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fisuke-shop%2F10000026%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fisuke-shop%2Fi%2F10000159%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f",
+      "price": 1780,
+      "rating": 4.6,
+      "review_count": 5117,
+      "furniture_category": "storage_furniture",
+      "furniture_category_label": "収納家具"
     },
     {
-      "post_id": "W20260831-01",
+      "post_id": "INT-20260831-07",
       "scheduled_at": "2026-08-31T07:00+09:00",
       "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "月初だけ家計簿をちゃんとつけようと思う。\n\n問題は月末までその気持ちが続かないこと。"
+      "type": "interior_engagement",
+      "content_format": "interior_engagement",
+      "parent_text": "朝の妄想タイム。リビングにワンポイントでチェアを置くなら、A: ビビッドな差し色で元気にする派、B: くすみカラーでやわらかくまとめる派、どっちが気分？",
+      "hook_type": "comparison|question|preference"
     },
     {
-      "post_id": "W20260831-02",
+      "post_id": "INT-20260831-12",
       "scheduled_at": "2026-08-31T12:00+09:00",
       "status": "scheduled",
       "type": "product",
-      "parent_text": "旅行のポーチ、ひとつに全部詰めるから結局探すんだよね。\n\n4つに分けて、必要なやつだけ外せる方が絶対ラク。",
-      "selected_item_code": "goodlifestyle:10000070",
-      "child_text_base": "4つのメッシュポーチをまとめて吊るせる4in1タイプ。必要なポーチだけ取り外して単体でも使えます。",
+      "content_format": "product",
+      "parent_text": "スクロールしてて、この丸みのある多段ワゴン見つけた。キッチン横にちょこんと置いて、薬味とか小物をランダムに入れておきたいな〜って想像してたよ。",
+      "hook_type": "room_imagination|price_hook",
+      "selected_item_code": "vogue-interior:10007424",
+      "item_code": "vogue-interior:10007424",
+      "item_name": "収納ワゴン トロリーワゴン 回転式 5段 7段 キャスター付き 完成品 スリム 多段チェスト 引き出し デスクワゴン サイドワゴン ファイルワゴン オフィスワゴン コスメワゴン ネイルワゴン キッチンワゴン 調味料収納 隙間収納 韓国インテリア デスク下 デスク横 書類収納",
+      "child_text_base": "幅32×奥行42cmで5段は高さ72cm、7段は高さ94cmの2サイズ展開。カラバリが豊富でホワイトやくすみカラーもあるよ。価格は税込で14,980円。",
+      "image_url": "https://thumbnail.image.rakuten.co.jp/@0_mall/vogue-interior/cabinet/cabinet/wgh001-01.jpg",
       "image_urls": [
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/goodlifestyle/cabinet/trip/trip_000/trip-0003_00.jpg"
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/vogue-interior/cabinet/cabinet/wgh001-01.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/vogue-interior/cabinet/kitchen-wa/wg-h001r-20.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/vogue-interior/cabinet/kitchen-wa/wg-h001r-3.jpg"
       ],
-      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00uh0rn.z7eisa34.g00uh0rn.z7eit677/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fgoodlifestyle%2Fts-trip-0003%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fgoodlifestyle%2Fi%2F10000070%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f"
+      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00uczon.z7eisc26.g00uczon.z7eit466/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fvogue-interior%2F2409ss-mt-wg-h001002%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fvogue-interior%2Fi%2F10007424%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f",
+      "price": 14980,
+      "rating": 4.51,
+      "review_count": 41,
+      "furniture_category": "storage_furniture",
+      "furniture_category_label": "収納家具"
     },
     {
-      "post_id": "W20260831-03",
+      "post_id": "INT-20260831-15",
       "scheduled_at": "2026-08-31T15:00+09:00",
       "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "朝は涼しくなってきたのに、駅に着く頃には普通に汗かいてる。"
+      "type": "room_idea",
+      "content_format": "room_idea",
+      "parent_text": "窓辺の読書コーナー作りの話。背もたれ低めのチェアに高さのある観葉植物を後ろに置くと、視線が抜けて狭さを感じさせないよ。ランプは暖色でまとめると午後のまどろみ感が出る。",
+      "hook_type": "room_idea|layout|color|styling"
     },
     {
-      "post_id": "W20260831-04",
+      "post_id": "INT-20260831-18",
       "scheduled_at": "2026-08-31T18:00+09:00",
       "status": "scheduled",
       "type": "product",
-      "parent_text": "鏡とコスメ収納を別々に置く必要なかったんだ。\n\n開けたらライト付きミラーまで出てくるメイクボックス、基地みたいでいい。",
-      "selected_item_code": "e-kit:10042844",
-      "child_text_base": "LEDミラーを一体化したメイクボックス。3色調光に対応し、仕切り位置を変えてコスメを収納できます。",
+      "content_format": "product",
+      "parent_text": "大きめの本棚を探してたら、天井まで突っ張れる本棚が気になった。圧迫感なく壁面にすっきり収まる感じが目に浮かんだよ。",
+      "hook_type": "discovery|safety",
+      "selected_item_code": "kagudoki:10017347",
+      "item_code": "kagudoki:10017347",
+      "item_name": "11％OFFクーポン配布中 08/23(日)00:00〜 本棚 スリム 突っ張り 耐震 シェルフ【実験動画】 突っ張り耐震本棚 幅60 奥行19 ホワイト ブラウン 木製 サンゴ 薄型 60 スリム 大容量 キャビネット 壁面収納 壁面 おしゃれ 天井 つっぱり オープン 転倒防止",
+      "child_text_base": "天井高さに合わせて伸縮でき、最大で高さ260cmまで対応。耐震実験（起震車）で震度7相当の試験を公開しているモデルだよ。価格は24,999円。",
+      "image_url": "https://thumbnail.image.rakuten.co.jp/@0_mall/kagudoki/cabinet/kihon9/aku1003123.jpg",
       "image_urls": [
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/e-kit/cabinet/description/ek-lmb/ek-lmb_1.jpg"
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/kagudoki/cabinet/kihon9/aku1003123.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/kagudoki/cabinet/kihon9/tupari01img.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/kagudoki/cabinet/kihon9/tupari02img.jpg"
       ],
-      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00sw2cn.z7eis31b.g00sw2cn.z7eitc12/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fe-kit%2Fek-lmb%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fe-kit%2Fi%2F10042844%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f"
+      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00qdpbn.z7eisf0e.g00qdpbn.z7eitd69/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fkagudoki%2Faku1003123%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fkagudoki%2Fi%2F10017347%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f",
+      "price": 24999,
+      "rating": 4.41,
+      "review_count": 1731,
+      "furniture_category": "storage_furniture",
+      "furniture_category_label": "収納家具"
     },
     {
-      "post_id": "W20260831-05",
+      "post_id": "INT-20260831-21",
       "scheduled_at": "2026-08-31T21:00+09:00",
       "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "仕事中は帰ったらあれやろうと思う。\n\n帰宅すると全部『明日でいい』になる。"
+      "type": "product",
+      "content_format": "product",
+      "parent_text": "夜にふと見かけた白い猫脚のドレッサーデスク。ベッドルームの片隅に置いたら、ちょっとした非日常のスイート感が出そうだなって想像してたよ。",
+      "hook_type": "room_imagination|style",
+      "selected_item_code": "double-oo:10021750",
+      "item_code": "double-oo:10021750",
+      "item_name": "ドレッサー デスク チェア セット 鏡なし 机 コンパクト 白 勉強机 兼用 パソコンデスク つくえ メイク台 化粧台 北欧 チェスト 引き出し 猫脚 幅90cm おしゃれ 木製 ホワイト ドレッサーデスク デスクセット 姫系",
+      "child_text_base": "幅90cm、奥行45cmのコンパクトサイズで鏡なしのドレッサーセット。価格は59,990円で、引き出しとサイドチェスト付きの構成だよ。",
+      "image_url": "https://thumbnail.image.rakuten.co.jp/@0_mall/double-oo/cabinet/25/25-329-sp1-rank.jpg",
+      "image_urls": [
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/double-oo/cabinet/25/25-329-sp1-rank.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/double-oo/cabinet/25/image/25-048-21.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/double-oo/cabinet/25/image/25-048-5.jpg"
+      ],
+      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00riyjn.z7eis28d.g00riyjn.z7eit325/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fdouble-oo%2F25-329%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fdouble-oo%2Fi%2F10021750%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f",
+      "price": 59990,
+      "rating": 4.35,
+      "review_count": 40,
+      "furniture_category": "storage_furniture",
+      "furniture_category_label": "収納家具"
     },
     {
-      "post_id": "W20260901-01",
+      "post_id": "INT-20260901-07",
       "scheduled_at": "2026-09-01T07:00+09:00",
       "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "洗濯物を畳むところまではできる。\n\n収納する最後の5分だけ急に面倒。"
+      "type": "interior_engagement",
+      "content_format": "interior_engagement",
+      "parent_text": "朝の妄想タイム。リビングにワンポイントでチェアを置くなら、A: ビビッドな差し色で元気にする派、B: くすみカラーでやわらかくまとめる派、どっちが気分？",
+      "hook_type": "comparison|question|preference"
     },
     {
-      "post_id": "W20260901-02",
+      "post_id": "INT-20260901-12",
       "scheduled_at": "2026-09-01T12:00+09:00",
       "status": "scheduled",
       "type": "product",
-      "parent_text": "毛玉のせいで二軍になった服、これで復活するなら一回全部やりたい。\n\n6枚刃の電動、見てるだけでも気持ちよさそう。",
-      "selected_item_code": "catmart:10000129",
-      "child_text_base": "USB-C充電式の電動毛玉取り。6枚刃で、衣類に合わせて3段階の速度を切り替えられます。",
+      "content_format": "product",
+      "parent_text": "スクロールしてて見つけたウェーブミラー。波みたいなフチがふんわり可愛くて、玄関に置いたら出かけるときの気分がちょっと上がりそうだなーって想像してたよ。",
+      "hook_type": "discovery|room_imagination|price_hook",
+      "selected_item_code": "rugly:10008652",
+      "item_code": "rugly:10008652",
+      "item_name": "韓国風 ミラー ウェーブミラー 壁掛け 鏡 全身鏡 ライト付き 女優鏡 照明付き 姿見 玄関 オシャレ かわいい 北欧 サロン 美容室 韓国インテリア 雑貨 スタンドミラー スタンド ＜ミラー MONOA+ ウェーブ 2サイズ / 高さ150cm 高さ165cm＞",
+      "child_text_base": "高さは150cmと165cmの2サイズ展開で、壁掛けとスタンドの2通りに使えるのがポイントみたい。LED付きタイプも選べて、価格は14,900円付近だったよ。",
+      "image_url": "https://thumbnail.image.rakuten.co.jp/@0_mall/rugly/cabinet/kagu/r-dolphin5015b.jpg",
       "image_urls": [
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/catmart/cabinet/09284353/12112655/12399820/imgrc0119294861.jpg"
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/rugly/cabinet/kagu/r-dolphin5015b.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/rugly/cabinet/event_banner/review-present_img.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/rugly/cabinet/kagu/dolphin_led_info_01.jpg"
       ],
-      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00tylun.z7eis4d0.g00tylun.z7eit2a3/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fcatmart%2Fsd-2512ss1%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fcatmart%2Fi%2F10000129%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f"
+      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00sma8n.z7eisce5.g00sma8n.z7eit7d8/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Frugly%2F1029952%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Frugly%2Fi%2F10008652%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f",
+      "price": 14900,
+      "rating": 4.59,
+      "review_count": 39,
+      "furniture_category": "mirror_dresser",
+      "furniture_category_label": "ミラー・ドレッサー"
     },
     {
-      "post_id": "W20260901-03",
+      "post_id": "INT-20260901-15",
       "scheduled_at": "2026-09-01T15:00+09:00",
       "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "平日の夜、自由時間が始まった瞬間に眠くなるの納得いかない。"
+      "type": "room_idea",
+      "content_format": "room_idea",
+      "parent_text": "午後の窓辺を心地よくするコツ：背の低いチェアを置いて、後ろに高さのある観葉植物を一つ。視線が抜けて狭さが気にならないよ。ランプは暖色でまとめると午後のまどろみ感が出る。",
+      "hook_type": "room_idea|layout|color|styling"
     },
     {
-      "post_id": "W20260901-04",
+      "post_id": "INT-20260901-18",
       "scheduled_at": "2026-09-01T18:00+09:00",
       "status": "scheduled",
       "type": "product",
-      "parent_text": "耳かきにライトだけでも便利なのに、ピンセットまで光るのか。\n\n見えないまま勘でやるより、こういう方が分かりやすい。",
-      "selected_item_code": "forthon:10000732",
-      "child_text_base": "LEDライト付き耳かきとピンセットを含む11点セット。USB充電式で、5倍拡大鏡と収納ケースも付属します。",
+      "content_format": "product",
+      "parent_text": "スクロール中に見かけた白いドレッサーセット。女優ミラー感あるライト付きで、寝室の片隅にあるだけでちょっとホテルっぽい非日常になりそうだなって想像してた。",
+      "hook_type": "wishlist|room_imagination",
+      "selected_item_code": "ejtsuhan:10000002",
+      "item_code": "ejtsuhan:10000002",
+      "item_name": "クーポンあり ドレッサー 2点セット LEDライト付き 化粧台 収納 大量収納 ドレッサーテーブル 一面鏡ドレッサー ライト付きドレッサー チェスト タッチコントロール 化粧台 鏡台 プレゼント 組み立てタイプ ドレッサーおしゃれ",
+      "child_text_base": "全体サイズは幅80×奥行38×高さ130cm。ミラーのライトは昼光色・昼白色・電球色の3色切替ができる仕様で、価格は約11,980円だよ。",
+      "image_url": "https://thumbnail.image.rakuten.co.jp/@0_mall/ejtsuhan/cabinet/doresa/11273111/imgrc0135959457.jpg",
       "image_urls": [
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/forthon/cabinet/product/sku4/r511/r511_1.jpg"
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/ejtsuhan/cabinet/doresa/11273111/imgrc0135959457.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/ejtsuhan/cabinet/doresa/13762767/imgrc0138835994.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/ejtsuhan/cabinet/doresa/11273111/13759169/2.jpg"
       ],
-      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00siqmn.z7eis805.g00siqmn.z7eit8da/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fforthon%2Fr511%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fforthon%2Fi%2F10000732%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f"
+      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00ul3gn.z7eis7ee.g00ul3gn.z7eit026/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fejtsuhan%2Fdoresav01%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fejtsuhan%2Fi%2F10000002%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f",
+      "price": 11980,
+      "rating": 4.23,
+      "review_count": 635,
+      "furniture_category": "mirror_dresser",
+      "furniture_category_label": "ミラー・ドレッサー"
     },
     {
-      "post_id": "W20260901-05",
+      "post_id": "INT-20260901-21",
       "scheduled_at": "2026-09-01T21:00+09:00",
       "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "火曜の夜なのに、体感だけはもう週の後半。\n\nまだ半分にも届いてないのが一番つらい。"
+      "type": "product",
+      "content_format": "product",
+      "parent_text": "夜に見かけたシンプルな全身鏡。細めフレームのゴールドがベッドルームでさりげなく効いて、照明を落としたときの反射が幻想的になりそうって想像してた。",
+      "hook_type": "seasonal|night",
+      "selected_item_code": "miruo-ledmirror:10000013",
+      "item_code": "miruo-ledmirror:10000013",
+      "item_name": "【最大1500円OFF★マラソン先行】ミラー 全身鏡 姿見 鏡 スタンドミラー アンティークミラー 全身ミラー 壁掛け かがみ 高さ160cm 幅50cm おしゃれ 大型 鏡 大きい スタンド 玄関 飛散防止 ゴールド ブラック ホワイト シルバー リビング",
+      "child_text_base": "壁掛け・スタンド・立てかけの3Way仕様で、色は白・黒・銀・金の4色展開。お手頃価格で6,490円前後だったよ。",
+      "image_url": "https://thumbnail.image.rakuten.co.jp/@0_mall/miruo-ledmirror/cabinet/07203191/07556579/1_1_1.jpg",
+      "image_urls": [
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/miruo-ledmirror/cabinet/07203191/07556579/1_1_1.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/miruo-ledmirror/cabinet/06693221/rebyu.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/miruo-ledmirror/cabinet/07203191/07556579/0206-5.jpg"
+      ],
+      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00tg1sn.z7eis7ca.g00tg1sn.z7eit5ad/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fmiruo-ledmirror%2Fjj00728aaf%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fmiruo-ledmirror%2Fi%2F10000013%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f",
+      "price": 6490,
+      "rating": 4.41,
+      "review_count": 1353,
+      "furniture_category": "mirror_dresser",
+      "furniture_category_label": "ミラー・ドレッサー"
     },
     {
-      "post_id": "W20260902-01",
+      "post_id": "INT-20260902-07",
       "scheduled_at": "2026-09-02T07:00+09:00",
       "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "コンビニの新商品、買う予定なくても一回は棚の前で止まる。"
+      "type": "interior_engagement",
+      "content_format": "interior_engagement",
+      "parent_text": "朝の妄想タイム。リビングにワンポイントでチェアを置くなら、A: ビビッドな差し色で元気にする派、B: くすみカラーでやわらかくまとめる派、どっちが気分？",
+      "hook_type": "comparison|question|preference"
     },
     {
-      "post_id": "W20260902-02",
+      "post_id": "INT-20260902-12",
       "scheduled_at": "2026-09-02T12:00+09:00",
       "status": "scheduled",
       "type": "product",
-      "parent_text": "スティック掃除機、壁に立てかけて倒れるまでがセットになってる。\n\n床置きスタンドで定位置作るだけでよかった。",
-      "selected_item_code": "yamayuu:10016371",
-      "child_text_base": "towerの床置き型スティッククリーナースタンド。壁に穴を開けず、掃除機の定位置を作れます。",
+      "content_format": "product",
+      "parent_text": "スクロール中に見つけた透明感のあるガラスボトル。窓辺の光を通してキラッとする想像をしてたら、午後のティータイムがちょっと特別になりそうだな〜って思ったよ。",
+      "hook_type": "room_imagination|price_hook",
+      "selected_item_code": "iradowl:10000865",
+      "item_code": "iradowl:10000865",
+      "item_name": "【SUMMER★日替わりSALE】ディフューザーボトル ガラス 詰め替え容器 のみ リードディフューザー アロマボトル 花瓶 フラワーベース おしゃれ 透明感 クリア シンプル 韓国風 北欧 ナチュラル インテリア雑貨 プレゼント ギフト ルームフレグランス",
+      "child_text_base": "A・Bタイプは高さ14cmで容量130ml、C・Dタイプは高さ10.5cmで容量120ml。価格は税込2,350円だよ。",
+      "image_url": "https://thumbnail.image.rakuten.co.jp/@0_mall/iradowl/cabinet/pic/merch/ra0038004_00.jpg",
       "image_urls": [
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/yamayuu/cabinet/01023319/02707641/03951765/yj-03273_thum00.jpg"
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/iradowl/cabinet/pic/merch/ra0038004_00.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/iradowl/cabinet/pic/merch/ra0038004_10.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/iradowl/cabinet/pic/merch/ra0038004_11.jpg"
       ],
-      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00qn4on.z7eis9a7.g00qn4on.z7eit285/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fyamayuu%2Fyj-03273%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fyamayuu%2Fi%2F10016371%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f"
+      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00tgpon.z7eisd25.g00tgpon.z7eit65d/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Firadowl%2Fra0038004%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Firadowl%2Fi%2F10000865%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f",
+      "price": 2350,
+      "rating": 4.6,
+      "review_count": 35,
+      "furniture_category": "interior_decor",
+      "furniture_category_label": "インテリア雑貨"
     },
     {
-      "post_id": "W20260902-03",
+      "post_id": "INT-20260902-15",
       "scheduled_at": "2026-09-02T15:00+09:00",
       "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "水曜の15時、『今週まだ半分か』と『もう半分か』が同時に来る。"
+      "type": "room_idea",
+      "content_format": "room_idea",
+      "parent_text": "午後の窓辺を心地よくするコツ：背の低いチェアを置いて、後ろに高さのある観葉植物を一つ。視線が抜けて狭さが気にならないし、ランプの光を当てると奥行きが出るよ。",
+      "hook_type": "room_idea|layout|color|styling"
     },
     {
-      "post_id": "W20260902-04",
+      "post_id": "INT-20260902-18",
       "scheduled_at": "2026-09-02T18:00+09:00",
       "status": "scheduled",
       "type": "product",
-      "parent_text": "旅行先の洗面台に全部並べるの、もうやめたい。\n\nポーチごと吊るして、必要な段だけ外せるのかなり良くない？",
-      "selected_item_code": "auc-risecreation:10005122",
-      "child_text_base": "3つのメッシュポーチを取り外せる吊り下げ式トラベルポーチ。展開時は全長約72cmです。",
+      "content_format": "product",
+      "parent_text": "夜のデスク横にちょこんと置きたい、木目調の小さな目覚まし時計。見た目がほっとする温かさで、ベッドサイドに馴染むな〜って想像してたよ。",
+      "hook_type": "discovery|room_imagination",
+      "selected_item_code": "golwis:10002091",
+      "item_code": "golwis:10002091",
+      "item_name": "目覚まし時計 大音量 置き時計 木目調 おしゃれ 小さい 北欧 新生活 母の日 プレゼント 男性 女性 置時計 アナログ時計 コンパクト 軽量 静音 コードレス 電池式 シンプル かわいい 子供 韓国 ライト ギフト 贈り物",
+      "child_text_base": "サイズは高さ11.5×幅7.5×奥行5.5cm、乾電池式（単3マンガン電池）で大音量アラームとライト機能付きだよ。価格は2,580円。",
+      "image_url": "https://thumbnail.image.rakuten.co.jp/@0_mall/golwis/cabinet/clock1/clock0045/clock0045-1.jpg",
       "image_urls": [
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/auc-risecreation/cabinet/product/top/r0499_01a.jpg"
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/golwis/cabinet/clock1/clock0045/clock0045-1.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/golwis/cabinet/tj/r-img_rr/0/clock0045.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/golwis/cabinet/tj/ir-img_ir/0/clock0045.jpg"
       ],
-      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00s0p3n.z7eisfb9.g00s0p3n.z7eit8f0/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fauc-risecreation%2Fr0499%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fauc-risecreation%2Fi%2F10005122%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f"
+      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00tom4n.z7eisd3c.g00tom4n.z7eit1d4/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fgolwis%2Fclock0045%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fgolwis%2Fi%2F10002091%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f",
+      "price": 2580,
+      "rating": 4.35,
+      "review_count": 48,
+      "furniture_category": "interior_decor",
+      "furniture_category_label": "インテリア雑貨"
     },
     {
-      "post_id": "W20260902-05",
+      "post_id": "INT-20260902-21",
       "scheduled_at": "2026-09-02T21:00+09:00",
       "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "朝、服を決める時間が長い日はだいたい最初に選んだ服に戻る。"
-    },
-    {
-      "post_id": "W20260903-01",
-      "scheduled_at": "2026-09-03T07:00+09:00",
-      "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "冷凍庫、整理した直後だけは何が入ってるか全部把握してる。"
-    },
-    {
-      "post_id": "W20260903-02",
-      "scheduled_at": "2026-09-03T12:00+09:00",
-      "status": "scheduled",
       "type": "product",
-      "parent_text": "ポーチの中にポーチを入れて探してるの、そろそろ終わりにしたい。\n\n4連で中身が見えるなら、場所を覚えなくていい。",
-      "selected_item_code": "goodcarsstyle:10000312",
-      "child_text_base": "4連メッシュポーチをまとめて吊るせるタイプ。各ポーチは取り外して単体でも使えます。",
+      "content_format": "product",
+      "parent_text": "夜に合いそうな掛け時計を探してたら、木目のやさしい雰囲気の時計を見つけた。暗めの照明でもすっと馴染んでくれそうな雰囲気だな〜って思ってたよ。",
+      "hook_type": "discovery|color",
+      "selected_item_code": "mirailead:10000003",
+      "item_code": "mirailead:10000003",
+      "item_name": "【最大500円クーポンあり】【楽天1位】電波時計 静音 おしゃれ 掛け時計 ステップ秒針 連続秒針 電波 壁掛け時計 軽量 北欧 壁掛け かべ掛け時計 かわいい 音がしない 見やすい 軽い シンプル 大きい アナログ オシャレ 木目調 ガラス付き選べる 父の日",
+      "child_text_base": "直径は30cm／35cmのサイズ展開があり、静音設計でカチカチ音が気になりにくいタイプ。価格は1,320円からのラインナップだよ。",
+      "image_url": "https://thumbnail.image.rakuten.co.jp/@0_mall/mirailead/cabinet/71030.jpg",
       "image_urls": [
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/goodcarsstyle/cabinet/trip/trip_000/trip-0003_00.jpg"
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/mirailead/cabinet/71030.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/mirailead/cabinet/12918889/imgrc0125417890.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/mirailead/cabinet/12918889/imgrc0125417892.jpg"
       ],
-      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00u3yjn.z7eisdca.g00u3yjn.z7eit52f/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fgoodcarsstyle%2Fts-travel-0003%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fgoodcarsstyle%2Fi%2F10000312%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f"
-    },
-    {
-      "post_id": "W20260903-03",
-      "scheduled_at": "2026-09-03T15:00+09:00",
-      "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "木曜の午後、明日さえ終われば休みだと思うと急に少しだけ強くなる。"
-    },
-    {
-      "post_id": "W20260903-04",
-      "scheduled_at": "2026-09-03T18:00+09:00",
-      "status": "scheduled",
-      "type": "product",
-      "parent_text": "使い捨てのホットアイマスク、毎回なくなるのが地味に嫌だった。\n\n充電して繰り返し使えるなら、寝る前の定位置に置いとける。",
-      "selected_item_code": "h-village:10000024",
-      "child_text_base": "USB-C充電式のホットアイマスク。シルク100％のカバーを使い、1回30分で2〜3回使える仕様です。",
-      "image_urls": [
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/h-village/cabinet/t01/cm-se-01_ht01.jpg"
-      ],
-      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00u965n.z7eisdf5.g00u965n.z7eitb42/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fh-village%2Fcm-se-01%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fh-village%2Fi%2F10000024%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f"
-    },
-    {
-      "post_id": "W20260903-05",
-      "scheduled_at": "2026-09-03T21:00+09:00",
-      "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "木曜の夜は、寝る前からもう週末のことを考えてる。"
-    },
-    {
-      "post_id": "W20260904-01",
-      "scheduled_at": "2026-09-04T07:00+09:00",
-      "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "出かける準備は面倒なのに、出たら出たで普通に楽しい。"
-    },
-    {
-      "post_id": "W20260904-02",
-      "scheduled_at": "2026-09-04T12:00+09:00",
-      "status": "scheduled",
-      "type": "product",
-      "parent_text": "焼き魚のためにグリルを洗うのが面倒で避けてた。\n\nレンジで焼き目まで付けられるなら、平日の魚料理はこれでいい。",
-      "selected_item_code": "livinza:10010346",
-      "child_text_base": "電子レンジで焼く・炒める・蒸す・茹でる・炊く・煮るの6通りに対応。セラミックで加熱して焼き目も付けられる調理器です。",
-      "image_urls": [
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/livinza/cabinet/baeworld/mwcp-p1_11_1.jpg"
-      ],
-      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00q0tjn.z7eis5ad.g00q0tjn.z7eite27/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Flivinza%2F10010346%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Flivinza%2Fi%2F10010346%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f"
-    },
-    {
-      "post_id": "W20260904-03",
-      "scheduled_at": "2026-09-04T15:00+09:00",
-      "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "金曜の午後、今日中にやることと来週でいいことの仕分けが始まる。"
-    },
-    {
-      "post_id": "W20260904-04",
-      "scheduled_at": "2026-09-04T18:00+09:00",
-      "status": "scheduled",
-      "type": "product",
-      "parent_text": "朝いちばん困るの、使い終わったヘアアイロンの行き先かもしれない。\n\n熱いまま収納できて吊るせるなら、洗面台に放置しなくて済む。",
-      "selected_item_code": "stellashop:10004912",
-      "child_text_base": "内側は耐熱温度300℃の素材。コード用ポケットと吊り下げループ付きで、約90gのヘアアイロンポーチです。",
-      "image_urls": [
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/stellashop/cabinet/image04/w-ch009.jpg"
-      ],
-      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00tbaun.z7eis88d.g00tbaun.z7eitf12/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fstellashop%2Fw-ch2209%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fstellashop%2Fi%2F10004912%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f"
-    },
-    {
-      "post_id": "W20260904-05",
-      "scheduled_at": "2026-09-04T21:00+09:00",
-      "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "作り置きした日は未来の自分に勝った気がする。"
-    },
-    {
-      "post_id": "W20260905-01",
-      "scheduled_at": "2026-09-05T07:00+09:00",
-      "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "土曜の朝、目覚ましなしで起きるとそれだけで勝った気がする。"
-    },
-    {
-      "post_id": "W20260905-02",
-      "scheduled_at": "2026-09-05T12:00+09:00",
-      "status": "scheduled",
-      "type": "product",
-      "parent_text": "衣替えで一番場所を取るの、服より布団かもしれない。\n\n次のシーズンまで使わないなら、圧縮して主役の席から降りてもらおう。",
-      "selected_item_code": "sixspace:10001661",
-      "child_text_base": "衣類や寝具に使える圧縮収納袋。M・Lサイズがあり、かさばる季節物を圧縮して保管できます。",
-      "image_urls": [
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/sixspace/cabinet/11877432/11877441/dbjj-main001.jpg"
-      ],
-      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00tkm8n.z7eisabd.g00tkm8n.z7eit31c/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fsixspace%2F80009048%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fsixspace%2Fi%2F10001661%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f"
-    },
-    {
-      "post_id": "W20260905-03",
-      "scheduled_at": "2026-09-05T15:00+09:00",
-      "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "昼休み、あと5分あると思ってスマホを見たら5分だけ消える。"
-    },
-    {
-      "post_id": "W20260905-04",
-      "scheduled_at": "2026-09-05T18:00+09:00",
-      "status": "scheduled",
-      "type": "product",
-      "parent_text": "寝る前に目を温めたいけど、使い捨てを毎回買うのは面倒。\n\n充電式で温度まで選べるなら、もう寝床の定番にできる。",
-      "selected_item_code": "excitech:10000345",
-      "child_text_base": "シルク100％カバーを使った充電式ホットアイマスク。35℃・44℃・48℃の3段階温度調節と30分自動オフに対応しています。",
-      "image_urls": [
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/excitech/cabinet/relx/eyemask/hoteyemask_th04.jpg"
-      ],
-      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00stven.z7eis2c6.g00stven.z7eita1a/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fexcitech%2Frelx-eyemask-001%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fexcitech%2Fi%2F10000345%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f"
-    },
-    {
-      "post_id": "W20260905-05",
-      "scheduled_at": "2026-09-05T21:00+09:00",
-      "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "帰宅して靴を脱いだ瞬間、その日の外出は完全終了。"
-    },
-    {
-      "post_id": "W20260906-01",
-      "scheduled_at": "2026-09-06T07:00+09:00",
-      "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "日曜の朝はまだ完全に休日。\n\n仕事のことは夕方まで入ってこなくていい。"
-    },
-    {
-      "post_id": "W20260906-02",
-      "scheduled_at": "2026-09-06T12:00+09:00",
-      "status": "scheduled",
-      "type": "product",
-      "parent_text": "バッグを替えるたびに小物を一個ずつ移すの、もう引っ越し作業なんよ。\n\n中身ごと持ち上げられるなら、それで終わり。",
-      "selected_item_code": "annekor:10000006",
-      "child_text_base": "小物をまとめられるフェルト製バッグインバッグ。約120gで、底板と複数ポケット付きです。",
-      "image_urls": [
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/annekor/cabinet/2021/ads_003/imgrc0093702138.jpg"
-      ],
-      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00u3dyn.z7eise31.g00u3dyn.z7eit40b/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fannekor%2Fads_003%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fannekor%2Fi%2F10000006%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f"
-    },
-    {
-      "post_id": "W20260906-03",
-      "scheduled_at": "2026-09-06T15:00+09:00",
-      "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "朝ごはんをちゃんと食べた日は生活が整った気がする。\n\nその後は別に整ってない。"
-    },
-    {
-      "post_id": "W20260906-04",
-      "scheduled_at": "2026-09-06T18:00+09:00",
-      "status": "scheduled",
-      "type": "product",
-      "parent_text": "レンジ調理器なのに、取っ手が猫で持ち手が肉球なのずるい。\n\n見た目だけじゃなく魚も肉も焼けるなら、普通に戦力。",
-      "selected_item_code": "seventreasure:10000323",
-      "child_text_base": "電子レンジ専用の猫型レンジパン。特殊素材でマイクロ波を熱に変え、焼く・炒める・茹でる・煮る・蒸す・炊くなどに使えます。",
-      "image_urls": [
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/seventreasure/cabinet/11973760/sv-508-2106.jpg"
-      ],
-      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00ukuvn.z7eisbd4.g00ukuvn.z7eit7f9/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fseventreasure%2Fsv-508%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fseventreasure%2Fi%2F10000323%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f"
-    },
-    {
-      "post_id": "W20260906-05",
-      "scheduled_at": "2026-09-06T21:00+09:00",
-      "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "ネットで買う時は何日も迷うのに、店頭だと勢いで買えるの不思議。"
-    },
-    {
-      "post_id": "W20260907-01",
-      "scheduled_at": "2026-09-07T07:00+09:00",
-      "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "9月になった瞬間、暑くても秋のものを見たくなる。"
-    },
-    {
-      "post_id": "W20260907-02",
-      "scheduled_at": "2026-09-07T12:00+09:00",
-      "status": "scheduled",
-      "type": "product",
-      "parent_text": "旅行の荷物、帰りだけ増える前提で詰めた方がいい。\n\n服をファスナーで圧縮できれば、お土産の場所を最初から残せる。",
-      "selected_item_code": "stela1:10000006",
-      "child_text_base": "ファスナーで圧縮する両面収納タイプのトラベルポーチ。S・M・Lがあり、衣類を分けながら収納できます。",
-      "image_urls": [
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/stela1/cabinet/11574206/rakuten_travel_main.jpg"
-      ],
-      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00ucq7n.z7eis372.g00ucq7n.z7eit3a7/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fstela1%2F10000006%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fstela1%2Fi%2F10000006%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f"
-    },
-    {
-      "post_id": "W20260907-03",
-      "scheduled_at": "2026-09-07T15:00+09:00",
-      "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "衣替えしようとして、去年一度も着なかった服と再会する。"
-    },
-    {
-      "post_id": "W20260907-04",
-      "scheduled_at": "2026-09-07T18:00+09:00",
-      "status": "scheduled",
-      "type": "product",
-      "parent_text": "ご飯を冷凍するなら、ラップを毎回切るところからやめたい。\n\n一膳ずつ容器に入れて積んでおけば、食べる時はそのままレンジ。",
-      "selected_item_code": "shopmarna:10006515",
-      "child_text_base": "一膳約180g用の冷凍ごはん容器5個セット。ふたをしたまま電子レンジ加熱でき、食洗機にも対応しています。",
-      "image_urls": [
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/shopmarna/cabinet/item_top/x4/x110.jpg"
-      ],
-      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00qtg2n.z7eis2dc.g00qtg2n.z7eitd7a/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fshopmarna%2Fx110%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fshopmarna%2Fi%2F10006515%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f"
-    },
-    {
-      "post_id": "W20260907-05",
-      "scheduled_at": "2026-09-07T21:00+09:00",
-      "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "夜に涼しくなると、急に温かい飲み物の選択肢が戻ってくる。"
-    },
-    {
-      "post_id": "W20260908-01",
-      "scheduled_at": "2026-09-08T07:00+09:00",
-      "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "火曜の朝、昨日一日働いただけなのに体感はもう週の真ん中。"
-    },
-    {
-      "post_id": "W20260908-02",
-      "scheduled_at": "2026-09-08T12:00+09:00",
-      "status": "scheduled",
-      "type": "product",
-      "parent_text": "ホテルの洗面台を自宅化するの、荷ほどきした瞬間から始まる。\n\nポーチを開いて吊るすだけなら、帰る時もそのまま閉じればいい。",
-      "selected_item_code": "luckyhill:10000112",
-      "child_text_base": "フックで吊り下げて開いたまま使えるトラベルポーチ。コスメや洗面用品をまとめて持ち運べます。",
-      "image_urls": [
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/luckyhill/cabinet/nz-42tc5.jpg"
-      ],
-      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00u05cn.z7eis444.g00u05cn.z7eit302/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fluckyhill%2Fnz-42tc%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fluckyhill%2Fi%2F10000112%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f"
-    },
-    {
-      "post_id": "W20260908-03",
-      "scheduled_at": "2026-09-08T15:00+09:00",
-      "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "休日前は夜更かししたいのに、こういう日に限って眠い。"
-    },
-    {
-      "post_id": "W20260908-04",
-      "scheduled_at": "2026-09-08T18:00+09:00",
-      "status": "scheduled",
-      "type": "product",
-      "parent_text": "肉を少し切るだけで包丁とまな板を出すの、洗い物の方が大仕事。\n\nキッチンバサミで済む日は、最初からハサミでいい。",
-      "selected_item_code": "k-kitchen:10081138",
-      "child_text_base": "貝印のカーブ刃キッチンバサミ。食材を切り分けやすい形で、食洗機にも対応しています。",
-      "image_urls": [
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/k-kitchen/cabinet/tasya93/9181196.jpg"
-      ],
-      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00qzr8n.z7eisc64.g00qzr8n.z7eitb88/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fk-kitchen%2F9181196%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fk-kitchen%2Fi%2F10081138%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f"
-    },
-    {
-      "post_id": "W20260908-05",
-      "scheduled_at": "2026-09-08T21:00+09:00",
-      "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "火曜の夜に部屋を片づけると、週の残りを立て直した気分になる。"
-    },
-    {
-      "post_id": "W20260909-01",
-      "scheduled_at": "2026-09-09T07:00+09:00",
-      "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "水曜まで来ると『半分』という言葉だけを頼りにする。"
-    },
-    {
-      "post_id": "W20260909-02",
-      "scheduled_at": "2026-09-09T12:00+09:00",
-      "status": "scheduled",
-      "type": "product",
-      "parent_text": "寝る前のスマホをやめる意志より、先に視界を閉じた方が早い気がする。\n\nシルクのアイマスクなら、寝る合図として置いておきたい。",
-      "selected_item_code": "yukinosizuku:10010750",
-      "child_text_base": "シルク100％生地のアイマスク。ベルトは長さを調整でき、頭まわりに合わせて装着できます。",
-      "image_urls": [
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/yukinosizuku/cabinet/10659028/imgrc0111952597.jpg"
-      ],
-      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00tjb1n.z7eis6c0.g00tjb1n.z7eit537/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fyukinosizuku%2Fn-eyemask-1%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fyukinosizuku%2Fi%2F10010750%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f"
-    },
-    {
-      "post_id": "W20260909-03",
-      "scheduled_at": "2026-09-09T15:00+09:00",
-      "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "買い物から帰って冷蔵庫に入れる作業、地味に第二ラウンド。"
-    },
-    {
-      "post_id": "W20260909-04",
-      "scheduled_at": "2026-09-09T18:00+09:00",
-      "status": "scheduled",
-      "type": "product",
-      "parent_text": "一膳分でも多い日に、冷凍ご飯だけ毎回サイズが合わない。\n\n100g用があるなら、小盛り派は最初からこっちでいい。",
-      "selected_item_code": "shimoyama-onlineshop:10002362",
-      "child_text_base": "約100gの小盛りご飯用・4個セット。すのこで余分な水分を落とし、ふたをしたまま電子レンジ加熱できます。食洗機対応です。",
-      "image_urls": [
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/shimoyama-onlineshop/cabinet/10044382/imgrc0077699494.jpg"
-      ],
-      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00ssg5n.z7eis545.g00ssg5n.z7eit1d3/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fshimoyama-onlineshop%2F2308mn144-set%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fshimoyama-onlineshop%2Fi%2F10002362%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f"
-    },
-    {
-      "post_id": "W20260909-05",
-      "scheduled_at": "2026-09-09T21:00+09:00",
-      "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "水曜の夜は予定を増やさない。\n\n後半戦のために何もしない時間も必要。"
-    },
-    {
-      "post_id": "W20260910-01",
-      "scheduled_at": "2026-09-10T07:00+09:00",
-      "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "仕事用バッグ、週末に中身を出すと謎のレシートが必ず出てくる。"
-    },
-    {
-      "post_id": "W20260910-02",
-      "scheduled_at": "2026-09-10T12:00+09:00",
-      "status": "scheduled",
-      "type": "product",
-      "parent_text": "ポーチを開けて、さらに中を探す時間が一番ムダ。\n\n中身が見える3サイズに分ければ、探す前に見つかる。",
-      "selected_item_code": "liviewstore:10003507",
-      "child_text_base": "L・M・Sのメッシュポーチ3点セット。合計約40gで、中身を見ながら用途別に仕分けできます。",
-      "image_urls": [
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/liviewstore/cabinet/zk/010-019/zk-select017n.jpg"
-      ],
-      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00u4sbn.z7eis470.g00u4sbn.z7eit825/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fliviewstore%2Fzk-select017%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fliviewstore%2Fi%2F10003507%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f"
-    },
-    {
-      "post_id": "W20260910-03",
-      "scheduled_at": "2026-09-10T15:00+09:00",
-      "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "木曜の午後、明日の自分に回せる仕事が急に魅力的に見える。"
-    },
-    {
-      "post_id": "W20260910-04",
-      "scheduled_at": "2026-09-10T18:00+09:00",
-      "status": "scheduled",
-      "type": "product",
-      "parent_text": "炒めながら胡椒を足したい時、両手が必要なの地味に不便。\n\n片手でボタンを押すだけなら、料理中はこっちが自然。",
-      "selected_item_code": "n-raffine:10010706",
-      "child_text_base": "上部のボタンで電動挽きできる充電式ミル。約4×4×14cmのミニサイズで、USB Type-C充電に対応しています。",
-      "image_urls": [
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/n-raffine/cabinet/07848197/nui.jpg"
-      ],
-      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00py1en.z7eis874.g00py1en.z7eit731/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fn-raffine%2Frh-7941%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fn-raffine%2Fi%2F10010706%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f"
-    },
-    {
-      "post_id": "W20260910-05",
-      "scheduled_at": "2026-09-10T21:00+09:00",
-      "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "木曜まで来たら、あと一日だけで週末だと思いたい。"
+      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00udkvn.z7eisc53.g00udkvn.z7eit3fb/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fmirailead%2Ftk-30%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fmirailead%2Fi%2F10000003%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f",
+      "price": 1320,
+      "rating": 4.23,
+      "review_count": 2710,
+      "furniture_category": "interior_decor",
+      "furniture_category_label": "インテリア雑貨"
     }
   ],
   "expired": []
