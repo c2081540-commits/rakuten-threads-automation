@@ -4,82 +4,20 @@ import requests
 
 API_URL = "https://openapi.rakuten.co.jp/ichibams/api/IchibaItem/Search/20260701"
 
-# 投稿者ペルソナの商品配分に対応する検索群。
-# 各カテゴリを最後まで検索し、収納・キッチンだけに偏らせない。
+# 家具・インテリア特化アカウントの商品候補検索群。
+# 見るだけでも楽しい家具と、実際に買いやすい小物・寝具を混ぜる。
 SEARCH_GROUPS = [
-    {
-        "id": "after_work_kitchen",
-        "label": "仕事終わり・キッチン",
-        "weekly_slots": 3,
-        "keywords": [
-            "レンジ調理器 一人暮らし",
-            "冷凍ご飯 容器",
-            "キッチン 時短 便利グッズ",
-            "食器洗い 便利グッズ",
-        ],
-    },
-    {
-        "id": "beauty_bath",
-        "label": "美容・お風呂",
-        "weekly_slots": 3,
-        "keywords": [
-            "吸水 ヘアタオル",
-            "ドライヤー 収納",
-            "ヘアアイロン 収納 ポーチ",
-            "コスメ 収納 ポーチ",
-        ],
-    },
-    {
-        "id": "morning_fashion_bag",
-        "label": "朝の支度・服・バッグ",
-        "weekly_slots": 2,
-        "keywords": [
-            "バッグインバッグ レディース",
-            "アクセサリー 収納 持ち運び",
-            "衣類スチーマー コンパクト",
-            "毛玉取り 電動",
-        ],
-    },
-    {
-        "id": "storage_cleaning",
-        "label": "収納・掃除",
-        "weekly_slots": 2,
-        "keywords": [
-            "一人暮らし 収納 便利グッズ",
-            "コード 収納 おしゃれ",
-            "ランドリー 省スペース",
-            "掃除 便利グッズ コンパクト",
-        ],
-    },
-    {
-        "id": "travel_outing",
-        "label": "旅行・外出・推し活",
-        "weekly_slots": 2,
-        "keywords": [
-            "旅行 圧縮ポーチ",
-            "吊り下げ トラベルポーチ",
-            "折りたたみ傘 軽量 レディース",
-            "推し活 ポーチ 収納",
-        ],
-    },
-    {
-        "id": "sleep_relax",
-        "label": "睡眠・リラックス",
-        "weekly_slots": 2,
-        "keywords": [
-            "アイマスク 睡眠",
-            "シルク 枕カバー",
-            "ホットアイマスク 充電式",
-            "リラックス グッズ デスク",
-        ],
-    },
+    {"id":"sofa_chair","label":"ソファ・チェア","weekly_slots":4,"keywords":["ソファ おしゃれ 北欧","一人掛け チェア おしゃれ","ダイニングチェア 北欧","韓国 インテリア チェア"]},
+    {"id":"table_desk","label":"テーブル・デスク","weekly_slots":4,"keywords":["ローテーブル おしゃれ","サイドテーブル 韓国 インテリア","ダイニングテーブル 北欧","デスク おしゃれ 一人暮らし"]},
+    {"id":"lighting","label":"照明","weekly_slots":3,"keywords":["フロアライト おしゃれ","テーブルライト 韓国 インテリア","ペンダントライト 北欧","間接照明 ホテルライク"]},
+    {"id":"rug_curtain","label":"ラグ・カーテン","weekly_slots":3,"keywords":["ラグ おしゃれ 北欧","ラグ 韓国 インテリア","カーテン おしゃれ ナチュラル","カーペット 一人暮らし おしゃれ"]},
+    {"id":"bed_bedding","label":"ベッド・寝具","weekly_slots":3,"keywords":["ベッドフレーム おしゃれ","ベッド 一人暮らし 韓国","掛け布団カバー おしゃれ","ベッドカバー ホテルライク"]},
+    {"id":"storage_furniture","label":"収納家具","weekly_slots":3,"keywords":["キャビネット おしゃれ","シェルフ 北欧 おしゃれ","テレビボード おしゃれ","チェスト 韓国 インテリア"]},
+    {"id":"mirror_dresser","label":"ミラー・ドレッサー","weekly_slots":2,"keywords":["全身ミラー おしゃれ","ウェーブミラー 韓国","ドレッサー おしゃれ コンパクト","卓上ミラー インテリア"]},
+    {"id":"interior_decor","label":"インテリア雑貨","weekly_slots":3,"keywords":["フラワーベース おしゃれ","クッション 北欧 おしゃれ","壁掛け時計 おしゃれ","インテリア雑貨 韓国"]},
 ]
 
-DEFAULT_KEYWORDS = [
-    keyword
-    for group in SEARCH_GROUPS
-    for keyword in group["keywords"]
-]
+DEFAULT_KEYWORDS = [keyword for group in SEARCH_GROUPS for keyword in group["keywords"]]
 
 
 def _credentials():
@@ -100,10 +38,7 @@ def normalize_item(wrapper):
     image_urls = []
     seen_urls = set()
     for image in images:
-        if isinstance(image, dict):
-            url = image.get("imageUrl")
-        else:
-            url = str(image)
+        url = image.get("imageUrl") if isinstance(image, dict) else str(image)
         if not url:
             continue
         normalized_url = url.split("?")[0]
@@ -111,22 +46,13 @@ def normalize_item(wrapper):
             continue
         seen_urls.add(normalized_url)
         image_urls.append(normalized_url)
-
     return {
-        "itemCode": item.get("itemCode", ""),
-        "itemName": item.get("itemName", ""),
-        "itemCaption": item.get("itemCaption", ""),
-        "itemPrice": int(item.get("itemPrice") or 0),
-        "reviewAverage": float(item.get("reviewAverage") or 0),
-        "reviewCount": int(item.get("reviewCount") or 0),
-        "affiliateUrl": item.get("affiliateUrl", ""),
-        "itemUrl": item.get("itemUrl", ""),
-        "shopName": item.get("shopName", ""),
-        "genreId": str(item.get("genreId", "")),
-        # 候補取得段階では楽天APIが返した画像を捨てない。
-        # 実投稿側の枚数上限とは分離し、後段で意味のある画像だけ選べるようにする。
-        "imageUrls": image_urls,
-        "imageCount": len(image_urls),
+        "itemCode": item.get("itemCode", ""), "itemName": item.get("itemName", ""),
+        "itemCaption": item.get("itemCaption", ""), "itemPrice": int(item.get("itemPrice") or 0),
+        "reviewAverage": float(item.get("reviewAverage") or 0), "reviewCount": int(item.get("reviewCount") or 0),
+        "affiliateUrl": item.get("affiliateUrl", ""), "itemUrl": item.get("itemUrl", ""),
+        "shopName": item.get("shopName", ""), "genreId": str(item.get("genreId", "")),
+        "imageUrls": image_urls, "imageCount": len(image_urls),
     }
 
 
@@ -134,81 +60,50 @@ def search_items(keyword, page=1, hits=30, sort="-reviewCount", timeout=20):
     keyword = " ".join(str(keyword).split())[:128]
     if not keyword:
         raise ValueError("楽天APIの検索キーワードが空です。")
-    params = {
-        **_credentials(),
-        "keyword": keyword,
-        "hits": hits,
-        "page": page,
-        "sort": sort,
-        "format": "json",
-    }
-
+    params = {**_credentials(), "keyword": keyword, "hits": hits, "page": page, "sort": sort, "format": "json"}
     for attempt in range(2):
         response = requests.get(API_URL, params=params, timeout=timeout)
         if response.status_code == 429 and attempt == 0:
             retry_after = response.headers.get("Retry-After")
-            try:
-                wait_seconds = max(1.0, min(float(retry_after), 5.0)) if retry_after else 2.0
-            except (TypeError, ValueError):
-                wait_seconds = 2.0
+            try: wait_seconds = max(1.0, min(float(retry_after), 5.0)) if retry_after else 2.0
+            except (TypeError, ValueError): wait_seconds = 2.0
             print(f"楽天API 429: {wait_seconds:g}秒待って1回だけ再試行します。")
-            time.sleep(wait_seconds)
-            continue
+            time.sleep(wait_seconds); continue
         if response.status_code != 200:
-            raise RuntimeError(
-                f"楽天API通信エラー HTTP {response.status_code}: {response.text[:1000]}"
-            )
+            raise RuntimeError(f"楽天API通信エラー HTTP {response.status_code}: {response.text[:1000]}")
         data = response.json()
-        if "error" in data:
-            raise RuntimeError(f"楽天APIレスポンスエラー: {data}")
+        if "error" in data: raise RuntimeError(f"楽天APIレスポンスエラー: {data}")
         return [normalize_item(item) for item in data.get("Items", [])]
-
     raise RuntimeError("楽天API 429: 1回再試行してもレート制限が解除されませんでした。")
 
 
 def fetch_candidate_groups(search_groups=None, pages_per_keyword=1):
-    """全検索カテゴリを省略せずに取得し、商品へ検索カテゴリを付与する。"""
     groups = search_groups or SEARCH_GROUPS
-    grouped = {}
-    request_count = 0
-
+    grouped = {}; request_count = 0
     for group in groups:
         collected = {}
         for keyword in group["keywords"]:
             for page in range(1, pages_per_keyword + 1):
-                if request_count > 0:
-                    time.sleep(1.1)
-                items = search_items(keyword=keyword, page=page, hits=30)
-                request_count += 1
+                if request_count > 0: time.sleep(1.1)
+                items = search_items(keyword=keyword, page=page, hits=30); request_count += 1
                 for item in items:
                     code = item.get("itemCode")
-                    if not code or code in collected:
-                        continue
-                    enriched = dict(item)
-                    enriched["candidateCategory"] = group["id"]
-                    enriched["candidateCategoryLabel"] = group["label"]
-                    enriched["matchedKeyword"] = keyword
+                    if not code or code in collected: continue
+                    enriched = dict(item); enriched["candidateCategory"] = group["id"]
+                    enriched["candidateCategoryLabel"] = group["label"]; enriched["matchedKeyword"] = keyword
                     collected[code] = enriched
         grouped[group["id"]] = list(collected.values())
-
     return grouped
 
 
 def fetch_candidate_pool(keywords=None, target_raw=50, max_pages_per_keyword=3):
-    """既存処理との互換用。新しい候補出力はfetch_candidate_groupsを使う。"""
-    keywords = keywords or DEFAULT_KEYWORDS
-    collected = {}
-    request_count = 0
+    keywords = keywords or DEFAULT_KEYWORDS; collected = {}; request_count = 0
     for keyword in keywords:
         for page in range(1, max_pages_per_keyword + 1):
-            if request_count > 0:
-                time.sleep(1.1)
-            items = search_items(keyword=keyword, page=page, hits=30)
-            request_count += 1
+            if request_count > 0: time.sleep(1.1)
+            items = search_items(keyword=keyword, page=page, hits=30); request_count += 1
             for item in items:
                 code = item.get("itemCode")
-                if code:
-                    collected[code] = item
-            if len(collected) >= target_raw:
-                return list(collected.values())
+                if code: collected[code] = item
+            if len(collected) >= target_raw: return list(collected.values())
     return list(collected.values())
