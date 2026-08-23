@@ -1,0 +1,38 @@
+{
+  "validated_at": "2026-08-23T16:44:34+09:00",
+  "target_count": 50,
+  "counts": {
+    "interior_engagement": 10,
+    "product": 30,
+    "room_idea": 10
+  },
+  "days": 10,
+  "unique_products": 30,
+  "errors": [],
+  "warnings": [
+    {
+      "post_id": "INT-20260824-18",
+      "phrase": "嬉しいポイント",
+      "text": "壁にちょこんと天然木の棚があると、写真立てや小さな植物が映えるなーと思った。賃貸でも使いやすそうな吊り具付きって嬉しいポイントだね。"
+    },
+    {
+      "post_id": "INT-20260830-18",
+      "phrase": "良さそう",
+      "text": "透明ガラスのペンダントって、灯りの揺らぎが天井や壁に映って雰囲気を作ってくれそうだなーと感じた。ダイニングのアクセントに良さそう。"
+    },
+    {
+      "post_id": "INT-20260902-18",
+      "phrase": "良さそう",
+      "text": "木目調の掛け時計、写真で見ただけでも壁に温かさが出ていいなと思った。デスク横のアクセントにちょうど良さそうなサイズ感が嬉しい。"
+    }
+  ],
+  "first_post": {
+    "post_id": "INT-20260824-07",
+    "scheduled_at": "2026-08-24T07:00+09:00",
+    "status": "scheduled",
+    "type": "interior_engagement",
+    "content_format": "interior_engagement",
+    "parent_text": "木目の家具なら、明るいオーク系と濃いウォールナット系どっち派？ 部屋を作るなら最初に選びたい方を知りたい。",
+    "hook_type": "comparison|question|preference"
+  }
+}
