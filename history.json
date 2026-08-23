@@ -1892,6 +1892,17 @@
       "parent_text": "日曜の夜だけ、急に部屋の細かいところが気になる。\n\n今やらなくていい掃除を始めるくらいなら、早く寝ればいいのに。",
       "posted_at": "2026-08-23T21:00:46.957886+09:00",
       "thread_id": "18222954469329316"
+    },
+    {
+      "post_id": "INT-20260824-07",
+      "scheduled_at": "2026-08-24T07:00+09:00",
+      "status": "published",
+      "type": "interior_engagement",
+      "content_format": "interior_engagement",
+      "parent_text": "木目の家具なら、明るいオーク系と濃いウォールナット系どっち派？ 部屋を作るなら最初に選びたい方を知りたい。",
+      "hook_type": "comparison|question|preference",
+      "posted_at": "2026-08-24T07:00:58.053122+09:00",
+      "thread_id": "18486934939103389"
     }
   ]
 }

@@ -1,15 +1,6 @@
 {
   "posts": [
     {
-      "post_id": "INT-20260824-07",
-      "scheduled_at": "2026-08-24T07:00+09:00",
-      "status": "scheduled",
-      "type": "interior_engagement",
-      "content_format": "interior_engagement",
-      "parent_text": "木目の家具なら、明るいオーク系と濃いウォールナット系どっち派？ 部屋を作るなら最初に選びたい方を知りたい。",
-      "hook_type": "comparison|question|preference"
-    },
-    {
       "post_id": "INT-20260824-12",
       "scheduled_at": "2026-08-24T12:00+09:00",
       "status": "scheduled",
