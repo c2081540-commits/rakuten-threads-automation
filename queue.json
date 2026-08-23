@@ -1,13 +1,6 @@
 {
   "posts": [
     {
-      "post_id": "W20260823-05",
-      "scheduled_at": "2026-08-23T21:00+09:00",
-      "status": "scheduled",
-      "type": "empathy",
-      "parent_text": "日曜の夜だけ、急に部屋の細かいところが気になる。\n\n今やらなくていい掃除を始めるくらいなら、早く寝ればいいのに。"
-    },
-    {
       "post_id": "INT-20260824-07",
       "scheduled_at": "2026-08-24T07:00+09:00",
       "status": "scheduled",
