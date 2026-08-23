@@ -26,7 +26,7 @@
       "status": "scheduled",
       "type": "interior_engagement",
       "content_format": "interior_engagement",
-      "parent_text": "丸いサイドテーブルか四角いサイドテーブル、どっちが部屋に落ち着くと思う？ソファ横に置くイメージで教えて〜",
+      "parent_text": "木目の家具なら、明るいオーク系と濃いウォールナット系どっち派？ 部屋を作るなら最初に選びたい方を知りたい。",
       "hook_type": "comparison|question|preference"
     },
     {
@@ -60,7 +60,7 @@
       "status": "scheduled",
       "type": "room_idea",
       "content_format": "room_idea",
-      "parent_text": "ソファと窓の間に小さな接点を作るだけで、だらっとした午後がちょっと特別になる。高さや形違いのテーブルを重ねるイメージで、小物の見せ方を遊びたい気分。クッションの色を拾ってグリーンかブランケットをそっと掛けると間がつながるかも。",
+      "parent_text": "ベッド横って、大きな家具より小さいサイドテーブルひとつの方が好き。スマホと飲み物だけ置けるくらいの余白がちょうどよく見える。",
       "hook_type": "room_idea|layout|color|styling"
     },
     {
@@ -119,7 +119,7 @@
       "status": "scheduled",
       "type": "interior_engagement",
       "content_format": "interior_engagement",
-      "parent_text": "ソファ横のサイドテーブル、丸いのと四角いのどっちが落ち着く？私は丸い方が抜け感作りやすい気がするんだけど、皆はどっち派？",
+      "parent_text": "ソファの色、グレーとアイボリーならどっちを置きたい？ 汚れを考えると迷うけど、見た目だけならかなり悩む。",
       "hook_type": "comparison|question|preference"
     },
     {
@@ -153,7 +153,7 @@
       "status": "scheduled",
       "type": "room_idea",
       "content_format": "room_idea",
-      "parent_text": "午後のだらっとした時間をちょっと特別にしたくて、ソファと窓の間に小さな“接点”を作るのが最近の気分。高さ違いのテーブルや小物で視線を散らすと、だらしなさがリセットされる気がする。",
+      "parent_text": "部屋の雰囲気を変えたい時、家具を買い替えるより先に照明を見たくなる。夜の見え方が変わるだけで、同じ家具でも別の部屋みたいに感じる。",
       "hook_type": "room_idea|layout|color|styling"
     },
     {
@@ -212,7 +212,7 @@
       "status": "scheduled",
       "type": "interior_engagement",
       "content_format": "interior_engagement",
-      "parent_text": "丸いスツールと背もたれ付きチェア、どっちをソファ横に置きたい？ちょっとした休憩用って想像して教えて〜",
+      "parent_text": "ローテーブルって、置く派？ 置かない派？ 広く見せたい気持ちと、飲み物を置く場所は欲しい気持ちがずっと戦ってる。",
       "hook_type": "comparison|question|preference"
     },
     {
@@ -246,7 +246,7 @@
       "status": "scheduled",
       "type": "room_idea",
       "content_format": "room_idea",
-      "parent_text": "午後のだらっとする時間をちょっとだけ特別にするなら、小さめチェアやスツールを窓際に一脚置いてみるといいかも。座面の高さを揃えて、横に低めの棚やトレイを置くと読みかけの本やマグが収まりやすく見えると思う。",
+      "parent_text": "ラグを敷くと床の見える面積が一気に変わるから、模様替えで意外と存在感が大きい。秋に向けて少し毛足のあるものも気になってる。",
       "hook_type": "room_idea|layout|color|styling"
     },
     {
@@ -305,7 +305,7 @@
       "status": "scheduled",
       "type": "interior_engagement",
       "content_format": "interior_engagement",
-      "parent_text": "丸いサイドテーブルか四角いサイドテーブル、どっちが部屋に落ち着くと思う？ソファ横に置くイメージで教えて〜",
+      "parent_text": "夜の部屋、明るめにする派？ 間接照明だけで少し暗めにする派？ 家具より照明で好みが分かれそう。",
       "hook_type": "comparison|question|preference"
     },
     {
@@ -339,7 +339,7 @@
       "status": "scheduled",
       "type": "room_idea",
       "content_format": "room_idea",
-      "parent_text": "午後のだらっとした時間をちょっと特別にするなら、小さめチェアやスツールを窓際に一脚置いてみるといいかも。座面の高さを揃えて、横に低めの棚やトレイを置くと読みかけの本やマグが収まりやすく見えると思う。",
+      "parent_text": "カーテンって背景みたいな扱いだけど、面積が大きいから色を変えるとかなり効く。次に選ぶなら家具より少し薄い色にしてみたい。",
       "hook_type": "room_idea|layout|styling"
     },
     {
@@ -398,7 +398,7 @@
       "status": "scheduled",
       "type": "interior_engagement",
       "content_format": "interior_engagement",
-      "parent_text": "ソファ横のサイドテーブル、丸いのと四角いのどっちが落ち着く？私は丸いほうが抜け感が出て好きなんだけど、皆はどっち派？",
+      "parent_text": "ラグは無地派？ 柄あり派？ ソファがシンプルなら、足元だけ少し遊ぶのもかわいいと思ってる。",
       "hook_type": "comparison|question|preference"
     },
     {
@@ -432,7 +432,7 @@
       "status": "scheduled",
       "type": "room_idea",
       "content_format": "room_idea",
-      "parent_text": "午後のだらっとした時間をちょっと特別にしたくて、窓際に高さ違いのテーブルや小さなオブジェを並べる想像ばかりしてる。視線が散らせると床にべたっと座る時間もゆったり見える気がする。",
+      "parent_text": "全身ミラーは実用品なのに、形がきれいだとそのままインテリアになるのが好き。壁に立てかけるだけで成立するものをつい見てしまう。",
       "hook_type": "room_idea|layout|styling"
     },
     {
@@ -491,7 +491,7 @@
       "status": "scheduled",
       "type": "interior_engagement",
       "content_format": "interior_engagement",
-      "parent_text": "サイドテーブル、丸と四角どっち派？ソファ横に置いたときの抜け感と使い勝手で教えて〜",
+      "parent_text": "ベッドは低めのロースタイルと、脚付きで床が見えるタイプならどっちが好き？ 同じ部屋でもかなり印象変わるよね。",
       "hook_type": "comparison|question|preference"
     },
     {
@@ -525,7 +525,7 @@
       "status": "scheduled",
       "type": "room_idea",
       "content_format": "room_idea",
-      "parent_text": "ラグやチェアで色をちょっと足すだけで、部屋全体の表情が変わるなーって最近思ってる。くすみカラーの一点投入、気分替えにちょうどいいかも。",
+      "parent_text": "ベッド周りは物を増やしたくないけど、ライトと小さいテーブルだけは欲しい。寝る前に見る場所だから、ここだけ少しホテルっぽくしたい。",
       "hook_type": "room_idea|color|styling"
     },
     {
@@ -584,7 +584,7 @@
       "status": "scheduled",
       "type": "interior_engagement",
       "content_format": "interior_engagement",
-      "parent_text": "ソファ横のサイドテーブル、丸いのと四角いのどっちが落ち着くと思う？ちょっとした飲み物置き場のイメージで教えて〜",
+      "parent_text": "カーテン選ぶなら、白っぽく軽く見せる派？ グレージュ系で落ち着かせる派？ 窓の面積が大きいほど迷う。",
       "hook_type": "comparison|question|preference"
     },
     {
@@ -618,7 +618,7 @@
       "status": "scheduled",
       "type": "room_idea",
       "content_format": "room_idea",
-      "parent_text": "午後に窓辺でぼんやりする場所を作りたくて、小さめのチェアを一脚とサイドテーブルを置く妄想。座面の高さを合わせておくと見た目も使い勝手も落ち着く気がする。",
+      "parent_text": "収納家具はたくさん入る物より、扉を閉めた時に生活感が消える物が気になる。見せる棚と隠す収納を半分ずつくらいにしたい。",
       "hook_type": "room_idea|layout|styling"
     },
     {
@@ -677,7 +677,7 @@
       "status": "scheduled",
       "type": "interior_engagement",
       "content_format": "interior_engagement",
-      "parent_text": "ソファ横のサイドテーブル、丸と四角どっちが落ち着く？私は丸いほうが抜け感あって好きなんだけど、実際に飲み物を置くなら皆はどっち派？",
+      "parent_text": "鏡をひとつ置くなら、大きい全身ミラーと小さめのデザインミラーどっち？ 実用重視か、部屋の雰囲気重視かで分かれそう。",
       "hook_type": "comparison|question|preference"
     },
     {
@@ -711,7 +711,7 @@
       "status": "scheduled",
       "type": "room_idea",
       "content_format": "room_idea",
-      "parent_text": "午後の窓辺を居心地よくするなら、高さ違いのテーブルと小物を段差で並べると視線が動いてゆったり見える。座る場所とテーブルの高さを揃えると見た目も落ち着く気がするし、観葉植物を低めにすると床の余白が生きるよね。",
+      "parent_text": "夏の部屋から秋っぽく変えるなら、まずクッションやブランケットみたいな布物から見たい。家具を替えなくても素材感で季節が変わる。",
       "hook_type": "room_idea|layout|color|styling"
     },
     {
@@ -770,7 +770,7 @@
       "status": "scheduled",
       "type": "interior_engagement",
       "content_format": "interior_engagement",
-      "parent_text": "ソファ横のサイドテーブル、丸いのと四角いのどっち派？見た目の抜け感と実際の置きやすさで教えてほしい〜",
+      "parent_text": "部屋で一つだけ変えるなら、照明・ラグ・カーテンのどれを変える？ 大きい家具を買わなくても雰囲気が変わる三択。",
       "hook_type": "comparison|question|preference"
     },
     {
@@ -804,7 +804,7 @@
       "status": "scheduled",
       "type": "room_idea",
       "content_format": "room_idea",
-      "parent_text": "ラグやチェアで色をちょっと足すだけで部屋全体の表情が変わるなーって最近よく思う。くすみカラーの一点投入なら、大きく模様替えしなくても気分転換できる気がする。低めのグリーンかピンクを床周りに差すだけで印象がぐっと変わりそう。",
+      "parent_text": "部屋の色を増やしすぎると家具選びが急に難しくなる。木目＋白＋好きな差し色ひとつくらいだと、次に買う物を選びやすそう。",
       "hook_type": "room_idea|color|styling"
     },
     {
@@ -863,7 +863,7 @@
       "status": "scheduled",
       "type": "interior_engagement",
       "content_format": "interior_engagement",
-      "parent_text": "ソファ横のサイドテーブル、丸いのと四角いのどっちが落ち着くと思う？私は丸い方が抜け感が出て好きなんだけど、飲み物を置くなら実用性も気になって迷う…みんなはどっち派？",
+      "parent_text": "家具を揃えるなら、白系でまとめる派？ 木目を残す派？ どっちも好きで、結局ミックスしたくなる。",
       "hook_type": "comparison|question|preference"
     },
     {
@@ -897,7 +897,7 @@
       "status": "scheduled",
       "type": "room_idea",
       "content_format": "room_idea",
-      "parent_text": "最近、ラグやクッションで色を少し足すだけの模様替えにハマってる。低めの観葉植物と淡いピンクかグリーンのクッションを一つだけ置くと、抜け感と温かみのバランスがちょうど良くなる気がする。",
+      "parent_text": "家具の高さが全部そろっている部屋より、低い家具の中にライトや植物で少し高さがある方が好き。視線が動く感じがあって見ていて飽きない。",
       "hook_type": "room_idea|color|styling"
     },
     {
