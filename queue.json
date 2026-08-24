@@ -1,31 +1,6 @@
 {
   "posts": [
     {
-      "post_id": "INT-20260824-12",
-      "scheduled_at": "2026-08-24T12:00+09:00",
-      "status": "scheduled",
-      "type": "product",
-      "content_format": "product",
-      "parent_text": "木目×マットブラックの組み合わせ、写真で見るだけでゆったりしたコーナーを作りたくなる。2段あるからディスプレイのバランスも想像しやすいなぁ。",
-      "hook_type": "room_imagination|price_hook|discovery",
-      "selected_item_code": "smile88:10067304",
-      "item_code": "smile88:10067304",
-      "item_name": "【楽天1位】サイドテーブル サイドラック ナイトテーブル ミニテーブル ソファ ベッド リビング 寝室 丸 おしゃれ 木目調 幅36cm×45cm インテリア 花台 スタンド 北欧 韓国 コーヒーテーブル カフェ アンティーク ヴィンテージ ■[送料無料]",
-      "child_text_base": "直径33cmの天板でコンパクト。上下それぞれの耐荷重が約50kgと表記あり。",
-      "image_url": "https://thumbnail.image.rakuten.co.jp/@0_mall/smile88/cabinet/master/1st2/a07291.jpg",
-      "image_urls": [
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/smile88/cabinet/master/1st2/a07291.jpg",
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/smile88/cabinet/master/2nd/01.jpg",
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/smile88/cabinet/rn/a07291-awd.jpg"
-      ],
-      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00q6pen.z7eise27.g00q6pen.z7eit804/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fsmile88%2Fa07291%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fsmile88%2Fi%2F10067304%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f",
-      "price": 3520,
-      "rating": 4.61,
-      "review_count": 31,
-      "furniture_category": "table_desk",
-      "furniture_category_label": "テーブル・デスク"
-    },
-    {
       "post_id": "INT-20260824-15",
       "scheduled_at": "2026-08-24T15:00+09:00",
       "status": "scheduled",
