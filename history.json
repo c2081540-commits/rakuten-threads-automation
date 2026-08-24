@@ -1998,6 +1998,17 @@
       "hook_type": "room_idea|layout|color|styling",
       "posted_at": "2026-08-24T15:00:49.227439+09:00",
       "thread_id": "18090274769149040"
+    },
+    {
+      "post_id": "INT-20260825-07",
+      "scheduled_at": "2026-08-25T07:00+09:00",
+      "status": "published",
+      "type": "interior_engagement",
+      "content_format": "interior_engagement",
+      "parent_text": "ソファの色、グレーとアイボリーならどっちを置きたい？ 汚れを考えると迷うけど、見た目だけならかなり悩む。",
+      "hook_type": "comparison|question|preference",
+      "posted_at": "2026-08-25T07:01:02.231405+09:00",
+      "thread_id": "18338864626281492"
     }
   ]
 }

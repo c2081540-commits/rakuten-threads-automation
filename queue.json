@@ -1,15 +1,6 @@
 {
   "posts": [
     {
-      "post_id": "INT-20260825-07",
-      "scheduled_at": "2026-08-25T07:00+09:00",
-      "status": "scheduled",
-      "type": "interior_engagement",
-      "content_format": "interior_engagement",
-      "parent_text": "ソファの色、グレーとアイボリーならどっちを置きたい？ 汚れを考えると迷うけど、見た目だけならかなり悩む。",
-      "hook_type": "comparison|question|preference"
-    },
-    {
       "post_id": "INT-20260825-12",
       "scheduled_at": "2026-08-25T12:00+09:00",
       "status": "scheduled",
