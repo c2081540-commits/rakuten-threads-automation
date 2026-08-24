@@ -1931,6 +1931,17 @@
       "hook_type": "comparison|question|preference",
       "posted_at": "2026-08-24T07:00:58.053122+09:00",
       "thread_id": "18486934939103389"
+    },
+    {
+      "post_id": "INT-20260824-15",
+      "scheduled_at": "2026-08-24T15:00+09:00",
+      "status": "published",
+      "type": "room_idea",
+      "content_format": "room_idea",
+      "parent_text": "ベッド横って、大きな家具より小さいサイドテーブルひとつの方が好き。スマホと飲み物だけ置けるくらいの余白がちょうどよく見える。",
+      "hook_type": "room_idea|layout|color|styling",
+      "posted_at": "2026-08-24T15:00:49.227439+09:00",
+      "thread_id": "18090274769149040"
     }
   ]
 }
