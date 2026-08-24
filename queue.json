@@ -1,31 +1,6 @@
 {
   "posts": [
     {
-      "post_id": "INT-20260824-18",
-      "scheduled_at": "2026-08-24T18:00+09:00",
-      "status": "scheduled",
-      "type": "product",
-      "content_format": "product",
-      "parent_text": "壁にちょこんと天然木の棚があるだけで、写真立てや小さな植物の居場所ができる感じが好き。奥行きが浅いから、壁面に少し飾りたい時の候補に入れたい。",
-      "hook_type": "room_imagination|seasonal|comparison",
-      "selected_item_code": "isuke-shop:10000159",
-      "item_code": "isuke-shop:10000159",
-      "item_name": "【天然木 楽天1位】ウォールシェルフ 壁掛け棚 賃貸OK 白吊具 押しピン 石膏ボード 壁 棚 穴あけ不要 工具不要 奥行15cm 飾り棚 壁面収納 洗面所 トイレ 玄関 キッチン リビング 北欧 おしゃれ ウォールラック 収納棚 木製",
-      "child_text_base": "奥行き15cmのスリム設計で複数サイズ展開あり。白い吊具（強力ピン）が付属するとの記載あり。",
-      "image_url": "https://thumbnail.image.rakuten.co.jp/@0_mall/isuke-shop/cabinet/08741736/imgrc0129345906.jpg",
-      "image_urls": [
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/isuke-shop/cabinet/08741736/imgrc0129345906.jpg",
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/isuke-shop/cabinet/10000026_01.jpg",
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/isuke-shop/cabinet/10000026_02.jpg"
-      ],
-      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00tnman.z7eis139.g00tnman.z7eit08c/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fisuke-shop%2F10000026%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fisuke-shop%2Fi%2F10000159%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f",
-      "price": 1780,
-      "rating": 4.6,
-      "review_count": 5117,
-      "furniture_category": "storage_furniture",
-      "furniture_category_label": "収納家具"
-    },
-    {
       "post_id": "INT-20260824-21",
       "scheduled_at": "2026-08-24T21:00+09:00",
       "status": "scheduled",
