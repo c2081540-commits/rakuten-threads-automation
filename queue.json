@@ -1,31 +1,6 @@
 {
   "posts": [
     {
-      "post_id": "INT-20260824-21",
-      "scheduled_at": "2026-08-24T21:00+09:00",
-      "status": "scheduled",
-      "type": "product",
-      "content_format": "product",
-      "parent_text": "カラフルでレトロなチェアを見かけて、食卓の印象が一気に変わるなーと思った。座面と脚の組み合わせが選べるのも、気分で色を替えたくなる理由かも。",
-      "hook_type": "wishlist|discovery|comparison",
-      "selected_item_code": "t-interior:10000250",
-      "item_code": "t-interior:10000250",
-      "item_name": "[マラソン限定]10%OFFクーポン8/24 20時～ smoo bloom ダイニングチェア 座面と脚を自由に選べる チェア 椅子 おしゃれ Y2K 韓国インテリア カラフル ポップ レトロ ミッドセンチュリー 肘付き イス デスクチェア コーデュロイ Branchpoint",
-      "child_text_base": "座面高さは約44.5cm、幅56cm×奥行55cmのサイズ感。複数カラーや素材の組み合わせが選べるシリーズ商品。",
-      "image_url": "https://thumbnail.image.rakuten.co.jp/@0_mall/t-interior/cabinet/item/usual/abf17cd.jpg",
-      "image_urls": [
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/t-interior/cabinet/item/usual/abf17cd.jpg",
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/t-interior/cabinet/item/images2/abf17cd_1.jpg",
-        "https://thumbnail.image.rakuten.co.jp/@0_mall/t-interior/cabinet/item/images2/imgrc0332608641.jpg"
-      ],
-      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00u9h5n.z7eisff5.g00u9h5n.z7eit776/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Ft-interior%2Fabf17cd%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Ft-interior%2Fi%2F10000250%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f",
-      "price": 7980,
-      "rating": 4.8,
-      "review_count": 166,
-      "furniture_category": "sofa_chair",
-      "furniture_category_label": "ソファ・チェア"
-    },
-    {
       "post_id": "INT-20260825-07",
       "scheduled_at": "2026-08-25T07:00+09:00",
       "status": "scheduled",
