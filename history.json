@@ -1047,6 +1047,34 @@
       "posted_at": "2026-08-24T21:01:28.761415+09:00",
       "thread_id": "18110493041011099",
       "reply_id": "18113983582771055"
+    },
+    {
+      "post_id": "INT-20260825-12",
+      "scheduled_at": "2026-08-25T12:00+09:00",
+      "status": "published",
+      "type": "product",
+      "content_format": "product",
+      "parent_text": "くすみカラーのラグを見かけて、写真だけで部屋のトーンがふっと柔らかくなる想像をしてしまった。ストライプ系のさりげない模様だとソファ周りがほどよく引き締まりそう。価格見てちょっと驚いたんだけど、この色数の豊富さなら気分で替えたくなりそう。",
+      "hook_type": "room_imagination|price_hook|seasonal",
+      "selected_item_code": "apoloce:10000016",
+      "item_code": "apoloce:10000016",
+      "item_name": "【48h★最大10％OFFクーポン】ラグ 洗える シエロ 【最大35％OFF】 販売累計14.9万枚！ ラグマット キルトラグ 北欧 おしゃれ くすみ カーペット 95×130 130×190 190×190 190×240 190×300 1.5畳 2畳 3畳 リビング 滑り止め オールシーズン コーデュロイ",
+      "child_text_base": "洗濯機で丸洗いできる仕様で、95×130〜190×300まで複数サイズ展開があるみたい。価格は手頃（掲載価格：2,990円）でレビュー評価も高め（約4.75）でした。",
+      "image_url": "https://thumbnail.image.rakuten.co.jp/@0_mall/apoloce/cabinet/er/sielo26n-mb.jpg",
+      "image_urls": [
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/apoloce/cabinet/er/sielo26n-mb.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/apoloce/cabinet/er/sielo26n-02.jpg",
+        "https://thumbnail.image.rakuten.co.jp/@0_mall/apoloce/cabinet/er/sielo26n-03.jpg"
+      ],
+      "affiliate_url": "https://hb.afl.rakuten.co.jp/hgc/g00t4iun.z7eis949.g00t4iun.z7eitf47/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fapoloce%2Fsielo-185%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fapoloce%2Fi%2F10000016%2F&rafcid=wsc_i_is_7dc2d120-2d33-4eec-9c51-200c50cb980f",
+      "price": 2990,
+      "rating": 4.75,
+      "review_count": 6546,
+      "furniture_category": "rug_curtain",
+      "furniture_category_label": "ラグ・カーテン",
+      "posted_at": "2026-08-25T12:01:57.487639+09:00",
+      "thread_id": "18156080935450660",
+      "reply_id": "18064981952591471"
     }
   ],
   "empathy_history": [
